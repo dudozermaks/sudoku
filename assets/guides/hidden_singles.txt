@@ -1,0 +1,11 @@
+"Hidden singles" is a quite simple Sudoku technique. The point of "Hidden singles" is that a Note is the only one of its kind in an entire row, column, or 3x3 block. However, this technique requires careful attention from the player, because it can be quite hard to spot the single Notes.
+
+It will be easier to understand this technique if you look at the example.
+
+Let's pay attention to this 3x3 block with Notes. There is only one cell, that may contain number 1. It's the top right cell. There are no any other cells in this block with the Note 1.
+
+-sudoku=000000010400000000020000000000050407008000300001090000300400200050100000000806000
+
+So we can remove all the Notes from this cell and put number 1 instead, since it's the only possible option.
+
+That's it for "Hidden singles" technique. Once you have learned it, you can proceed with the following Sudoku strategies.
