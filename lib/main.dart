@@ -18,7 +18,6 @@ import 'package:sudoku/pages/statistics.dart';
 import 'package:sudoku/tools/app_settings.dart';
 import 'package:sudoku/tools/stats.dart';
 
-import 'package:sudoku/src/rust/api/sudoku.dart';
 import 'package:sudoku/src/rust/frb_generated.dart';
 
 Future<void> main() async {
