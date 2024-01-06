@@ -48,7 +48,6 @@ fn _strategy_to_difficulty(s: &Strategy) -> u32 {
 
 #[flutter_rust_bridge::frb(sync)]
 pub fn get_rating(sudoku_string: String) -> (u32, bool) {
-    let mut difficulty = 0;
     let sudoku = Sudoku::from_str_line(&sudoku_string);
     let solver = StrategySolver::from_sudoku(sudoku.unwrap());
 
@@ -71,24 +70,24 @@ pub fn get_rating(sudoku_string: String) -> (u32, bool) {
         Strategy::MutantJellyfish,
     ]);
 
-    let techniques: Deductions;
+    let deductions: Deductions;
     let is_solved: bool;
 
     if solver_res.is_ok() {
-        techniques = solver_res.unwrap().1;
+        deductions = solver_res.unwrap().1;
         is_solved = true;
     } else {
-        techniques = solver_res.unwrap_err().1;
+        deductions = solver_res.unwrap_err().1;
         is_solved = false;
     }
 
-    for technique in techniques.iter() {
-        let strategy = technique.strategy();
-
-        difficulty += _strategy_to_difficulty(&strategy);
-    }
-
-    return (difficulty, is_solved);
+    return (
+        deductions
+            .iter()
+            .map(|d| _strategy_to_difficulty(&d.strategy()))
+            .sum(),
+        is_solved,
+    );
 }
 
 #[flutter_rust_bridge::frb(init)]
