@@ -35,7 +35,7 @@ class _GuidesState extends State<Guides> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List<String> guides = json
-                  .decode(snapshot.data as String? ?? "")
+                  .decode(snapshot.data ?? "")
                   .keys
                   .where((String key) => key.startsWith(Guides.path))
                   .toList();

@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:hive_flutter/adapters.dart';
+import 'package:sudoku/logic/sudoku_info.dart';
+import 'package:sudoku/tools/app_settings.dart';
 import 'package:sudoku/tools/pos.dart';
 import 'package:sudoku/src/rust/api/sudoku.dart';
 
@@ -16,11 +19,13 @@ class SudokuField {
   File? _saveFile;
   bool _hasBeenModified = false;
 
-  String? _uniqueSolution;
-	bool _isRatingComplete = false;
-  int _difficulty = 0;
+  SudokuInfo info = SudokuInfo.empty();
 
-	String get difficultyString => difficulty.toString() + (_isRatingComplete ? "" : "+");
+  Box infoBox;
+
+  int get difficulty => info.difficulty;
+  String get difficultyString =>
+      difficulty.toString() + (info.humanEngineSolved ? "" : "+");
 
   SudokuField({String? clues})
       : _pencilmarks = List.generate(81, (index) => List.empty(growable: true),
@@ -28,7 +33,8 @@ class SudokuField {
         _clues = List.filled(81, 0, growable: false),
         _isUserPlaced = List.filled(81, true, growable: false),
         time = 0,
-        _selected = Pos(-1, -1) {
+        _selected = Pos(-1, -1),
+        infoBox = Hive.box(AppGlobals.infoBoxName) {
     if (clues != null) {
       _setClues(clues);
       _getPuzzleInfo();
@@ -49,12 +55,8 @@ class SudokuField {
         _isUserPlaced = List<bool>.from(json["isUserPlaced"], growable: false),
         time = json["time"] as int,
         _selected = Pos.fromJson(json["selected"]),
-				_isRatingComplete = json["isRatingComplete"] as bool,
-        _difficulty = json["rating"] as int,
-        _uniqueSolution = json["uniqueSolution"] as String {
-    if (_uniqueSolution == "") {
-      _uniqueSolution = null;
-    }
+        infoBox = Hive.box(AppGlobals.infoBoxName) {
+    _getPuzzleInfo();
   }
 
   SudokuField.generate() : this(clues: generateSudoku());
@@ -63,14 +65,12 @@ class SudokuField {
 
   bool get _isCompleted {
     String clues = cluesToString(nonUser: true, user: true);
-    if (_uniqueSolution != null) {
-      return _uniqueSolution == clues;
+    if (info.uniqueSolution != null) {
+      return info.uniqueSolution == clues;
     } else {
       return !clues.contains("0");
     }
   }
-
-  int get difficulty => _difficulty;
 
   // TODO: getter for file
   FileStat? get saveFileStat => _saveFile?.statSync();
@@ -129,12 +129,12 @@ class SudokuField {
   }
 
   bool isRightPlaced(int index) {
-    if (_uniqueSolution == null ||
+    if (info.uniqueSolution == null ||
         !_isUserPlaced[index] ||
         _clues[index] == 0) {
       return true;
     }
-    return _clues[index] == int.tryParse(_uniqueSolution![index]);
+    return _clues[index] == int.tryParse(info.uniqueSolution![index]);
   }
 
   bool isUserPlaced(int index) => _isUserPlaced[index];
@@ -179,20 +179,19 @@ class SudokuField {
         "isUserPlaced": _isUserPlaced,
         "time": time,
         "selected": _selected,
-        "rating": _difficulty,
-        "isRatingComplete": _isRatingComplete,
-        "uniqueSolution": _uniqueSolution ?? "",
       };
 
   void _getPuzzleInfo() {
-    final puzzleClues = cluesToString(nonUser: true, user: false);
+    final clues = cluesToString(nonUser: true, user: false);
 
-    _uniqueSolution = uniqueSolution(sudokuString: puzzleClues);
+    info = infoBox.get(clues) ?? SudokuInfo.fromSudoku(clues);
 
-    if (_uniqueSolution != null) {
-			(int, bool) rating = getRating(sudokuString: puzzleClues);
-      _difficulty = rating.$1;
-			_isRatingComplete  = rating.$2;
+    SudokuInfo? dbInfo = infoBox.get(clues);
+    if (dbInfo == null) {
+      info = SudokuInfo.fromSudoku(clues);
+			infoBox.put(clues, info);
+    } else {
+      info = dbInfo;
     }
   }
 

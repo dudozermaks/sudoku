@@ -30,13 +30,22 @@ impl CstDecode<Vec<u8>> for Box<[u8]> {
         self.into_vec()
     }
 }
+impl CstDecode<Vec<(String, u32)>> for flutter_rust_bridge::for_generated::wasm_bindgen::JsValue {
+    fn cst_decode(self) -> Vec<(String, u32)> {
+        self.dyn_into::<flutter_rust_bridge::for_generated::js_sys::Array>()
+            .unwrap()
+            .iter()
+            .map(CstDecode::cst_decode)
+            .collect()
+    }
+}
 impl CstDecode<Option<String>> for Option<String> {
     fn cst_decode(self) -> Option<String> {
         self.map(CstDecode::cst_decode)
     }
 }
-impl CstDecode<(u32, bool)> for flutter_rust_bridge::for_generated::wasm_bindgen::JsValue {
-    fn cst_decode(self) -> (u32, bool) {
+impl CstDecode<(String, u32)> for flutter_rust_bridge::for_generated::wasm_bindgen::JsValue {
+    fn cst_decode(self) -> (String, u32) {
         let self_ = self
             .dyn_into::<flutter_rust_bridge::for_generated::js_sys::Array>()
             .unwrap();
@@ -47,6 +56,34 @@ impl CstDecode<(u32, bool)> for flutter_rust_bridge::for_generated::wasm_bindgen
             self_.length()
         );
         (self_.get(0).cst_decode(), self_.get(1).cst_decode())
+    }
+}
+impl CstDecode<(u32, std::collections::HashMap<String, u32>, bool)>
+    for flutter_rust_bridge::for_generated::wasm_bindgen::JsValue
+{
+    fn cst_decode(self) -> (u32, std::collections::HashMap<String, u32>, bool) {
+        let self_ = self
+            .dyn_into::<flutter_rust_bridge::for_generated::js_sys::Array>()
+            .unwrap();
+        assert_eq!(
+            self_.length(),
+            3,
+            "Expected 3 elements, got {}",
+            self_.length()
+        );
+        (
+            self_.get(0).cst_decode(),
+            self_.get(1).cst_decode(),
+            self_.get(2).cst_decode(),
+        )
+    }
+}
+impl CstDecode<std::collections::HashMap<String, u32>>
+    for flutter_rust_bridge::for_generated::wasm_bindgen::JsValue
+{
+    fn cst_decode(self) -> std::collections::HashMap<String, u32> {
+        let vec: Vec<(String, u32)> = self.cst_decode();
+        vec.into_iter().collect()
     }
 }
 impl CstDecode<String> for flutter_rust_bridge::for_generated::wasm_bindgen::JsValue {
@@ -107,13 +144,13 @@ pub fn wire_get_rating(
 }
 
 #[wasm_bindgen]
-pub fn wire_init_app(port_: flutter_rust_bridge::for_generated::MessagePort) {
-    wire_init_app_impl(port_)
+pub fn wire_get_unique_solution(
+    sudoku_string: String,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartDco {
+    wire_get_unique_solution_impl(sudoku_string)
 }
 
 #[wasm_bindgen]
-pub fn wire_unique_solution(
-    sudoku_string: String,
-) -> flutter_rust_bridge::for_generated::WireSyncRust2DartDco {
-    wire_unique_solution_impl(sudoku_string)
+pub fn wire_init_app(port_: flutter_rust_bridge::for_generated::MessagePort) {
+    wire_init_app_impl(port_)
 }

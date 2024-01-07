@@ -63,11 +63,12 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 abstract class RustLibApi extends BaseApi {
   String generateSudoku({dynamic hint});
 
-  (int, bool) getRating({required String sudokuString, dynamic hint});
+  (int, Map<String, int>, bool) getRating(
+      {required String sudokuString, dynamic hint});
+
+  String? getUniqueSolution({required String sudokuString, dynamic hint});
 
   Future<void> initApp({dynamic hint});
-
-  String? uniqueSolution({required String sudokuString, dynamic hint});
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -101,14 +102,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  (int, bool) getRating({required String sudokuString, dynamic hint}) {
+  (int, Map<String, int>, bool) getRating(
+      {required String sudokuString, dynamic hint}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         var arg0 = cst_encode_String(sudokuString);
         return wire.wire_get_rating(arg0);
       },
       codec: DcoCodec(
-        decodeSuccessData: dco_decode_record_u_32_bool,
+        decodeSuccessData: dco_decode_record_u_32_map_string_u_32_bool,
         decodeErrorData: null,
       ),
       constMeta: kGetRatingConstMeta,
@@ -120,6 +122,29 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kGetRatingConstMeta => const TaskConstMeta(
         debugName: "get_rating",
+        argNames: ["sudokuString"],
+      );
+
+  @override
+  String? getUniqueSolution({required String sudokuString, dynamic hint}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        var arg0 = cst_encode_String(sudokuString);
+        return wire.wire_get_unique_solution(arg0);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_opt_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kGetUniqueSolutionConstMeta,
+      argValues: [sudokuString],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kGetUniqueSolutionConstMeta => const TaskConstMeta(
+        debugName: "get_unique_solution",
         argNames: ["sudokuString"],
       );
 
@@ -145,28 +170,11 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         argNames: [],
       );
 
-  @override
-  String? uniqueSolution({required String sudokuString, dynamic hint}) {
-    return handler.executeSync(SyncTask(
-      callFfi: () {
-        var arg0 = cst_encode_String(sudokuString);
-        return wire.wire_unique_solution(arg0);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_opt_String,
-        decodeErrorData: null,
-      ),
-      constMeta: kUniqueSolutionConstMeta,
-      argValues: [sudokuString],
-      apiImpl: this,
-      hint: hint,
-    ));
+  @protected
+  Map<String, int> dco_decode_Map_String_u_32(dynamic raw) {
+    return Map.fromEntries(dco_decode_list_record_string_u_32(raw)
+        .map((e) => MapEntry(e.$1, e.$2)));
   }
-
-  TaskConstMeta get kUniqueSolutionConstMeta => const TaskConstMeta(
-        debugName: "unique_solution",
-        argNames: ["sudokuString"],
-      );
 
   @protected
   String dco_decode_String(dynamic raw) {
@@ -184,19 +192,38 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<(String, int)> dco_decode_list_record_string_u_32(dynamic raw) {
+    return (raw as List<dynamic>).map(dco_decode_record_string_u_32).toList();
+  }
+
+  @protected
   String? dco_decode_opt_String(dynamic raw) {
     return raw == null ? null : dco_decode_String(raw);
   }
 
   @protected
-  (int, bool) dco_decode_record_u_32_bool(dynamic raw) {
+  (String, int) dco_decode_record_string_u_32(dynamic raw) {
     final arr = raw as List<dynamic>;
     if (arr.length != 2) {
       throw Exception('Expected 2 elements, got ${arr.length}');
     }
     return (
+      dco_decode_String(arr[0]),
+      dco_decode_u_32(arr[1]),
+    );
+  }
+
+  @protected
+  (int, Map<String, int>, bool) dco_decode_record_u_32_map_string_u_32_bool(
+      dynamic raw) {
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3) {
+      throw Exception('Expected 3 elements, got ${arr.length}');
+    }
+    return (
       dco_decode_u_32(arr[0]),
-      dco_decode_bool(arr[1]),
+      dco_decode_Map_String_u_32(arr[1]),
+      dco_decode_bool(arr[2]),
     );
   }
 
@@ -213,6 +240,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   @protected
   void dco_decode_unit(dynamic raw) {
     return;
+  }
+
+  @protected
+  Map<String, int> sse_decode_Map_String_u_32(SseDeserializer deserializer) {
+    var inner = sse_decode_list_record_string_u_32(deserializer);
+    return Map.fromEntries(inner.map((e) => MapEntry(e.$1, e.$2)));
   }
 
   @protected
@@ -233,6 +266,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<(String, int)> sse_decode_list_record_string_u_32(
+      SseDeserializer deserializer) {
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <(String, int)>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_record_string_u_32(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
   String? sse_decode_opt_String(SseDeserializer deserializer) {
     if (sse_decode_bool(deserializer)) {
       return (sse_decode_String(deserializer));
@@ -242,10 +286,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  (int, bool) sse_decode_record_u_32_bool(SseDeserializer deserializer) {
-    var var_field0 = sse_decode_u_32(deserializer);
-    var var_field1 = sse_decode_bool(deserializer);
+  (String, int) sse_decode_record_string_u_32(SseDeserializer deserializer) {
+    var var_field0 = sse_decode_String(deserializer);
+    var var_field1 = sse_decode_u_32(deserializer);
     return (var_field0, var_field1);
+  }
+
+  @protected
+  (int, Map<String, int>, bool) sse_decode_record_u_32_map_string_u_32_bool(
+      SseDeserializer deserializer) {
+    var var_field0 = sse_decode_u_32(deserializer);
+    var var_field1 = sse_decode_Map_String_u_32(deserializer);
+    var var_field2 = sse_decode_bool(deserializer);
+    return (var_field0, var_field1, var_field2);
   }
 
   @protected
@@ -287,6 +340,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_Map_String_u_32(
+      Map<String, int> self, SseSerializer serializer) {
+    sse_encode_list_record_string_u_32(
+        self.entries.map((e) => (e.key, e.value)).toList(), serializer);
+  }
+
+  @protected
   void sse_encode_String(String self, SseSerializer serializer) {
     sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
   }
@@ -304,6 +364,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_list_record_string_u_32(
+      List<(String, int)> self, SseSerializer serializer) {
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_record_string_u_32(item, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer) {
     sse_encode_bool(self != null, serializer);
     if (self != null) {
@@ -312,9 +381,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_record_u_32_bool((int, bool) self, SseSerializer serializer) {
+  void sse_encode_record_string_u_32(
+      (String, int) self, SseSerializer serializer) {
+    sse_encode_String(self.$1, serializer);
+    sse_encode_u_32(self.$2, serializer);
+  }
+
+  @protected
+  void sse_encode_record_u_32_map_string_u_32_bool(
+      (int, Map<String, int>, bool) self, SseSerializer serializer) {
     sse_encode_u_32(self.$1, serializer);
-    sse_encode_bool(self.$2, serializer);
+    sse_encode_Map_String_u_32(self.$2, serializer);
+    sse_encode_bool(self.$3, serializer);
   }
 
   @protected

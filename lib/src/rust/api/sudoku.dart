@@ -9,8 +9,10 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 String generateSudoku({dynamic hint}) =>
     RustLib.instance.api.generateSudoku(hint: hint);
 
-String? uniqueSolution({required String sudokuString, dynamic hint}) =>
-    RustLib.instance.api.uniqueSolution(sudokuString: sudokuString, hint: hint);
+String? getUniqueSolution({required String sudokuString, dynamic hint}) =>
+    RustLib.instance.api
+        .getUniqueSolution(sudokuString: sudokuString, hint: hint);
 
-(int, bool) getRating({required String sudokuString, dynamic hint}) =>
+(int, Map<String, int>, bool) getRating(
+        {required String sudokuString, dynamic hint}) =>
     RustLib.instance.api.getRating(sudokuString: sudokuString, hint: hint);

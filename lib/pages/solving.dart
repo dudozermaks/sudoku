@@ -37,15 +37,16 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     var colorScheme = Theme.of(context).colorScheme;
 
     // deprecated in future versions of Flutter
-    return WillPopScope(
-      onWillPop: _goBackRequiest,
+    return PopScope(
+			canPop: true,
+      onPopInvoked: _goBackRequiest,
       child: Scaffold(
         appBar: AppBar(
           title: _buildTimer(colorScheme),
           centerTitle: true,
           leading: BackButton(
             onPressed: () async {
-              if (await _goBackRequiest() && context.mounted) {
+              if (await _goBackRequiest(true) && context.mounted) {
                 Navigator.of(context).pop();
               }
             },
@@ -72,7 +73,6 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     var buttons = _buildButtons();
     return [
       Text(
-				// TODO: add + if has did not solve
         widget.field.difficultyString,
         style: Theme.of(context).textTheme.titleLarge,
       ),
@@ -199,7 +199,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
 
   /// Brings up dialog, which asks user does he want to quit
   /// Returns true if user choosed to quit, otherwise false
-  Future<bool> _goBackRequiest() async {
+  Future<bool> _goBackRequiest(_) async {
     if (!widget.field.hasBeenModified) {
       return true;
     }
@@ -267,13 +267,14 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   }
 
   void _infoPressed() async {
+		var content = "${"engine-info".i18n()}\n${widget.field.info.toString()}";
+
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("puzzle-info".i18n()),
-					// TODO: Add content
-          // content: Text("engine-info".i18n([widget.field.rating.toString()])),
+					content: Text(content),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -300,7 +301,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   }
 
   Future<void> _save() async {
-    await widget.field.save(context.read<AppSettings>().savesPath);
+    await widget.field.save(context.read<AppGlobals>().savesPath);
 
     if (!context.mounted) {
       return;

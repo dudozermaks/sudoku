@@ -36,7 +36,7 @@ class Stats {
   int get _divisionSafeSolvedCount => solvedCount == 0 ? 1 : solvedCount;
 
   Stats(BuildContext context)
-      : saveFile = context.read<AppSettings>().statFile {
+      : saveFile = context.read<AppGlobals>().statFile {
     load();
   }
 
@@ -74,6 +74,7 @@ class Stats {
   }
 }
 
+// TODO: To Hive
 class StatPiece {
   final int timeFinished;
   final int timeToSolve;

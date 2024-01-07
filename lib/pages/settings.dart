@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:localization/localization.dart';
-import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:sudoku/tools/app_settings.dart';
 
@@ -13,34 +13,34 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var settings = context.watch<AppSettings>();
-
     return Scaffold(
       appBar: AppBar(title: Text("settings".i18n())),
       body: SafeArea(
         child: SettingsList(
           lightTheme: buildTheme(context),
           darkTheme: buildTheme(context),
-          sections: [buildThemeSection(settings)],
+          sections: [buildThemeSection()],
         ),
       ),
     );
   }
 
-  SettingsSection buildThemeSection(AppSettings settings) {
+  SettingsSection buildThemeSection() {
+		var themeBox = Hive.box(AppGlobals.themeBoxName);
+
     return SettingsSection(
       title: Text("theme".i18n()),
       tiles: [
         SettingsTile(
           leading: const Icon(Icons.color_lens),
           title: Text("theme-base-color".i18n()),
-          trailing: Icon(Icons.circle, color: settings.color),
-          onPressed: (context) => pickColor(context, settings),
+          trailing: Icon(Icons.circle, color: themeBox.get("color")),
+          onPressed: (context) => pickColor(context, themeBox, "color"),
         ),
         SettingsTile.navigation(
           leading: const Icon(Icons.dark_mode),
           title: Text("theme-mode".i18n()),
-          value: Text("theme-mode-${settings.themeMode.name}".i18n()),
+          // value: Text("theme-mode-${themeBox.get("themeMode").name}".i18n()),
           onPressed: (context) {
             showDialog(
               context: context,
@@ -49,8 +49,8 @@ class Settings extends StatelessWidget {
                   title: Text("theme-mode".i18n()),
                   i18nPrefix: "theme-mode",
                   values: ThemeMode.values,
-                  initialValue: settings.themeMode,
-                  onSelected: (ThemeMode value) => settings.themeMode = value,
+                  initialValue: themeBox.get("themeMode") as ThemeMode,
+                  onSelected: (ThemeMode value) => themeBox.put("themeMode", value),
                 );
               },
             );
@@ -68,8 +68,8 @@ class Settings extends StatelessWidget {
     );
   }
 
-  void pickColor(BuildContext context, AppSettings settings) {
-    Color pickerColor = settings.color;
+  void pickColor(BuildContext context, Box box, String name) {
+    Color pickerColor = box.get(name, defaultValue: const Color(0xFF000000));
 
     showDialog(
       context: context,
@@ -101,7 +101,7 @@ class Settings extends StatelessWidget {
               TextButton(
                 child: Text("select".i18n()),
                 onPressed: () {
-                  settings.color = pickerColor;
+									box.put(name, pickerColor);
                   Navigator.of(context).pop();
                 },
               ),

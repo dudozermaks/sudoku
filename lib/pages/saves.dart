@@ -18,7 +18,7 @@ class _SavesState extends State<Saves> {
   final _files = List<File>.empty(growable: true);
   bool loaded = false;
   void _getFiles() {
-    final savesDir = Directory(context.read<AppSettings>().savesPath);
+    final savesDir = Directory(context.read<AppGlobals>().savesPath);
 
     if (savesDir.existsSync()) {
       for (var file in savesDir.listSync()) {

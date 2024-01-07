@@ -19,6 +19,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   });
 
   @protected
+  Map<String, int> dco_decode_Map_String_u_32(dynamic raw);
+
+  @protected
   String dco_decode_String(dynamic raw);
 
   @protected
@@ -28,10 +31,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
+  List<(String, int)> dco_decode_list_record_string_u_32(dynamic raw);
+
+  @protected
   String? dco_decode_opt_String(dynamic raw);
 
   @protected
-  (int, bool) dco_decode_record_u_32_bool(dynamic raw);
+  (String, int) dco_decode_record_string_u_32(dynamic raw);
+
+  @protected
+  (int, Map<String, int>, bool) dco_decode_record_u_32_map_string_u_32_bool(
+      dynamic raw);
 
   @protected
   int dco_decode_u_32(dynamic raw);
@@ -43,6 +53,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void dco_decode_unit(dynamic raw);
 
   @protected
+  Map<String, int> sse_decode_Map_String_u_32(SseDeserializer deserializer);
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
@@ -52,10 +65,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
+  List<(String, int)> sse_decode_list_record_string_u_32(
+      SseDeserializer deserializer);
+
+  @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
 
   @protected
-  (int, bool) sse_decode_record_u_32_bool(SseDeserializer deserializer);
+  (String, int) sse_decode_record_string_u_32(SseDeserializer deserializer);
+
+  @protected
+  (int, Map<String, int>, bool) sse_decode_record_u_32_map_string_u_32_bool(
+      SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_32(SseDeserializer deserializer);
@@ -68,6 +89,13 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   int sse_decode_i_32(SseDeserializer deserializer);
+
+  @protected
+  ffi.Pointer<wire_cst_list_record_string_u_32> cst_encode_Map_String_u_32(
+      Map<String, int> raw) {
+    return cst_encode_list_record_string_u_32(
+        raw.entries.map((e) => (e.key, e.value)).toList());
+  }
 
   @protected
   ffi.Pointer<wire_cst_list_prim_u_8_strict> cst_encode_String(String raw) {
@@ -83,16 +111,35 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<wire_cst_list_record_string_u_32>
+      cst_encode_list_record_string_u_32(List<(String, int)> raw) {
+    final ans = wire.cst_new_list_record_string_u_32(raw.length);
+    for (var i = 0; i < raw.length; ++i) {
+      cst_api_fill_to_wire_record_string_u_32(raw[i], ans.ref.ptr[i]);
+    }
+    return ans;
+  }
+
+  @protected
   ffi.Pointer<wire_cst_list_prim_u_8_strict> cst_encode_opt_String(
       String? raw) {
     return raw == null ? ffi.nullptr : cst_encode_String(raw);
   }
 
   @protected
-  void cst_api_fill_to_wire_record_u_32_bool(
-      (int, bool) apiObj, wire_cst_record_u_32_bool wireObj) {
+  void cst_api_fill_to_wire_record_string_u_32(
+      (String, int) apiObj, wire_cst_record_string_u_32 wireObj) {
+    wireObj.field0 = cst_encode_String(apiObj.$1);
+    wireObj.field1 = cst_encode_u_32(apiObj.$2);
+  }
+
+  @protected
+  void cst_api_fill_to_wire_record_u_32_map_string_u_32_bool(
+      (int, Map<String, int>, bool) apiObj,
+      wire_cst_record_u_32_map_string_u_32_bool wireObj) {
     wireObj.field0 = cst_encode_u_32(apiObj.$1);
-    wireObj.field1 = cst_encode_bool(apiObj.$2);
+    wireObj.field1 = cst_encode_Map_String_u_32(apiObj.$2);
+    wireObj.field2 = cst_encode_bool(apiObj.$3);
   }
 
   @protected
@@ -108,6 +155,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void cst_encode_unit(void raw);
 
   @protected
+  void sse_encode_Map_String_u_32(
+      Map<String, int> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
@@ -118,10 +169,19 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       Uint8List self, SseSerializer serializer);
 
   @protected
+  void sse_encode_list_record_string_u_32(
+      List<(String, int)> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
 
   @protected
-  void sse_encode_record_u_32_bool((int, bool) self, SseSerializer serializer);
+  void sse_encode_record_string_u_32(
+      (String, int) self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_record_u_32_map_string_u_32_bool(
+      (int, Map<String, int>, bool) self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_32(int self, SseSerializer serializer);
@@ -211,6 +271,24 @@ class RustLibWire implements BaseWire {
       WireSyncRust2DartDco Function(
           ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
+  WireSyncRust2DartDco wire_get_unique_solution(
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> sudoku_string,
+  ) {
+    return _wire_get_unique_solution(
+      sudoku_string,
+    );
+  }
+
+  late final _wire_get_unique_solutionPtr = _lookup<
+          ffi.NativeFunction<
+              WireSyncRust2DartDco Function(
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_sudoku_wire_get_unique_solution');
+  late final _wire_get_unique_solution =
+      _wire_get_unique_solutionPtr.asFunction<
+          WireSyncRust2DartDco Function(
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
   void wire_init_app(
     int port_,
   ) {
@@ -224,23 +302,6 @@ class RustLibWire implements BaseWire {
           'frbgen_sudoku_wire_init_app');
   late final _wire_init_app =
       _wire_init_appPtr.asFunction<void Function(int)>();
-
-  WireSyncRust2DartDco wire_unique_solution(
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> sudoku_string,
-  ) {
-    return _wire_unique_solution(
-      sudoku_string,
-    );
-  }
-
-  late final _wire_unique_solutionPtr = _lookup<
-          ffi.NativeFunction<
-              WireSyncRust2DartDco Function(
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_sudoku_wire_unique_solution');
-  late final _wire_unique_solution = _wire_unique_solutionPtr.asFunction<
-      WireSyncRust2DartDco Function(
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
   ffi.Pointer<wire_cst_list_prim_u_8_strict> cst_new_list_prim_u_8_strict(
     int len,
@@ -256,6 +317,22 @@ class RustLibWire implements BaseWire {
               ffi.Int32)>>('frbgen_sudoku_cst_new_list_prim_u_8_strict');
   late final _cst_new_list_prim_u_8_strict = _cst_new_list_prim_u_8_strictPtr
       .asFunction<ffi.Pointer<wire_cst_list_prim_u_8_strict> Function(int)>();
+
+  ffi.Pointer<wire_cst_list_record_string_u_32> cst_new_list_record_string_u_32(
+    int len,
+  ) {
+    return _cst_new_list_record_string_u_32(
+      len,
+    );
+  }
+
+  late final _cst_new_list_record_string_u_32Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<wire_cst_list_record_string_u_32> Function(
+              ffi.Int32)>>('frbgen_sudoku_cst_new_list_record_string_u_32');
+  late final _cst_new_list_record_string_u_32 =
+      _cst_new_list_record_string_u_32Ptr.asFunction<
+          ffi.Pointer<wire_cst_list_record_string_u_32> Function(int)>();
 
   int dummy_method_to_enforce_bundling() {
     return _dummy_method_to_enforce_bundling();
@@ -275,10 +352,26 @@ final class wire_cst_list_prim_u_8_strict extends ffi.Struct {
   external int len;
 }
 
-final class wire_cst_record_u_32_bool extends ffi.Struct {
+final class wire_cst_record_string_u_32 extends ffi.Struct {
+  external ffi.Pointer<wire_cst_list_prim_u_8_strict> field0;
+
+  @ffi.Uint32()
+  external int field1;
+}
+
+final class wire_cst_list_record_string_u_32 extends ffi.Struct {
+  external ffi.Pointer<wire_cst_record_string_u_32> ptr;
+
+  @ffi.Int32()
+  external int len;
+}
+
+final class wire_cst_record_u_32_map_string_u_32_bool extends ffi.Struct {
   @ffi.Uint32()
   external int field0;
 
+  external ffi.Pointer<wire_cst_list_record_string_u_32> field1;
+
   @ffi.Bool()
-  external bool field1;
+  external bool field2;
 }

@@ -18,6 +18,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   });
 
   @protected
+  Map<String, int> dco_decode_Map_String_u_32(dynamic raw);
+
+  @protected
   String dco_decode_String(dynamic raw);
 
   @protected
@@ -27,10 +30,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
+  List<(String, int)> dco_decode_list_record_string_u_32(dynamic raw);
+
+  @protected
   String? dco_decode_opt_String(dynamic raw);
 
   @protected
-  (int, bool) dco_decode_record_u_32_bool(dynamic raw);
+  (String, int) dco_decode_record_string_u_32(dynamic raw);
+
+  @protected
+  (int, Map<String, int>, bool) dco_decode_record_u_32_map_string_u_32_bool(
+      dynamic raw);
 
   @protected
   int dco_decode_u_32(dynamic raw);
@@ -42,6 +52,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void dco_decode_unit(dynamic raw);
 
   @protected
+  Map<String, int> sse_decode_Map_String_u_32(SseDeserializer deserializer);
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
@@ -51,10 +64,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
+  List<(String, int)> sse_decode_list_record_string_u_32(
+      SseDeserializer deserializer);
+
+  @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
 
   @protected
-  (int, bool) sse_decode_record_u_32_bool(SseDeserializer deserializer);
+  (String, int) sse_decode_record_string_u_32(SseDeserializer deserializer);
+
+  @protected
+  (int, Map<String, int>, bool) sse_decode_record_u_32_map_string_u_32_bool(
+      SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_32(SseDeserializer deserializer);
@@ -69,6 +90,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   int sse_decode_i_32(SseDeserializer deserializer);
 
   @protected
+  List<dynamic> cst_encode_Map_String_u_32(Map<String, int> raw) {
+    return cst_encode_list_record_string_u_32(
+        raw.entries.map((e) => (e.key, e.value)).toList());
+  }
+
+  @protected
   String cst_encode_String(String raw) {
     return raw;
   }
@@ -79,13 +106,28 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  List<dynamic> cst_encode_list_record_string_u_32(List<(String, int)> raw) {
+    return raw.map(cst_encode_record_string_u_32).toList();
+  }
+
+  @protected
   String? cst_encode_opt_String(String? raw) {
     return raw == null ? null : cst_encode_String(raw);
   }
 
   @protected
-  List<dynamic> cst_encode_record_u_32_bool((int, bool) raw) {
-    return [cst_encode_u_32(raw.$1), cst_encode_bool(raw.$2)];
+  List<dynamic> cst_encode_record_string_u_32((String, int) raw) {
+    return [cst_encode_String(raw.$1), cst_encode_u_32(raw.$2)];
+  }
+
+  @protected
+  List<dynamic> cst_encode_record_u_32_map_string_u_32_bool(
+      (int, Map<String, int>, bool) raw) {
+    return [
+      cst_encode_u_32(raw.$1),
+      cst_encode_Map_String_u_32(raw.$2),
+      cst_encode_bool(raw.$3)
+    ];
   }
 
   @protected
@@ -101,6 +143,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void cst_encode_unit(void raw);
 
   @protected
+  void sse_encode_Map_String_u_32(
+      Map<String, int> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
@@ -111,10 +157,19 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       Uint8List self, SseSerializer serializer);
 
   @protected
+  void sse_encode_list_record_string_u_32(
+      List<(String, int)> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
 
   @protected
-  void sse_encode_record_u_32_bool((int, bool) self, SseSerializer serializer);
+  void sse_encode_record_string_u_32(
+      (String, int) self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_record_u_32_map_string_u_32_bool(
+      (int, Map<String, int>, bool) self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_32(int self, SseSerializer serializer);
@@ -146,11 +201,11 @@ class RustLibWire extends BaseWire {
       wire_get_rating(String sudoku_string) =>
           wasmModule.wire_get_rating(sudoku_string);
 
-  void wire_init_app(NativePortType port_) => wasmModule.wire_init_app(port_);
-
   dynamic /* flutter_rust_bridge::for_generated::WireSyncRust2DartDco */
-      wire_unique_solution(String sudoku_string) =>
-          wasmModule.wire_unique_solution(sudoku_string);
+      wire_get_unique_solution(String sudoku_string) =>
+          wasmModule.wire_get_unique_solution(sudoku_string);
+
+  void wire_init_app(NativePortType port_) => wasmModule.wire_init_app(port_);
 }
 
 @JS('wasm_bindgen')
@@ -174,8 +229,8 @@ class RustLibWasmModule implements WasmModule {
   external dynamic /* flutter_rust_bridge::for_generated::WireSyncRust2DartDco */
       wire_get_rating(String sudoku_string);
 
-  external void wire_init_app(NativePortType port_);
-
   external dynamic /* flutter_rust_bridge::for_generated::WireSyncRust2DartDco */
-      wire_unique_solution(String sudoku_string);
+      wire_get_unique_solution(String sudoku_string);
+
+  external void wire_init_app(NativePortType port_);
 }

@@ -63,6 +63,23 @@ fn wire_get_rating_impl(
         },
     )
 }
+fn wire_get_unique_solution_impl(
+    sudoku_string: impl CstDecode<String>,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartDco {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::DcoCodec, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "get_unique_solution",
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+        },
+        move || {
+            let api_sudoku_string = sudoku_string.cst_decode();
+            transform_result_dco((move || {
+                Result::<_, ()>::Ok(crate::api::sudoku::get_unique_solution(api_sudoku_string))
+            })())
+        },
+    )
+}
 fn wire_init_app_impl(port_: flutter_rust_bridge::for_generated::MessagePort) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
@@ -76,23 +93,6 @@ fn wire_init_app_impl(port_: flutter_rust_bridge::for_generated::MessagePort) {
                     (move || Result::<_, ()>::Ok(crate::api::sudoku::init_app()))(),
                 )
             }
-        },
-    )
-}
-fn wire_unique_solution_impl(
-    sudoku_string: impl CstDecode<String>,
-) -> flutter_rust_bridge::for_generated::WireSyncRust2DartDco {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::DcoCodec, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "unique_solution",
-            port: None,
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
-        },
-        move || {
-            let api_sudoku_string = sudoku_string.cst_decode();
-            transform_result_dco((move || {
-                Result::<_, ()>::Ok(crate::api::sudoku::unique_solution(api_sudoku_string))
-            })())
         },
     )
 }
@@ -114,6 +114,13 @@ impl CstDecode<u8> for u8 {
         self
     }
 }
+impl SseDecode for std::collections::HashMap<String, u32> {
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <Vec<(String, u32)>>::sse_decode(deserializer);
+        return inner.into_iter().collect();
+    }
+}
+
 impl SseDecode for String {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut inner = <Vec<u8>>::sse_decode(deserializer);
@@ -138,6 +145,17 @@ impl SseDecode for Vec<u8> {
     }
 }
 
+impl SseDecode for Vec<(String, u32)> {
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<(String, u32)>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
 impl SseDecode for Option<String> {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         if (<bool>::sse_decode(deserializer)) {
@@ -148,11 +166,20 @@ impl SseDecode for Option<String> {
     }
 }
 
-impl SseDecode for (u32, bool) {
+impl SseDecode for (String, u32) {
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_field0 = <String>::sse_decode(deserializer);
+        let mut var_field1 = <u32>::sse_decode(deserializer);
+        return (var_field0, var_field1);
+    }
+}
+
+impl SseDecode for (u32, std::collections::HashMap<String, u32>, bool) {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut var_field0 = <u32>::sse_decode(deserializer);
-        let mut var_field1 = <bool>::sse_decode(deserializer);
-        return (var_field0, var_field1);
+        let mut var_field1 = <std::collections::HashMap<String, u32>>::sse_decode(deserializer);
+        let mut var_field2 = <bool>::sse_decode(deserializer);
+        return (var_field0, var_field1, var_field2);
     }
 }
 
@@ -180,6 +207,12 @@ impl SseDecode for i32 {
 
 // Section: rust2dart
 
+impl SseEncode for std::collections::HashMap<String, u32> {
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Vec<(String, u32)>>::sse_encode(self.into_iter().collect(), serializer);
+    }
+}
+
 impl SseEncode for String {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Vec<u8>>::sse_encode(self.into_bytes(), serializer);
@@ -201,6 +234,15 @@ impl SseEncode for Vec<u8> {
     }
 }
 
+impl SseEncode for Vec<(String, u32)> {
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <(String, u32)>::sse_encode(item, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<String> {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <bool>::sse_encode(self.is_some(), serializer);
@@ -210,10 +252,18 @@ impl SseEncode for Option<String> {
     }
 }
 
-impl SseEncode for (u32, bool) {
+impl SseEncode for (String, u32) {
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.0, serializer);
+        <u32>::sse_encode(self.1, serializer);
+    }
+}
+
+impl SseEncode for (u32, std::collections::HashMap<String, u32>, bool) {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <u32>::sse_encode(self.0, serializer);
-        <bool>::sse_encode(self.1, serializer);
+        <std::collections::HashMap<String, u32>>::sse_encode(self.1, serializer);
+        <bool>::sse_encode(self.2, serializer);
     }
 }
 

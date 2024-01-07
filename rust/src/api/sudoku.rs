@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use sudoku::strategy::deduction::Deductions;
 pub use sudoku::strategy::Strategy;
 use sudoku::strategy::StrategySolver;
@@ -9,7 +11,7 @@ pub fn generate_sudoku() -> String {
 }
 
 #[flutter_rust_bridge::frb(sync)]
-pub fn unique_solution(sudoku_string: String) -> Option<String> {
+pub fn get_unique_solution(sudoku_string: String) -> Option<String> {
     let sudoku = Sudoku::from_str_line(&sudoku_string);
     if sudoku.is_ok() {
         let solution = sudoku.unwrap().solution();
@@ -47,7 +49,32 @@ fn _strategy_to_difficulty(s: &Strategy) -> u32 {
 }
 
 #[flutter_rust_bridge::frb(sync)]
-pub fn get_rating(sudoku_string: String) -> (u32, bool) {
+fn _strategy_to_string(s: &Strategy) -> String {
+    match s {
+        Strategy::NakedSingles => "naked-singles",
+        Strategy::HiddenSingles => "hidden-singles",
+        Strategy::LockedCandidates => "locked-candidates",
+        Strategy::NakedPairs => "naked-pairs",
+        Strategy::NakedTriples => "naked-triples",
+        Strategy::NakedQuads => "naked-quads",
+        Strategy::HiddenPairs => "hidden-pairs",
+        Strategy::HiddenTriples => "hidden-triples",
+        Strategy::HiddenQuads => "hidden-quads",
+        Strategy::XWing => "x-wing",
+        Strategy::Swordfish => "swordfish",
+        Strategy::Jellyfish => "jellyfish",
+        Strategy::XyWing => "xy-wing",
+        Strategy::XyzWing => "xyz-wing",
+        Strategy::MutantSwordfish => "mutant-swordfish",
+        Strategy::MutantJellyfish => "mutant-jellyfish",
+        _ => "unknown",
+    }
+    .to_string()
+        + "-strategy"
+}
+
+#[flutter_rust_bridge::frb(sync)]
+pub fn get_rating(sudoku_string: String) -> (u32, HashMap<String, u32>, bool) {
     let sudoku = Sudoku::from_str_line(&sudoku_string);
     let solver = StrategySolver::from_sudoku(sudoku.unwrap());
 
@@ -81,13 +108,20 @@ pub fn get_rating(sudoku_string: String) -> (u32, bool) {
         is_solved = false;
     }
 
-    return (
-        deductions
-            .iter()
-            .map(|d| _strategy_to_difficulty(&d.strategy()))
-            .sum(),
-        is_solved,
-    );
+    let mut difficulty = 0;
+    let mut strategy_count = HashMap::new();
+
+    for deduction in deductions.iter() {
+        let strategy = &deduction.strategy();
+
+        difficulty += _strategy_to_difficulty(&strategy);
+
+        *strategy_count
+            .entry(_strategy_to_string(strategy))
+            .or_insert(0) += 1;
+    }
+
+    return (difficulty, strategy_count, is_solved);
 }
 
 #[flutter_rust_bridge::frb(init)]
