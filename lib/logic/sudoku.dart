@@ -195,10 +195,8 @@ class SudokuField {
 
     SudokuInfo? dbInfo = infoBox.get(clues);
     if (dbInfo == null) {
-			print("da");
       info = SudokuInfo.fromSudoku(clues);
     } else {
-			print("ne");
       info = dbInfo;
     }
   }
