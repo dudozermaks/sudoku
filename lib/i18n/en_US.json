@@ -19,7 +19,7 @@
 	"statistics": "Statistics",
 	"guides": "Guides",
 	"guides-no-content":
-    "Ooops! Looks like there is no text in your guide!\nPlease report this bug to the Github",
+    "Ooops! Looks like there is no text in your guide!\nPlease report this bug on the Github",
 	"settings": "Settings",
 	"go-back": "Go back",
 	"go-back-ask": "Do you want to go back?",

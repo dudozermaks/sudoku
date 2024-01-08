@@ -21,6 +21,7 @@ class SavesViewer extends StatefulWidget {
   State<SavesViewer> createState() => _SavesViewerState();
 }
 
+// TODO: when deleting something wrong happends
 class _SavesViewerState extends State<SavesViewer> {
   late SudokuField field;
   @override
@@ -78,6 +79,7 @@ class _SavesViewerState extends State<SavesViewer> {
   void _loadPuzzle(BuildContext context) async {
     Navigator.of(context)
         .pushNamed(SolvingPage.routeName, arguments: field)
+				// Updating this save tile
         .then(
           (value) => setState(
             () => field = SudokuField.fromFile(widget.file),

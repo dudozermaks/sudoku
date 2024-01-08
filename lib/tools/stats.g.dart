@@ -1,41 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sudoku_info.dart';
+part of 'stats.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class SudokuInfoAdapter extends TypeAdapter<SudokuInfo> {
+class StatPieceAdapter extends TypeAdapter<StatPiece> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  SudokuInfo read(BinaryReader reader) {
+  StatPiece read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SudokuInfo(
-      uniqueSolution: fields[0] as String?,
-      difficulty: fields[1] as int,
-      usedMethods: (fields[2] as Map).cast<String, int>(),
-      humanEngineSolved: fields[3] as bool,
+    return StatPiece(
+      timeFinished: fields[0] as int,
+      timeToSolve: fields[1] as int,
+      difficulty: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, SudokuInfo obj) {
+  void write(BinaryWriter writer, StatPiece obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.uniqueSolution)
-      ..writeByte(1)
-      ..write(obj.difficulty)
-      ..writeByte(2)
-      ..write(obj.usedMethods)
       ..writeByte(3)
-      ..write(obj.humanEngineSolved);
+      ..writeByte(0)
+      ..write(obj.timeFinished)
+      ..writeByte(1)
+      ..write(obj.timeToSolve)
+      ..writeByte(2)
+      ..write(obj.difficulty);
   }
 
   @override
@@ -44,7 +41,7 @@ class SudokuInfoAdapter extends TypeAdapter<SudokuInfo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SudokuInfoAdapter &&
+      other is StatPieceAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -1,14 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/logic/sudoku.dart';
 import 'package:sudoku/tools/app_settings.dart';
 
+part 'stats.g.dart';
+
 class Stats {
+  Box saveBox;
   var stats = List<StatPiece>.empty(growable: true);
-  File saveFile;
 
   /// Sum of every puzzle's rating user solved
   int get rating {
@@ -35,63 +33,33 @@ class Stats {
   int get solvedCount => stats.length;
   int get _divisionSafeSolvedCount => solvedCount == 0 ? 1 : solvedCount;
 
-  Stats(BuildContext context)
-      : saveFile = context.read<AppGlobals>().statFile {
-    load();
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    for (var statJson in json["stats"]) {
-      stats.add(StatPiece.fromJson(statJson));
-    }
-  }
-
-  Map<String, dynamic> toJson() => {
-        "stats": stats,
-      };
-
-  void save() {
-    saveFile.writeAsString(
-      jsonEncode(this),
-    );
-  }
-
-  void load() {
-    if (!saveFile.existsSync()) {
-      return;
-    }
-
-    fromJson(
-      jsonDecode(
-        saveFile.readAsStringSync(),
-      ),
-    );
+  Stats() : saveBox = Hive.box(AppGlobals.statisticBoxName) {
+    for (int i = 0; i < saveBox.length; i++) {
+			stats.add(saveBox.getAt(i));
+		}
   }
 
   void addPuzzle(SudokuField f) {
-    stats.add(StatPiece(f.difficulty, f.time));
-    save();
+    stats.add(StatPiece.fromDifficultyAndTime(f.difficulty, f.time));
+
+    saveBox.add(stats.last);
   }
 }
 
-// TODO: To Hive
+@HiveType(typeId: 1)
 class StatPiece {
+  @HiveField(0)
   final int timeFinished;
+  @HiveField(1)
   final int timeToSolve;
+  @HiveField(2)
   final int difficulty;
 
-  StatPiece(this.difficulty, this.timeToSolve)
+  StatPiece(
+      {required this.timeFinished,
+      required this.timeToSolve,
+      required this.difficulty});
+
+  StatPiece.fromDifficultyAndTime(this.difficulty, this.timeToSolve)
       : timeFinished = DateTime.now().millisecondsSinceEpoch;
-
-  StatPiece.fromJson(Map<String, dynamic> json)
-      // TODO: remove this questionmarks
-      : timeFinished = json["timeFinished"] as int? ?? 0,
-        timeToSolve = json["timeToSolve"] as int? ?? 0,
-        difficulty = json["rating"] as int? ?? 0;
-
-  Map<String, dynamic> toJson() => {
-        "rating": difficulty,
-        "timeFinished": timeFinished,
-        "timeToSolve": timeToSolve,
-      };
 }

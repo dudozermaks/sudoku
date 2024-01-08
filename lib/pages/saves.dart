@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
+import 'package:sudoku/logic/sudoku.dart';
 import 'package:sudoku/tools/app_settings.dart';
 import 'package:sudoku/widgets/saves_viewer.dart';
 
@@ -77,9 +78,13 @@ class _SavesState extends State<Saves> {
   }
 
   void _deleteSave(File f) {
-    setState(() {
-      _files.remove(f);
-      f.deleteSync();
-    });
+    SudokuField.deleteFromDB(f).then(
+      (value) => setState(
+        () {
+          _files.remove(f);
+          f.deleteSync();
+        },
+      ),
+    );
   }
 }

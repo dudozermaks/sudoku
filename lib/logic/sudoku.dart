@@ -139,6 +139,7 @@ class SudokuField {
 
   bool isUserPlaced(int index) => _isUserPlaced[index];
 
+	/// Call deleteFromDB when deleting saved file.
   Future<void> save(String savePath, {File? file}) async {
     if (file != null) _saveFile = file;
 
@@ -154,6 +155,12 @@ class SudokuField {
     }
 
     await _saveFile!.writeAsString(jsonEncode(this));
+
+    final clues = cluesToString(nonUser: true, user: false);
+
+		if (infoBox.get(clues) == null){
+			await infoBox.put(clues, info);
+		}
 
     _hasBeenModified = false;
   }
@@ -188,9 +195,10 @@ class SudokuField {
 
     SudokuInfo? dbInfo = infoBox.get(clues);
     if (dbInfo == null) {
+			print("da");
       info = SudokuInfo.fromSudoku(clues);
-			infoBox.put(clues, info);
     } else {
+			print("ne");
       info = dbInfo;
     }
   }
@@ -225,6 +233,21 @@ class SudokuField {
       _pencilmarks[index].sort();
     }
   }
+
+	/// Call this function before deleting saved file.
+	static Future<void> deleteFromDB(File file) async {
+    var field = SudokuField.fromFile(file);
+    final clues = field.cluesToString(nonUser: true, user: false);
+		await field.infoBox.delete(clues);
+
+		// TODO: Replace with something better
+		// Why I think it is okay to do that:
+		// Let's imagine that user has maybe 100 saved Sudoku
+		// I do not think that this would really slow down his workflow (but I'm not sure)
+		// But, this will reduce memory used by application
+		// If you have any other strategy to remove deleted cache from disk, please share!
+		field.infoBox.compact();
+	}
 }
 
 extension IsValidClues on String {

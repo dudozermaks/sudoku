@@ -7,7 +7,6 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sudoku/logic/sudoku.dart';
-import 'package:sudoku/logic/sudoku_info.dart';
 
 import 'package:sudoku/pages/guides.dart';
 import 'package:sudoku/pages/home.dart';
@@ -15,7 +14,6 @@ import 'package:sudoku/pages/saves.dart';
 import 'package:sudoku/pages/settings.dart';
 import 'package:sudoku/pages/solving.dart';
 import 'package:sudoku/pages/statistics.dart';
-import 'package:sudoku/tools/adapters.dart';
 
 import 'package:sudoku/tools/app_settings.dart';
 import 'package:sudoku/tools/stats.dart';
@@ -31,11 +29,7 @@ Future<void> main() async {
 
   await RustLib.init();
 
-  await Hive.initFlutter();
-  Hive.registerAdapter(ThemeModeAdapter());
-  Hive.registerAdapter(SudokuInfoAdapter());
-  Hive.registerAdapter(ColorAdapter());
-
+	// Initializes Hive too
   await globals.load();
 
   runApp(const SudokuApp());
@@ -49,7 +43,7 @@ class SudokuApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AppGlobals>.value(value: globals),
-        Provider<Stats>(create: (context) => Stats(context)),
+        Provider<Stats>(create: (context) => Stats()),
       ],
       child: Builder(
         builder: (BuildContext context) => buildMaterialApp(context),
