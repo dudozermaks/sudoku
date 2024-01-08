@@ -151,7 +151,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   }
 
   void _generateNextField() =>
-      Navigator.of(context).popAndPushNamed(SolvingPage.generatingRouteName);
+      Navigator.of(context).pushReplacementNamed(SolvingPage.generatingRouteName);
 
   void _copyToClipboard() =>
       Clipboard.setData(ClipboardData(text: widget.field.cluesToString()));
