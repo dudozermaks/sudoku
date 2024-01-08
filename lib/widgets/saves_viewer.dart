@@ -56,7 +56,7 @@ class _SavesViewerState extends State<SavesViewer> {
             Text(field.difficultyString),
             ElevatedButton.icon(
               onPressed: () async {
-                if (await _showDelteDialog()) widget.onDelete(widget.file);
+                if (await _showDeleteDialog()) widget.onDelete(widget.file);
               },
               icon: const Icon(Icons.delete),
               label: Text("delete".i18n()),
@@ -87,7 +87,7 @@ class _SavesViewerState extends State<SavesViewer> {
         );
   }
 
-  Future<bool> _showDelteDialog() async {
+  Future<bool> _showDeleteDialog() async {
     return await showDialog<bool>(
           context: context,
           builder: (context) {

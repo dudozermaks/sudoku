@@ -17,8 +17,18 @@ class Saves extends StatefulWidget {
 
 class _SavesState extends State<Saves> {
   final _files = List<File>.empty(growable: true);
-  bool loaded = false;
-  void _getFiles() {
+
+	void _sortFiles(){
+    _files.sort((a, b) {
+      final aM = a.statSync().modified;
+      final bM = b.statSync().modified;
+      return bM.compareTo(aM);
+    });
+	}
+
+  @override
+  void initState() {
+    super.initState();
     final savesDir = Directory(context.read<AppGlobals>().savesPath);
 
     if (savesDir.existsSync()) {
@@ -26,26 +36,12 @@ class _SavesState extends State<Saves> {
         _files.add(file as File);
       }
     }
-
-    _files.sort((a, b) {
-      final aM = a.statSync().modified;
-      final bM = b.statSync().modified;
-      return bM.compareTo(aM);
-    });
-
-    setState(() {
-      loaded = true;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getFiles();
+		_sortFiles();
   }
 
   @override
   Widget build(BuildContext context) {
+		_sortFiles();
     return Scaffold(
       appBar: AppBar(title: Text("saves".i18n())),
       body: _buildBody(context),
@@ -53,36 +49,40 @@ class _SavesState extends State<Saves> {
   }
 
   Widget _buildBody(context) {
-    if (loaded) {
-      if (_files.isEmpty) {
-        return Center(
-          child: Text(
-            "no-saved-files".i18n(),
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        );
-      }
-      return ListView.separated(
-        itemCount: _files.length,
-        separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, index) {
-          return SavesViewer(
-            file: _files[index],
-            onDelete: _deleteSave,
-          );
-        },
-      );
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
+		if (_files.isEmpty) {
+			return Center(
+				child: Text(
+					"no-saved-files".i18n(),
+					style: Theme.of(context).textTheme.bodyLarge,
+				),
+			);
+		}
+		
+		return ListView.separated(
+			itemCount: _files.length,
+
+			separatorBuilder: (context, index) => const Divider(),
+			itemBuilder: (context, index) {
+				// https://api.flutter.dev/flutter/foundation/Key-class.html
+				// https://stackoverflow.com/questions/55142992/flutter-delete-item-from-listview
+				// In short, when you remove element from list, ListView is not aware of that
+				// For it to determine that you have removed something, you have to provide an optional key parameter
+				// that every widget has
+				return SavesViewer(
+					key: ValueKey(_files[index].path),
+					file: _files[index],
+					onDelete: _deleteSave,
+				);
+			},
+		);
   }
 
   void _deleteSave(File f) {
     SudokuField.deleteFromDB(f).then(
       (value) => setState(
         () {
-          _files.remove(f);
           f.deleteSync();
+          _files.remove(f);
         },
       ),
     );
