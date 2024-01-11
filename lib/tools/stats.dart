@@ -35,14 +35,26 @@ class Stats {
 
   Stats() : saveBox = Hive.box(AppGlobals.statisticBoxName) {
     for (int i = 0; i < saveBox.length; i++) {
-			stats.add(saveBox.getAt(i));
-		}
+      stats.add(saveBox.getAt(i));
+    }
   }
 
   void addPuzzle(SudokuField f) {
-    stats.add(StatPiece.fromDifficultyAndTime(f.difficulty, f.time));
+    if (!_isSudokuAlreadySolved(f)) {
+      stats.add(StatPiece.fromSudoku(f));
+      saveBox.add(stats.last);
+    }
+  }
 
-    saveBox.add(stats.last);
+  bool _isSudokuAlreadySolved(SudokuField f) {
+    var clues = f.cluesToString();
+    for (var stat in stats) {
+      if (stat.clues == clues) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 
@@ -50,16 +62,27 @@ class Stats {
 class StatPiece {
   @HiveField(0)
   final int timeFinished;
+
   @HiveField(1)
   final int timeToSolve;
+
   @HiveField(2)
   final int difficulty;
 
-  StatPiece(
-      {required this.timeFinished,
-      required this.timeToSolve,
-      required this.difficulty});
+  /// Only non-user clues
+  @HiveField(3)
+  final String clues;
 
-  StatPiece.fromDifficultyAndTime(this.difficulty, this.timeToSolve)
-      : timeFinished = DateTime.now().millisecondsSinceEpoch;
+  StatPiece({
+    required this.timeFinished,
+    required this.timeToSolve,
+    required this.difficulty,
+    required this.clues,
+  });
+
+  StatPiece.fromSudoku(SudokuField f)
+      : difficulty = f.difficulty,
+        timeToSolve = f.time,
+        clues = f.cluesToString(),
+        timeFinished = DateTime.now().millisecondsSinceEpoch;
 }

@@ -8,7 +8,6 @@ import 'package:sudoku/tools/pos.dart';
 import 'package:sudoku/src/rust/api/sudoku.dart';
 
 class SudokuField {
-  // TODO: add isCompleted
   final List<int> _clues;
   final List<List<int>> _pencilmarks;
   final List<bool> _isUserPlaced;

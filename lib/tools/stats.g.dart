@@ -20,19 +20,22 @@ class StatPieceAdapter extends TypeAdapter<StatPiece> {
       timeFinished: fields[0] as int,
       timeToSolve: fields[1] as int,
       difficulty: fields[2] as int,
+      clues: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, StatPiece obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.timeFinished)
       ..writeByte(1)
       ..write(obj.timeToSolve)
       ..writeByte(2)
-      ..write(obj.difficulty);
+      ..write(obj.difficulty)
+      ..writeByte(3)
+      ..write(obj.clues);
   }
 
   @override

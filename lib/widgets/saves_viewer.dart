@@ -21,7 +21,6 @@ class SavesViewer extends StatefulWidget {
   State<SavesViewer> createState() => _SavesViewerState();
 }
 
-// TODO: when deleting something wrong happends
 class _SavesViewerState extends State<SavesViewer> {
   late SudokuField field;
   @override
