@@ -117,7 +117,7 @@ class SudokuWidget extends StatelessWidget {
     if (setSelected != null) {
 			return Cell(
 				position: position,
-				onTap: setSelected!(position),
+				onTap: () => setSelected!(position),
 				isSelected: position == field.selected,
 				isError: !field.isRightPlaced(index),
 				isUserPlaced: field.isUserPlaced(index),
