@@ -112,22 +112,29 @@ class SudokuWidget extends StatelessWidget {
   }
 
   Cell buildCell(Pos position) {
-    VoidCallback? onTap;
+		int index = position.toIndex();
 
     if (setSelected != null) {
-      onTap = () => setSelected!(position);
+			return Cell(
+				position: position,
+				onTap: setSelected!(position),
+				isSelected: position == field.selected,
+				isError: !field.isRightPlaced(index),
+				isUserPlaced: field.isUserPlaced(index),
+				clue: field.getClue(index),
+				pencilmarks: field.getPencilmarks(index),
+			);
     }
-
-    int index = position.toIndex();
-
-    return Cell(
-      position: position,
-      onTap: onTap,
-      isSelected: position == field.selected,
-      isError: !field.isRightPlaced(index),
-      isUserPlaced: field.isUserPlaced(index),
-      clue: field.getClue(index),
-      pencilmarks: field.getPencilmarks(index),
-    );
+		else {
+			return Cell(
+				position: position,
+				onTap: null,
+				isSelected: false,
+				isError: false,
+				isUserPlaced: field.isUserPlaced(index),
+				clue: field.getClue(index),
+				pencilmarks: field.getPencilmarks(index),
+			);
+		}
   }
 }
