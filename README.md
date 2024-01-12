@@ -41,7 +41,6 @@ This is a preferable timeline for tasks. But some tasks might be done faster or 
 * Improve statistics. Add diagrams, GitHub-style activity charts
 * Add more guides
 * Transform UI. Create separated pages for almost every button on main screen
-* Create guides (for users)
 * Add backwards-compatibility for statistics and saves (done using [Hive](https://pub.dev/packages/hive))
 
 #### After
