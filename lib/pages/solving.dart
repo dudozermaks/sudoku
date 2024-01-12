@@ -38,7 +38,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
 
     // deprecated in future versions of Flutter
     return PopScope(
-			canPop: false,
+      canPop: false,
       onPopInvoked: _goBackRequiest,
       child: Scaffold(
         appBar: AppBar(
@@ -46,7 +46,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           centerTitle: true,
           leading: BackButton(
             onPressed: () async {
-              if (await _goBackRequiest(true) && context.mounted) {
+              if (await _goBackRequiest(false) && context.mounted) {
                 Navigator.of(context).pop();
               }
             },
@@ -150,8 +150,8 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     return res;
   }
 
-  void _generateNextField() =>
-      Navigator.of(context).pushReplacementNamed(SolvingPage.generatingRouteName);
+  void _generateNextField() => Navigator.of(context)
+      .pushReplacementNamed(SolvingPage.generatingRouteName);
 
   void _copyToClipboard() =>
       Clipboard.setData(ClipboardData(text: widget.field.cluesToString()));
@@ -199,8 +199,9 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
 
   /// Brings up dialog, which asks user does he want to quit
   /// Returns true if user choosed to quit, otherwise false
-  Future<bool> _goBackRequiest(_) async {
-    if (!widget.field.hasBeenModified) {
+  /// First argument - didPop (if it is true, function returns true)
+  Future<bool> _goBackRequiest(didPop) async {
+    if (!widget.field.hasBeenModified || didPop) {
       return true;
     }
 
@@ -267,14 +268,14 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   }
 
   void _infoPressed() async {
-		var content = "${"engine-info".i18n()}\n${widget.field.info.toString()}";
+    var content = "${"engine-info".i18n()}\n${widget.field.info.toString()}";
 
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("puzzle-info".i18n()),
-					content: Text(content),
+          content: Text(content),
           actions: <Widget>[
             TextButton(
               onPressed: () {

@@ -17,7 +17,7 @@ class StatPieceAdapter extends TypeAdapter<StatPiece> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return StatPiece(
-      timeFinished: fields[0] as int,
+      millisecondsFinished: fields[0] as int,
       timeToSolve: fields[1] as int,
       difficulty: fields[2] as int,
       clues: fields[3] as String,
@@ -29,7 +29,7 @@ class StatPieceAdapter extends TypeAdapter<StatPiece> {
     writer
       ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.timeFinished)
+      ..write(obj.millisecondsFinished)
       ..writeByte(1)
       ..write(obj.timeToSolve)
       ..writeByte(2)

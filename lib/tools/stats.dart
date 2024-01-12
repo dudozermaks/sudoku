@@ -46,8 +46,24 @@ class Stats {
     }
   }
 
+  List<DateTime> getActivityMap(int year) {
+    var res = List<DateTime>.empty(growable: true);
+
+    for (var stat in stats) {
+      var statDateTime =
+          DateTime.fromMillisecondsSinceEpoch(stat.millisecondsFinished);
+
+      if (statDateTime.year == year) {
+        res.add(statDateTime);
+      }
+    }
+
+    return res;
+  }
+
   bool _isSudokuAlreadySolved(SudokuField f) {
     var clues = f.cluesToString();
+
     for (var stat in stats) {
       if (stat.clues == clues) {
         return true;
@@ -60,8 +76,9 @@ class Stats {
 
 @HiveType(typeId: 1)
 class StatPiece {
+  /// Milliseconds since epoch
   @HiveField(0)
-  final int timeFinished;
+  final int millisecondsFinished;
 
   @HiveField(1)
   final int timeToSolve;
@@ -74,7 +91,7 @@ class StatPiece {
   final String clues;
 
   StatPiece({
-    required this.timeFinished,
+    required this.millisecondsFinished,
     required this.timeToSolve,
     required this.difficulty,
     required this.clues,
@@ -84,5 +101,5 @@ class StatPiece {
       : difficulty = f.difficulty,
         timeToSolve = f.time,
         clues = f.cluesToString(),
-        timeFinished = DateTime.now().millisecondsSinceEpoch;
+        millisecondsFinished = DateTime.now().millisecondsSinceEpoch;
 }
