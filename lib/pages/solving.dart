@@ -38,7 +38,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
 
     // deprecated in future versions of Flutter
     return PopScope(
-			canPop: true,
+			canPop: false,
       onPopInvoked: _goBackRequiest,
       child: Scaffold(
         appBar: AppBar(
