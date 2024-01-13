@@ -39,18 +39,16 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     // deprecated in future versions of Flutter
     return PopScope(
       canPop: false,
-      onPopInvoked: _goBackRequiest,
+      onPopInvoked: (didPop) {
+        if (!didPop) {
+          _goBack();
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
           title: _buildTimer(colorScheme),
           centerTitle: true,
-          leading: BackButton(
-            onPressed: () async {
-              if (await _goBackRequiest(false) && context.mounted) {
-                Navigator.of(context).pop();
-              }
-            },
-          ),
+          leading: BackButton(onPressed: _goBack),
         ),
         body: OrientationBuilder(
           builder: (context, orientation) {
@@ -197,11 +195,8 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     }
   }
 
-  /// Brings up dialog, which asks user does he want to quit
-  /// Returns true if user choosed to quit, otherwise false
-  /// First argument - didPop (if it is true, function returns true)
-  Future<bool> _goBackRequiest(didPop) async {
-    if (!widget.field.hasBeenModified || didPop) {
+  Future<bool> _askUserToGoBack() async {
+    if (!widget.field.hasBeenModified) {
       return true;
     }
 
@@ -257,6 +252,12 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     }
 
     return true;
+  }
+
+  void _goBack() async {
+    if (await _askUserToGoBack() && context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   void _finishField() {
