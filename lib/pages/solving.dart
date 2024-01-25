@@ -320,7 +320,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     timer.onStopTimer();
 
     var stats = Provider.of<Stats>(context, listen: false);
-    stats.addPuzzle(f);
+    stats.addStatPiece(StatPiece.fromSudoku(f));
 
     showDialog(
       context: context,

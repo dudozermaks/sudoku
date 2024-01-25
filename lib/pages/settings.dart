@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:localization/localization.dart';
+import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:sudoku/tools/app_settings.dart';
+import 'package:sudoku/tools/stats.dart';
 
 class Settings extends StatefulWidget {
   static const routeName = "/settings";
@@ -24,14 +26,14 @@ class _SettingsState extends State<Settings> {
         child: SettingsList(
           lightTheme: buildTheme(context),
           darkTheme: buildTheme(context),
-          sections: [buildThemeSection()],
+          sections: [buildThemeSection(), buildDevelopmentSection()],
         ),
       ),
     );
   }
 
   SettingsSection buildThemeSection() {
-		var themeBox = Hive.box(AppGlobals.themeBoxName);
+    var themeBox = Hive.box(AppGlobals.themeBoxName);
     return SettingsSection(
       title: Text("theme".i18n()),
       tiles: [
@@ -44,7 +46,9 @@ class _SettingsState extends State<Settings> {
         SettingsTile.navigation(
           leading: const Icon(Icons.dark_mode),
           title: Text("theme-mode".i18n()),
-          value: Text("theme-mode-${(themeBox.get("themeMode") as ThemeMode).name}".i18n()),
+          value: Text(
+              "theme-mode-${(themeBox.get("themeMode") as ThemeMode).name}"
+                  .i18n()),
           onPressed: (context) {
             showDialog(
               context: context,
@@ -54,10 +58,11 @@ class _SettingsState extends State<Settings> {
                   i18nPrefix: "theme-mode",
                   values: ThemeMode.values,
                   initialValue: themeBox.get("themeMode") as ThemeMode,
-                  onSelected: (ThemeMode value) => themeBox.put("themeMode", value),
+                  onSelected: (ThemeMode value) =>
+                      themeBox.put("themeMode", value),
                 );
               },
-            ).then((value) => setState((){}));
+            ).then((value) => setState(() {}));
           },
         ),
       ],
@@ -105,7 +110,7 @@ class _SettingsState extends State<Settings> {
               TextButton(
                 child: Text("select".i18n()),
                 onPressed: () {
-									box.put(name, pickerColor);
+                  box.put(name, pickerColor);
                   Navigator.of(context).pop();
                 },
               ),
@@ -113,6 +118,39 @@ class _SettingsState extends State<Settings> {
           );
         });
       },
+    );
+  }
+
+  SettingsSection buildDevelopmentSection() {
+    generateStats(BuildContext context) {
+      Random rg = Random(42);
+      var stats = Provider.of<Stats>(context, listen: false);
+
+      for (int i = 0; i < 100; i++) {
+        var s = StatPiece(
+          difficulty: rg.nextInt(800) + 700,
+          // 60 * 30 * 1000 ms : 10 mins
+          timeToSolve: rg.nextInt(60 * 30 * 1000),
+          clues: "0" * 81,
+          // from 01.01.2022 to 01.01.2025
+          millisecondsFinished: rg.nextInt(1640995200) + 94694400,
+        );
+
+        stats.addStatPiece(s, checkIfAlreadyAdded: false);
+      }
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("done".i18n())));
+    }
+
+    return SettingsSection(
+      title: const Text("Development"),
+      tiles: [
+        SettingsTile(
+          leading: const Icon(Icons.analytics_outlined),
+          title: Text("development-fake-stats".i18n()),
+          onPressed: generateStats,
+        ),
+      ],
     );
   }
 }

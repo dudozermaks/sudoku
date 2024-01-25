@@ -39,10 +39,10 @@ class Stats {
     }
   }
 
-  void addPuzzle(SudokuField f) {
-    if (!_isSudokuAlreadySolved(f)) {
-      stats.add(StatPiece.fromSudoku(f));
-      saveBox.add(stats.last);
+  void addStatPiece(StatPiece s, {bool checkIfAlreadyAdded=true}) {
+    if (!checkIfAlreadyAdded || !_isStatsAlreadyAdded(s)) {
+      stats.add(s);
+      saveBox.add(s);
     }
   }
 
@@ -61,11 +61,9 @@ class Stats {
     return res;
   }
 
-  bool _isSudokuAlreadySolved(SudokuField f) {
-    var clues = f.cluesToString();
-
+  bool _isStatsAlreadyAdded(StatPiece s) {
     for (var stat in stats) {
-      if (stat.clues == clues) {
+      if (stat.clues == s.clues) {
         return true;
       }
     }
@@ -80,9 +78,11 @@ class StatPiece {
   @HiveField(0)
   final int millisecondsFinished;
 
+  /// Milliseconds
   @HiveField(1)
   final int timeToSolve;
 
+  /// Usually between 700 and 1400
   @HiveField(2)
   final int difficulty;
 
