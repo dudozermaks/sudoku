@@ -27,7 +27,6 @@ class Settings extends StatelessWidget {
 
   SettingsSection buildThemeSection() {
 		var themeBox = Hive.box(AppGlobals.themeBoxName);
-
     return SettingsSection(
       title: Text("theme".i18n()),
       tiles: [
@@ -40,7 +39,7 @@ class Settings extends StatelessWidget {
         SettingsTile.navigation(
           leading: const Icon(Icons.dark_mode),
           title: Text("theme-mode".i18n()),
-          // value: Text("theme-mode-${themeBox.get("themeMode").name}".i18n()),
+          value: Text("theme-mode-${(themeBox.get("themeMode") as ThemeMode).name}".i18n()),
           onPressed: (context) {
             showDialog(
               context: context,
