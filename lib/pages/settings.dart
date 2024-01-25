@@ -7,10 +7,15 @@ import 'package:localization/localization.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:sudoku/tools/app_settings.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   static const routeName = "/settings";
   const Settings({super.key});
 
+  @override
+  State<Settings> createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +57,7 @@ class Settings extends StatelessWidget {
                   onSelected: (ThemeMode value) => themeBox.put("themeMode", value),
                 );
               },
-            );
+            ).then((value) => setState((){}));
           },
         ),
       ],
