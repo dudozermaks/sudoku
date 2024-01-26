@@ -9,6 +9,8 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:sudoku/tools/app_settings.dart';
 import 'package:sudoku/tools/stats.dart';
 
+import 'package:flutter/foundation.dart' as foundation;
+
 class Settings extends StatefulWidget {
   static const routeName = "/settings";
   const Settings({super.key});
@@ -26,7 +28,10 @@ class _SettingsState extends State<Settings> {
         child: SettingsList(
           lightTheme: buildTheme(context),
           darkTheme: buildTheme(context),
-          sections: [buildThemeSection(), buildDevelopmentSection()],
+          sections: [
+            buildThemeSection(),
+            if (foundation.kDebugMode) buildDevelopmentSection()
+          ],
         ),
       ),
     );
