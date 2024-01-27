@@ -171,7 +171,7 @@ class _SettingsState extends State<Settings> {
           onPressed: generateStats,
         ),
         SettingsTile(
-          leading: const Icon(Icons.analytics_outlined),
+          leading: const Icon(Icons.delete_forever_outlined),
           title: Text("development-delete-stats".i18n()),
           onPressed: deleteStats,
         ),
