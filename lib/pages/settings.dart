@@ -128,17 +128,19 @@ class _SettingsState extends State<Settings> {
 
   SettingsSection buildDevelopmentSection() {
     generateStats(BuildContext context) {
-      Random rg = Random(42);
+			int rgSeed = DateTime.now().millisecondsSinceEpoch;
+      Random rg = Random(rgSeed);
+			debugPrint("Generating fake statistics. Rg seed: $rgSeed");
       var stats = Provider.of<Stats>(context, listen: false);
 
       for (int i = 0; i < 100; i++) {
         var s = StatPiece(
           difficulty: rg.nextInt(800) + 700,
-          // 60 * 30 * 1000 ms : 10 mins
+          // 60 * 30 * 1000 ms = 30 mins
           timeToSolve: rg.nextInt(60 * 30 * 1000),
           clues: "0" * 81,
-          // from 01.01.2022 to 01.01.2025
-          millisecondsFinished: rg.nextInt(94694400) + 1640995200,
+          // from 01.01.2022 to 01.01.2023
+          millisecondsFinished: DateTime(2023).add(Duration(days: rg.nextInt(365))).millisecondsSinceEpoch,
         );
 
         stats.addStatPiece(s, checkIfAlreadyAdded: false);
