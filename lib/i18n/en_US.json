@@ -70,5 +70,6 @@
 	"minute": "minute%b{:s}",
 	"second": "second%b{:s}",
 	"stat-puzzles-solved": "Puzzles solved: %s",
-	"development-fake-stats": "Generate fake statistics"
+	"development-fake-stats": "Generate fake statistics",
+	"development-delete-stats": "Delete ALL statistics"
 }

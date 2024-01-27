@@ -151,6 +151,16 @@ class _SettingsState extends State<Settings> {
           .showSnackBar(SnackBar(content: Text("done".i18n())));
     }
 
+
+    deleteStats(BuildContext context) {
+      var stats = Provider.of<Stats>(context, listen: false);
+			stats.saveBox.clear();
+			stats.stats.clear();
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("done".i18n())));
+		}
+
     return SettingsSection(
       title: const Text("Development"),
       tiles: [
@@ -158,6 +168,11 @@ class _SettingsState extends State<Settings> {
           leading: const Icon(Icons.analytics_outlined),
           title: Text("development-fake-stats".i18n()),
           onPressed: generateStats,
+        ),
+        SettingsTile(
+          leading: const Icon(Icons.analytics_outlined),
+          title: Text("development-delete-stats".i18n()),
+          onPressed: deleteStats,
         ),
       ],
     );
