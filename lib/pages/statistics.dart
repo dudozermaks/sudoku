@@ -20,42 +20,94 @@ class StatisticsPage extends StatelessWidget {
 
   List<Widget> buildBody(Stats stats, BuildContext context) {
     return [
-      Row(
-        children: [
-          Text(
-            "stat-rating".i18n([stats.rating.toString()]),
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            "stat-rating-average".i18n([stats.averagePuzzleRating.toString()]),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
+      Text(
+        "stat-rating".i18n([stats.rating.toString()]),
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
-      Row(
-        children: [
-          Text(
-            "stat-time-solving".i18n([stats.timeSolving.format()]),
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(width: 10),
-          Flexible(
-            child: Text(
-              "stat-time-average".i18n([stats.averageTimeSolving.format()]),
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ),
-        ],
+      Text(
+        "stat-rating-average".i18n([stats.averagePuzzleRating.toString()]),
+        style: Theme.of(context).textTheme.bodySmall,
       ),
+			const Divider(),
+      Text(
+        "stat-time-solving".i18n([stats.timeSolving.format()]),
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+      Text(
+        "stat-time-average".i18n([stats.averageTimeSolving.format()]),
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
+			const Divider(),
       Text(
         "stat-puzzles-solved".i18n([stats.solvedCount.toString()]),
         style: Theme.of(context).textTheme.bodyLarge,
+      ),
+			const Divider(),
+      Text("activity-chart".i18n()),
+      // TODO: Make year-chooser
+      // TODO: Add two timestemps between which data is shown
+      ActivityChart(
+        activity: stats.getActivityMap(2023),
       ),
     ];
   }
 }
 
+class ActivityChart extends StatelessWidget {
+  final List<int> activity;
+  const ActivityChart({
+    super.key,
+    required this.activity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).colorScheme.primary;
+    Color getColor(int numberOfActivities) {
+      switch (numberOfActivities) {
+        case 0:
+          return primaryColor.withOpacity(0.0);
+        case 1:
+          return primaryColor.withOpacity(0.2);
+        case 2:
+          return primaryColor.withOpacity(0.4);
+        case 3:
+          return primaryColor.withOpacity(0.6);
+        case 4:
+          return primaryColor.withOpacity(0.8);
+        default:
+          return primaryColor.withOpacity(1);
+      }
+    }
+
+    // TODO: Add timestampts
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final cellSize = constraints.maxWidth / 53;
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (int i = 0; i < activity.length; i += 7)
+              Column(
+                children: [
+                  for (int j = 0; (j < 7 && i + j < activity.length); j++)
+                    Container(
+                      width: cellSize,
+                      height: cellSize,
+                      decoration: BoxDecoration(
+                        color: getColor(activity[i + j]),
+                        borderRadius: BorderRadius.circular(cellSize * 0.0),
+                      ),
+                    )
+                ],
+              )
+          ],
+        );
+      },
+    );
+  }
+}
 
 // TODO: Replace with even better formating
 extension on Duration {

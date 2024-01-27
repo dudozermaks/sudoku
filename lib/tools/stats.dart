@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/logic/sudoku.dart';
 import 'package:sudoku/tools/app_settings.dart';
@@ -39,24 +40,29 @@ class Stats {
     }
   }
 
-  void addStatPiece(StatPiece s, {bool checkIfAlreadyAdded=true}) {
+  void addStatPiece(StatPiece s, {bool checkIfAlreadyAdded = true}) {
     if (!checkIfAlreadyAdded || !_isStatsAlreadyAdded(s)) {
       stats.add(s);
       saveBox.add(s);
     }
   }
 
-  List<DateTime> getActivityMap(int year) {
-    var res = List<DateTime>.empty(growable: true);
+  List<int> getActivityMap(int year) {
+		// Source: https://pub.dev/documentation/quiver/latest/quiver.time/isLeapYear.html#:~:text=Returns%20true%20if%20year%20is,including%20years%20divisible%20by%20400.
+    bool isLeap = (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
+
+    var res = List<int>.filled(isLeap ? 366 : 365, 0, growable: false);
+
+		var yearStart = DateTime(year);
 
     for (var stat in stats) {
-      var statDateTime =
-          DateTime.fromMillisecondsSinceEpoch(stat.millisecondsFinished);
+			var currentDate = DateTime.fromMillisecondsSinceEpoch(stat.millisecondsFinished);
 
-      if (statDateTime.year == year) {
-        res.add(statDateTime);
-      }
-    }
+			if (currentDate.year == year) {
+				int diff = -yearStart.difference(currentDate).inDays;
+				res[diff] += 1;
+			}
+		}
 
     return res;
   }
@@ -74,6 +80,7 @@ class Stats {
 
 @HiveType(typeId: 1)
 class StatPiece {
+  // TODO: Change this to DateTime
   /// Milliseconds since epoch
   @HiveField(0)
   final int millisecondsFinished;
