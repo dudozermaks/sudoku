@@ -153,6 +153,7 @@ class _SettingsState extends State<Settings> {
 
 
     deleteStats(BuildContext context) {
+			debugPrint("Deleting statistics");
       var stats = Provider.of<Stats>(context, listen: false);
 			stats.saveBox.clear();
 			stats.stats.clear();
