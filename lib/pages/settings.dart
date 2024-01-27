@@ -138,11 +138,13 @@ class _SettingsState extends State<Settings> {
           timeToSolve: rg.nextInt(60 * 30 * 1000),
           clues: "0" * 81,
           // from 01.01.2022 to 01.01.2025
-          millisecondsFinished: rg.nextInt(1640995200) + 94694400,
+          millisecondsFinished: rg.nextInt(94694400) + 1640995200,
         );
 
         stats.addStatPiece(s, checkIfAlreadyAdded: false);
       }
+			stats.stats.sort((a, b) => a.millisecondsFinished.compareTo(b.millisecondsFinished));
+
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("done".i18n())));
     }
