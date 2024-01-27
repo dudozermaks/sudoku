@@ -117,7 +117,7 @@ extension on Duration {
 
       String formated = n.toString();
 
-      return "$formated ${s.i18n([], [n < 1])} ";
+      return "$formated ${s.i18n([], [n < 2])} ";
     }
 
     String days = formatWithWords(inDays.abs(), "day");
