@@ -64,6 +64,10 @@
 	"stat-rating-average": "(average puzzle rating: %s)",
 	"stat-time-solving": "You spend %s solving Sudoku",
 	"stat-time-average": "(average per puzzle: %s)",
+	"day": "day%b{:s}",
+	"hour": "hour%b{:s}",
+	"minute": "minute%b{:s}",
+	"second": "second%b{:s}",
 	"stat-puzzles-solved": "Puzzles solved: %s",
 	"development-fake-stats": "Generate fake statistics"
 }

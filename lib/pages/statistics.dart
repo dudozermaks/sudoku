@@ -56,12 +56,24 @@ class StatisticsPage extends StatelessWidget {
   }
 }
 
+
+// TODO: Replace with even better formating
 extension on Duration {
   String format() {
-    String negativeSign = isNegative ? '-' : '';
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(inMinutes.remainder(60).abs());
-    String twoDigitSeconds = twoDigits(inSeconds.remainder(60).abs());
-    return "$negativeSign${twoDigits(inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+    String formatWithWords(int n, String s) {
+      if (n == 0) return "";
+
+      String formated = n.toString();
+
+      return "$formated ${s.i18n([], [n < 1])} ";
+    }
+
+    String days = formatWithWords(inDays.abs(), "day");
+    String twoDigitHours = formatWithWords(inHours.remainder(24).abs(), "hour");
+    String twoDigitMinutes =
+        formatWithWords(inMinutes.remainder(60).abs(), "minute");
+    String twoDigitSeconds =
+        formatWithWords(inSeconds.remainder(60).abs(), "second");
+    return "$days$twoDigitHours$twoDigitMinutes$twoDigitSeconds".trimRight();
   }
 }
