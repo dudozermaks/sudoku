@@ -128,11 +128,12 @@ class _SettingsState extends State<Settings> {
 
   SettingsSection buildDevelopmentSection() {
     generateStats(BuildContext context) {
-			int rgSeed = DateTime.now().millisecondsSinceEpoch;
+      int rgSeed = DateTime.now().millisecondsSinceEpoch;
       Random rg = Random(rgSeed);
-			debugPrint("Generating fake statistics. Rg seed: $rgSeed");
+      debugPrint("Generating fake statistics. Rg seed: $rgSeed");
       var stats = Provider.of<Stats>(context, listen: false);
 
+      List<StatPiece> statPieces = List.empty(growable: true);
       for (int i = 0; i < 100; i++) {
         var s = StatPiece(
           difficulty: rg.nextInt(800) + 700,
@@ -140,27 +141,31 @@ class _SettingsState extends State<Settings> {
           timeToSolve: rg.nextInt(60 * 30 * 1000),
           clues: "0" * 81,
           // from 01.01.2022 to 01.01.2023
-          millisecondsFinished: DateTime(2023).add(Duration(days: rg.nextInt(365))).millisecondsSinceEpoch,
+          finished: DateTime(2023).add(Duration(days: rg.nextInt(365))),
         );
 
+        statPieces.add(s);
+      }
+
+      statPieces.sort((a, b) => a.finished.compareTo(b.finished));
+
+      for (var s in statPieces) {
         stats.addStatPiece(s, checkIfAlreadyAdded: false);
       }
-			stats.stats.sort((a, b) => a.millisecondsFinished.compareTo(b.millisecondsFinished));
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("done".i18n())));
     }
 
-
     deleteStats(BuildContext context) {
-			debugPrint("Deleting statistics");
+      debugPrint("Deleting statistics");
       var stats = Provider.of<Stats>(context, listen: false);
-			stats.saveBox.clear();
-			stats.stats.clear();
+      stats.saveBox.clear();
+      stats.stats.clear();
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("done".i18n())));
-		}
+    }
 
     return SettingsSection(
       title: const Text("Development"),

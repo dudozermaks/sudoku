@@ -55,7 +55,7 @@ class Stats {
 		var yearStart = DateTime(year);
 
     for (var stat in stats) {
-			var currentDate = DateTime.fromMillisecondsSinceEpoch(stat.millisecondsFinished);
+			var currentDate = stat.finished;
 
 			if (currentDate.year == year) {
 				int diff = -yearStart.difference(currentDate).inDays;
@@ -79,10 +79,9 @@ class Stats {
 
 @HiveType(typeId: 1)
 class StatPiece {
-  // TODO: Change this to DateTime
   /// Milliseconds since epoch
   @HiveField(0)
-  final int millisecondsFinished;
+  final DateTime finished;
 
   /// Milliseconds
   @HiveField(1)
@@ -97,7 +96,7 @@ class StatPiece {
   final String clues;
 
   StatPiece({
-    required this.millisecondsFinished,
+    required this.finished,
     required this.timeToSolve,
     required this.difficulty,
     required this.clues,
@@ -107,5 +106,5 @@ class StatPiece {
       : difficulty = f.difficulty,
         timeToSolve = f.time,
         clues = f.cluesToString(),
-        millisecondsFinished = DateTime.now().millisecondsSinceEpoch;
+        finished = DateTime.now();
 }
