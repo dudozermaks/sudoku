@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/logic/sudoku.dart';
 import 'package:sudoku/tools/app_settings.dart';
