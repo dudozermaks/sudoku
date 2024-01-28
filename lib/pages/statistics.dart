@@ -28,7 +28,7 @@ class StatisticsPage extends StatelessWidget {
         "stat-rating-average".i18n([stats.averagePuzzleRating.toString()]),
         style: Theme.of(context).textTheme.bodySmall,
       ),
-			const Divider(),
+      const Divider(),
       Text(
         "stat-time-solving".i18n([stats.timeSolving.format()]),
         style: Theme.of(context).textTheme.bodyLarge,
@@ -37,12 +37,12 @@ class StatisticsPage extends StatelessWidget {
         "stat-time-average".i18n([stats.averageTimeSolving.format()]),
         style: Theme.of(context).textTheme.bodySmall,
       ),
-			const Divider(),
+      const Divider(),
       Text(
         "stat-puzzles-solved".i18n([stats.solvedCount.toString()]),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
-			const Divider(),
+      const Divider(),
       Text("activity-chart".i18n()),
       // TODO: Make year-chooser
       // TODO: Add two timestemps between which data is shown
@@ -118,6 +118,7 @@ extension on Duration {
       String formated = n.toString();
 
       return "$formated ${s.i18n([], [n < 2])} ";
+      return "$formated ${s.i18n([], [n == 1])} ";
     }
 
     String days = formatWithWords(inDays.abs(), "day");
