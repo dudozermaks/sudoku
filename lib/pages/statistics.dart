@@ -37,6 +37,10 @@ class StatisticsPage extends StatelessWidget {
         "stat-time-average".i18n([stats.averageTimeSolving.format()]),
         style: Theme.of(context).textTheme.bodySmall,
       ),
+      Text(
+        "stat-longest-streak".i18n([Duration(days: stats.longestStreak).format()]),
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
       const Divider(),
       Text(
         "stat-puzzles-solved".i18n([stats.solvedCount.toString()]),

@@ -33,6 +33,32 @@ class Stats {
   int get solvedCount => stats.length;
   int get _divisionSafeSolvedCount => solvedCount == 0 ? 1 : solvedCount;
 
+	int get longestStreak {
+		if (stats.isEmpty) return 0;
+
+		int biggestStreak = 1;
+		int currentStreak = 1;
+		DateTime lastDate = stats[0].finished;
+
+		for (var s in stats.skip(1)){
+			var daysBetween = lastDate.daysBetween(s.finished);
+			lastDate = s.finished;
+			print(daysBetween);
+
+			if (daysBetween == 1) {
+				currentStreak += 1;
+			}
+			else if (daysBetween > 1) {
+				if (biggestStreak < currentStreak) {
+					biggestStreak = currentStreak;
+				}
+				currentStreak = 1;
+			}
+		}
+
+		return biggestStreak;
+	}
+
   Stats() : saveBox = Hive.box(AppGlobals.statisticBoxName) {
     for (int i = 0; i < saveBox.length; i++) {
       stats.add(saveBox.getAt(i));
@@ -107,4 +133,12 @@ class StatPiece {
         timeToSolve = f.time,
         clues = f.cluesToString(),
         finished = DateTime.now();
+}
+
+extension _DaysBetween on DateTime {
+	int daysBetween(DateTime to) {
+		DateTime from = DateTime(year, month, day);
+		to = DateTime(to.year, to.month, to.day);
+		return (to.difference(from).inHours / 24).round();
+	}
 }

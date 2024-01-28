@@ -70,6 +70,7 @@
 	"minute": "minute%b{:s}",
 	"second": "second%b{:s}",
 	"stat-puzzles-solved": "Puzzles solved: %s",
+	"stat-longest-streak": "Longest streak: %s",
 	"development-fake-stats": "Generate fake statistics",
 	"development-delete-stats": "Delete ALL statistics"
 }
