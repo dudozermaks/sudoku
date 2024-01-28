@@ -43,7 +43,10 @@ class StatisticsPage extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       const Divider(),
-      Text("activity-chart".i18n()),
+      Text(
+        "activity-chart".i18n(),
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
       // TODO: Make year-chooser
       // TODO: Add two timestemps between which data is shown
       ActivityChart(
