@@ -127,14 +127,25 @@ class _SettingsState extends State<Settings> {
   }
 
   SettingsSection buildDevelopmentSection() {
+    deleteStats(BuildContext context) {
+      debugPrint("Deleting statistics");
+      var stats = Provider.of<Stats>(context, listen: false);
+      stats.saveBox.clear();
+      stats.stats.clear();
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("done".i18n())));
+    }
+
     generateStats(BuildContext context) {
       int rgSeed = DateTime.now().millisecondsSinceEpoch;
       Random rg = Random(rgSeed);
+      deleteStats(context);
       debugPrint("Generating fake statistics. Rg seed: $rgSeed");
       var stats = Provider.of<Stats>(context, listen: false);
 
       List<StatPiece> statPieces = List.empty(growable: true);
-      for (int i = 0; i < 100; i++) {
+      for (int i = 0; i < 200; i++) {
         var s = StatPiece(
           difficulty: rg.nextInt(800) + 700,
           // 60 * 30 * 1000 ms = 30 mins
@@ -157,28 +168,18 @@ class _SettingsState extends State<Settings> {
           .showSnackBar(SnackBar(content: Text("done".i18n())));
     }
 
-    deleteStats(BuildContext context) {
-      debugPrint("Deleting statistics");
-      var stats = Provider.of<Stats>(context, listen: false);
-      stats.saveBox.clear();
-      stats.stats.clear();
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("done".i18n())));
-    }
-
     return SettingsSection(
       title: const Text("Development"),
       tiles: [
         SettingsTile(
-          leading: const Icon(Icons.analytics_outlined),
-          title: Text("development-fake-stats".i18n()),
-          onPressed: generateStats,
-        ),
-        SettingsTile(
           leading: const Icon(Icons.delete_forever_outlined),
           title: Text("development-delete-stats".i18n()),
           onPressed: deleteStats,
+        ),
+        SettingsTile(
+          leading: const Icon(Icons.analytics_outlined),
+          title: Text("development-fake-stats".i18n()),
+          onPressed: generateStats,
         ),
       ],
     );
