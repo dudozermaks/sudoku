@@ -117,7 +117,6 @@ extension on Duration {
 
       String formated = n.toString();
 
-      return "$formated ${s.i18n([], [n < 2])} ";
       return "$formated ${s.i18n([], [n == 1])} ";
     }
 
