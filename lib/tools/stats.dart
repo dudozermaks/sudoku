@@ -43,7 +43,6 @@ class Stats {
 		for (var s in stats.skip(1)){
 			var daysBetween = lastDate.daysBetween(s.finished);
 			lastDate = s.finished;
-			print(daysBetween);
 
 			if (daysBetween == 1) {
 				currentStreak += 1;
