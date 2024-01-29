@@ -129,11 +129,11 @@ extension on Duration {
     }
 
     String days = formatWithWords(inDays.abs(), "day");
-    String twoDigitHours = formatWithWords(inHours.remainder(24).abs(), "hour");
-    String twoDigitMinutes =
+    String hours = formatWithWords(inHours.remainder(24).abs(), "hour");
+    String minutes =
         formatWithWords(inMinutes.remainder(60).abs(), "minute");
-    String twoDigitSeconds =
+    String seconds =
         formatWithWords(inSeconds.remainder(60).abs(), "second");
-    return "$days$twoDigitHours$twoDigitMinutes$twoDigitSeconds".trimRight();
+    return "$days$hours$minutes$seconds".trimRight();
   }
 }
