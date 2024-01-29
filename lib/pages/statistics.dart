@@ -57,6 +57,7 @@ class StatisticsPage extends StatelessWidget {
       ActivityChart(
         activity: stats.getActivityMap(2023),
       ),
+      const Divider(),
     ];
   }
 }
@@ -130,10 +131,8 @@ extension on Duration {
 
     String days = formatWithWords(inDays.abs(), "day");
     String hours = formatWithWords(inHours.remainder(24).abs(), "hour");
-    String minutes =
-        formatWithWords(inMinutes.remainder(60).abs(), "minute");
-    String seconds =
-        formatWithWords(inSeconds.remainder(60).abs(), "second");
+    String minutes = formatWithWords(inMinutes.remainder(60).abs(), "minute");
+    String seconds = formatWithWords(inSeconds.remainder(60).abs(), "second");
     return "$days$hours$minutes$seconds".trimRight();
   }
 }
