@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sudoku/logic/sudoku_info.dart';
-import 'package:sudoku/tools/adapters.dart';
-import 'package:sudoku/tools/stats.dart';
+import 'package:sudoku/sudoku_logic/sudoku_info.dart';
+import 'package:sudoku/other_logic/adapters.dart';
+import 'package:sudoku/other_logic/statistics.dart';
 
 class AppGlobals {
   static const String themeBoxName = "themeBox";

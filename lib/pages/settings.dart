@@ -6,8 +6,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:sudoku/tools/app_settings.dart';
-import 'package:sudoku/tools/stats.dart';
+import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/statistics.dart';
 
 import 'package:flutter/foundation.dart' as foundation;
 

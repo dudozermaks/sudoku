@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
-import 'package:sudoku/logic/sudoku.dart';
+import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/widgets/sudoku.dart';
 
 class GuideViewer extends StatelessWidget {

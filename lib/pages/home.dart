@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
-import 'package:sudoku/logic/sudoku.dart';
+import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/pages/guides.dart';
 import 'package:sudoku/pages/saves.dart';
 import 'package:sudoku/pages/settings.dart';

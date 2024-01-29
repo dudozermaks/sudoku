@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:sudoku/logic/sudoku.dart';
+import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/pages/solving.dart';
 import 'package:sudoku/widgets/sudoku.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku/tools/pos.dart';
+import 'package:sudoku/sudoku_logic/pos.dart';
 
 class Cell extends StatelessWidget {
   final Pos position;

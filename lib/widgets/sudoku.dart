@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku/logic/sudoku.dart';
-import 'package:sudoku/tools/pos.dart';
+import 'package:sudoku/sudoku_logic/sudoku.dart';
+import 'package:sudoku/sudoku_logic/pos.dart';
 import 'package:sudoku/widgets/cell.dart';
 
 class SudokuWidget extends StatelessWidget {

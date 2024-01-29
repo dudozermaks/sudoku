@@ -1,8 +1,8 @@
 import 'package:hive_flutter/adapters.dart';
-import 'package:sudoku/logic/sudoku.dart';
-import 'package:sudoku/tools/app_settings.dart';
+import 'package:sudoku/sudoku_logic/sudoku.dart';
+import 'package:sudoku/other_logic/app_settings.dart';
 
-part 'stats.g.dart';
+part 'statistics.g.dart';
 
 class Stats {
   Box saveBox;

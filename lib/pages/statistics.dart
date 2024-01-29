@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
-import 'package:sudoku/tools/stats.dart';
+import 'package:sudoku/other_logic/statistics.dart';
 
 class StatisticsPage extends StatelessWidget {
   static const routeName = "/statistics";
