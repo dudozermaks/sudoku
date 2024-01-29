@@ -11,15 +11,15 @@ import 'package:sudoku/tools/stats.dart';
 
 import 'package:flutter/foundation.dart' as foundation;
 
-class Settings extends StatefulWidget {
+class SettingsPage extends StatefulWidget {
   static const routeName = "/settings";
-  const Settings({super.key});
+  const SettingsPage({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

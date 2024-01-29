@@ -83,14 +83,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 10),
-            buildButton(Saves.routeName, "saves".i18n()),
+            buildButton(SavesPage.routeName, "saves".i18n()),
             buildButton(
                 SolvingPage.userSettingRouteName, "set-field-yourself".i18n()),
             buildButton(
                 SolvingPage.generatingRouteName, "generate-field".i18n()),
             buildButton(StatisticsPage.routeName, "statistics".i18n()),
-            buildButton(Guides.routeName, "guides".i18n()),
-            buildButton(Settings.routeName, "settings".i18n()),
+            buildButton(GuidesPage.routeName, "guides".i18n()),
+            buildButton(SettingsPage.routeName, "settings".i18n()),
           ],
         ),
       ),

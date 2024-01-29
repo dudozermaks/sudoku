@@ -86,10 +86,10 @@ class SudokuApp extends StatelessWidget {
                   field: SudokuField.generate(),
                   generated: true,
                 ),
-            Saves.routeName: (context) => const Saves(),
+            SavesPage.routeName: (context) => const SavesPage(),
             StatisticsPage.routeName: (context) => const StatisticsPage(),
-            Guides.routeName: (context) => const Guides(),
-            Settings.routeName: (context) => const Settings(),
+            GuidesPage.routeName: (context) => const GuidesPage(),
+            SettingsPage.routeName: (context) => const SettingsPage(),
           },
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,

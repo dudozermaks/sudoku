@@ -6,17 +6,17 @@ import 'package:localization/localization.dart';
 import 'package:sudoku/widgets/guide_viewer.dart';
 
 // TODO: Add localisation somehow???
-class Guides extends StatefulWidget {
-  const Guides({super.key});
+class GuidesPage extends StatefulWidget {
+  const GuidesPage({super.key});
 
   static const routeName = "/guides";
   static const path = "assets/guides/";
 
   @override
-  State<Guides> createState() => _GuidesState();
+  State<GuidesPage> createState() => _GuidesPageState();
 }
 
-class _GuidesState extends State<Guides> {
+class _GuidesPageState extends State<GuidesPage> {
   late final Future<String> guideList;
 
   @override
@@ -37,7 +37,7 @@ class _GuidesState extends State<Guides> {
               final List<String> guides = json
                   .decode(snapshot.data ?? "")
                   .keys
-                  .where((String key) => key.startsWith(Guides.path))
+                  .where((String key) => key.startsWith(GuidesPage.path))
                   .toList();
 
               return ListView(
@@ -75,7 +75,7 @@ extension _Converters on String {
   }
 
   String toTechniqueName() {
-    return replaceFirst(Guides.path, "")
+    return replaceFirst(GuidesPage.path, "")
         .snakeCasetoSentenceCase()
         .split(".")[0];
   }
