@@ -38,7 +38,8 @@ class StatisticsPage extends StatelessWidget {
         style: Theme.of(context).textTheme.bodySmall,
       ),
       Text(
-        "stat-longest-streak".i18n([Duration(days: stats.longestStreak).format()]),
+        "stat-longest-streak"
+            .i18n([Duration(days: stats.longestStreak).format()]),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       const Divider(),
