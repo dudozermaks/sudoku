@@ -11,6 +11,7 @@ class AppGlobals {
   static const String themeBoxName = "themeBox";
   static const String infoBoxName = "infoBox";
   static const String statisticBoxName = "statisticsBox";
+	static const EdgeInsets padding = EdgeInsets.all(5);
   late String applicationPath;
   late String savesPath;
   late File statFile;

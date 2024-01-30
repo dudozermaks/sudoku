@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:sudoku/other_logic/app_settings.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/pages/guides.dart';
 import 'package:sudoku/pages/saves.dart';
@@ -39,68 +41,92 @@ class _HomePageState extends State<HomePage> {
     bool canBeLoaded = _controller.text.isValidClues();
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                "app-name".i18n(),
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      color: colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-            ),
-            TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              onChanged: (String text) {
-                setState(() {});
-              },
-              onSubmitted: (String value) {
-                if (canBeLoaded) {
-                  _loadPuzzle(SudokuField(clues: _controller.text));
-                }
-              },
-              decoration: InputDecoration(
-                prefixIcon: TextButton(
-                  child: const Icon(Icons.clear),
-                  onPressed: () => setState(() {
-                    _controller.clear();
-                  }),
+        child: Padding(
+          padding: AppGlobals.padding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  "app-name".i18n(),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
-                suffixIcon: TextButton(
-                  onPressed: canBeLoaded
-                      ? () => _loadPuzzle(SudokuField(clues: _controller.text))
+              ),
+              TextField(
+                controller: _controller,
+                keyboardType: TextInputType.number,
+                onChanged: (String text) {
+                  setState(() {});
+                },
+                onSubmitted: (String value) {
+                  if (canBeLoaded) {
+                    _loadPuzzle(SudokuField(clues: _controller.text));
+                  }
+                },
+                decoration: InputDecoration(
+                  prefixIcon: TextButton(
+                    child: const Icon(Icons.clear),
+                    onPressed: () => setState(() {
+                      _controller.clear();
+                    }),
+                  ),
+                  suffixIcon: TextButton(
+                    onPressed: canBeLoaded
+                        ? () =>
+                            _loadPuzzle(SudokuField(clues: _controller.text))
+                        : null,
+                    child: const Icon(Icons.send),
+                  ),
+                  labelText: "load-from-string".i18n(),
+                  helperText: _controller.text.isNotEmpty
+                      ? "can-be-loaded".i18n([], [canBeLoaded])
                       : null,
-                  child: const Icon(Icons.send),
+                  helperStyle:
+                      TextStyle(color: canBeLoaded ? Colors.green : Colors.red),
+                  border: const OutlineInputBorder(),
                 ),
-                labelText: "load-from-string".i18n(),
-                helperText: "can-be-loaded".i18n([], [canBeLoaded]),
-                helperStyle:
-                    TextStyle(color: canBeLoaded ? Colors.green : Colors.red),
-                border: const OutlineInputBorder(),
               ),
-            ),
-            const SizedBox(height: 10),
-            buildButton(SavesPage.routeName, "saves".i18n()),
-            buildButton(
-                SolvingPage.userSettingRouteName, "set-field-yourself".i18n()),
-            buildButton(
-                SolvingPage.generatingRouteName, "generate-field".i18n()),
-            buildButton(StatisticsPage.routeName, "statistics".i18n()),
-            buildButton(GuidesPage.routeName, "guides".i18n()),
-            buildButton(SettingsPage.routeName, "settings".i18n()),
-          ],
+              const SizedBox(height: 10),
+              OrientationBuilder(builder: (context, orientation) {
+                List<Widget> buttons = buildButtons();
+                if (orientation == Orientation.portrait) {
+                  return Column(
+                    children: [...buttons],
+                  );
+                }
+                return Wrap(
+                  children: [...buttons],
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  ElevatedButton buildButton(String routeName, String text) {
-    return ElevatedButton(
-      onPressed: () => Navigator.of(context).pushNamed(routeName),
-      child: Text(text),
+  List<Widget> buildButtons() {
+    return [
+      buildButton(SavesPage.routeName, "saves".i18n()),
+      buildButton(
+          SolvingPage.userSettingRouteName, "set-field-yourself".i18n()),
+      buildButton(SolvingPage.generatingRouteName, "generate-field".i18n()),
+      buildButton(StatisticsPage.routeName, "statistics".i18n()),
+      buildButton(GuidesPage.routeName, "guides".i18n()),
+      buildButton(SettingsPage.routeName, "settings".i18n()),
+    ];
+  }
+
+  Widget buildButton(String routeName, String text) {
+    return SizedBox(
+      width: 200,
+      child: OutlinedButton(
+        onPressed: () => Navigator.of(context).pushNamed(routeName),
+        child: Text(text),
+      ),
     );
   }
 
