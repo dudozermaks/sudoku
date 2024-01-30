@@ -23,8 +23,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text:
-          "000000010400000000020000000000050407008000300001090000300400200050100000000806000",
+      text: foundation.kDebugMode
+          ? "000000010400000000020000000000050407008000300001090000300400200050100000000806000"
+          : null,
     );
   }
 
