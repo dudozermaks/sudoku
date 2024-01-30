@@ -29,7 +29,6 @@ Future<void> main() async {
 
   await RustLib.init();
 
-	// Initializes Hive too
   await globals.load();
 
   runApp(const SudokuApp());
@@ -82,7 +81,6 @@ class SudokuApp extends StatelessWidget {
                   userSetting: true,
                 ),
             SolvingPage.generatingRouteName: (context) => SolvingPage(
-                  // TODO: when hot-reloading puzzle is generated again
                   field: SudokuField.generate(),
                   generated: true,
                 ),
