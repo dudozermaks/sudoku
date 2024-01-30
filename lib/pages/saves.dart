@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
-import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/widgets/saves_viewer.dart';
 
 class SavesPage extends StatefulWidget {

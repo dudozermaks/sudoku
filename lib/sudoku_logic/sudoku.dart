@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/sudoku_logic/sudoku_info.dart';
-import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/pos.dart';
 import 'package:sudoku/src/rust/api/sudoku.dart';
 

@@ -4,7 +4,7 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
-import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/pos.dart';
 import 'package:sudoku/other_logic/statistics.dart';
 import 'package:sudoku/widgets/numpad.dart';

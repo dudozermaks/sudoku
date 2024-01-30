@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
-import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/pages/guides.dart';
 import 'package:sudoku/pages/saves.dart';

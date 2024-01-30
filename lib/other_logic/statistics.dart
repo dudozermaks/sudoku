@@ -1,6 +1,6 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
-import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 
 part 'statistics.g.dart';
 

@@ -15,7 +15,7 @@ import 'package:sudoku/pages/settings.dart';
 import 'package:sudoku/pages/solving.dart';
 import 'package:sudoku/pages/statistics.dart';
 
-import 'package:sudoku/other_logic/app_settings.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/other_logic/statistics.dart';
 
 import 'package:sudoku/src/rust/frb_generated.dart';
