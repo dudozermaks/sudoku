@@ -91,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 10),
+							// TODO: Does not work on Android when changing orientaiton:(
               OrientationBuilder(builder: (context, orientation) {
                 List<Widget> buttons = buildButtons();
                 if (orientation == Orientation.portrait) {
