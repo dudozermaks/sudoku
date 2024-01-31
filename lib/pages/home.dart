@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
       buildButton(
           SolvingPage.userSettingRouteName, "set-field-yourself".i18n(), Icons.edit),
       buildButton(SolvingPage.generatingRouteName, "generate-field".i18n(), Icons.computer),
-      buildButton(StatisticsPage.routeName, "statistics".i18n(), Icons.analytics_outlined),
+      buildButton(StatisticsPage.routeName, "statistics".i18n(), Icons.analytics),
       buildButton(GuidesPage.routeName, "guides".i18n(), Icons.book),
       buildButton(SettingsPage.routeName, "settings".i18n(), Icons.settings),
     ];
