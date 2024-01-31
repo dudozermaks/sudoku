@@ -91,18 +91,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 10),
-							// TODO: Does not work on Android when changing orientaiton:(
-              OrientationBuilder(builder: (context, orientation) {
-                List<Widget> buttons = buildButtons();
-                if (orientation == Orientation.portrait) {
-                  return Column(
-                    children: [...buttons],
-                  );
-                }
-                return Wrap(
-                  children: [...buttons],
-                );
-              }),
+              (MediaQuery.of(context).orientation == Orientation.portrait)
+                  ? Column(
+                      children: buildButtons(),
+                    )
+                  : Wrap(
+											spacing: 6,
+											alignment: WrapAlignment.center,
+                      children: buildButtons(),
+                    ),
             ],
           ),
         ),
