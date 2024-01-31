@@ -35,7 +35,6 @@ class _SavesViewerState extends State<SavesViewer> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 1,
           child: GestureDetector(
             onTap: () => _loadPuzzle(context),
             child: SudokuWidget(

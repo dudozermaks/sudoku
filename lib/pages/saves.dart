@@ -59,9 +59,14 @@ class _SavesPageState extends State<SavesPage> {
       );
     }
 
-    return ListView.separated(
+    // TODO: fix padding in portrait mode
+    // TODO: maybe add 3, 4, 5... cross axis counts somehow
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount:
+            MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 2,
+      ),
       itemCount: _files.length,
-      separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         // https://api.flutter.dev/flutter/foundation/Key-class.html
         // https://stackoverflow.com/questions/55142992/flutter-delete-item-from-listview
