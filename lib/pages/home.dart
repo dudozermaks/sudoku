@@ -96,8 +96,8 @@ class _HomePageState extends State<HomePage> {
                       children: buildButtons(),
                     )
                   : Wrap(
-											spacing: 6,
-											alignment: WrapAlignment.center,
+                      spacing: 6,
+                      alignment: WrapAlignment.center,
                       children: buildButtons(),
                     ),
             ],
@@ -109,22 +109,23 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> buildButtons() {
     return [
-      buildButton(SavesPage.routeName, "saves".i18n()),
+      buildButton(SavesPage.routeName, "saves".i18n(), Icons.save),
       buildButton(
-          SolvingPage.userSettingRouteName, "set-field-yourself".i18n()),
-      buildButton(SolvingPage.generatingRouteName, "generate-field".i18n()),
-      buildButton(StatisticsPage.routeName, "statistics".i18n()),
-      buildButton(GuidesPage.routeName, "guides".i18n()),
-      buildButton(SettingsPage.routeName, "settings".i18n()),
+          SolvingPage.userSettingRouteName, "set-field-yourself".i18n(), Icons.edit),
+      buildButton(SolvingPage.generatingRouteName, "generate-field".i18n(), Icons.computer),
+      buildButton(StatisticsPage.routeName, "statistics".i18n(), Icons.analytics_outlined),
+      buildButton(GuidesPage.routeName, "guides".i18n(), Icons.book),
+      buildButton(SettingsPage.routeName, "settings".i18n(), Icons.settings),
     ];
   }
 
-  Widget buildButton(String routeName, String text) {
+  Widget buildButton(String routeName, String text, IconData icon) {
     return SizedBox(
       width: 200,
-      child: OutlinedButton(
+      child: OutlinedButton.icon(
         onPressed: () => Navigator.of(context).pushNamed(routeName),
-        child: Text(text),
+        label: Text(text),
+        icon: Icon(icon),
       ),
     );
   }
