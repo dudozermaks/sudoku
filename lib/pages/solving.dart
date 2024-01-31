@@ -10,6 +10,7 @@ import 'package:sudoku/other_logic/statistics.dart';
 import 'package:sudoku/widgets/numpad.dart';
 import 'package:sudoku/widgets/sudoku.dart';
 
+// TODO: Refactor UI
 class SolvingPage extends StatefulWidget {
   static const routeName = "/solving";
   static const userSettingRouteName = "/setting_and_solving";

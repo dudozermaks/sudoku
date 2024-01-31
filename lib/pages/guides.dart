@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
 import 'package:sudoku/widgets/guide_viewer.dart';
+// TODO: Refactor UI
 
 // TODO: Add localisation somehow???
 class GuidesPage extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku/other_logic/statistics.dart';
 
+// TODO: Refactor UI
 class StatisticsPage extends StatelessWidget {
   static const routeName = "/statistics";
   const StatisticsPage({super.key});

@@ -11,6 +11,7 @@ import 'package:sudoku/other_logic/statistics.dart';
 
 import 'package:flutter/foundation.dart' as foundation;
 
+// TODO: Refactor UI
 class SettingsPage extends StatefulWidget {
   static const routeName = "/settings";
   const SettingsPage({super.key});
