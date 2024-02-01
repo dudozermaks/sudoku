@@ -59,12 +59,11 @@ class _SavesPageState extends State<SavesPage> {
       );
     }
 
-    // TODO: fix padding in portrait mode
-    // TODO: maybe add 3, 4, 5... cross axis counts somehow
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount:
             MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 2,
+        childAspectRatio: 1.3,
       ),
       itemCount: _files.length,
       itemBuilder: (context, index) {
