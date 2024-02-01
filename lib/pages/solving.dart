@@ -19,11 +19,12 @@ class SolvingPage extends StatefulWidget {
   final SudokuField field;
   final bool generated;
 
-  const SolvingPage(
-      {super.key,
-      required this.field,
-      this.userSetting = false,
-      this.generated = false});
+  const SolvingPage({
+    super.key,
+    required this.field,
+    this.userSetting = false,
+    this.generated = false,
+  });
 
   @override
   State<SolvingPage> createState() => _SolvingPageState();
@@ -36,6 +37,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
+    var orientation = MediaQuery.of(context).orientation;
 
     // deprecated in future versions of Flutter
     return PopScope(
@@ -51,70 +53,113 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           centerTitle: true,
           leading: BackButton(onPressed: _goBack),
         ),
-        body: OrientationBuilder(
-          builder: (context, orientation) {
-            if (orientation == Orientation.portrait) {
-              return Column(
-                children: _buildMain(context, orientation),
-              );
-            } else {
-              return Row(
-                children: _buildMain(context, orientation),
-              );
-            }
-          },
-        ),
+        body: _buildMain(context, orientation),
       ),
     );
   }
 
-  List<Widget> _buildMain(BuildContext context, Orientation orientation) {
+  Widget _buildMain(BuildContext context, Orientation orientation) {
     var buttons = _buildButtons();
-    return [
-      Text(
-        widget.field.difficultyString,
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
-      Flexible(
-        flex: 9,
-        child: SudokuWidget(
-          field: widget.field,
-          setSelected: (Pos selected) {
-            setState(() {
-              widget.field.selected = selected;
-            });
-          },
+
+    List<Widget> children;
+    if (orientation == Orientation.portrait) {
+      children = [
+        Text(
+          widget.field.difficultyString,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-      ),
-      Expanded(
-        child: orientation == Orientation.portrait
-            ? Row(children: buttons)
-            : Column(children: buttons),
-      ),
-      Expanded(
-        flex: 7,
-        child: ConstrainedBox(
-          constraints:
-              BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-          child: Numpad(onPressed: (int a) {
-            setState(() {
-              widget.field.toggleNumber(a);
-            });
-          }),
+        Flexible(
+          flex: 9,
+          child: SudokuWidget(
+            field: widget.field,
+            setSelected: (Pos selected) {
+              setState(() {
+                widget.field.selected = selected;
+              });
+            },
+          ),
         ),
-      )
-    ];
+        Expanded(
+            child: Row(children: [
+          ...buttons.map(
+            (e) => Expanded(child: e),
+          )
+        ])),
+        Expanded(
+          flex: 7,
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+            child: Numpad(onPressed: (int a) {
+              setState(() {
+                widget.field.toggleNumber(a);
+              });
+            }),
+          ),
+        )
+      ];
+    } else {
+      children = [
+        Flexible(
+          flex: 9,
+          child: SudokuWidget(
+            field: widget.field,
+            setSelected: (Pos selected) {
+              setState(() {
+                widget.field.selected = selected;
+              });
+            },
+          ),
+        ),
+        Row(
+          children: [
+            Column(
+              children: [
+                Text(
+                  widget.field.difficultyString,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Row(
+									// TODO: add expanded to those buttons somehow? Or make them stretch another way
+                  children: [
+                    ...buttons,
+                  ],
+                ),
+                Expanded(
+                  child:
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minWidth: MediaQuery.of(context).size.width / 10),
+                      child: Numpad(onPressed: (int a) {
+                        setState(() {
+                          widget.field.toggleNumber(a);
+                        });
+                      }),
+                    ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ];
+    }
+
+    return (orientation == Orientation.portrait)
+        ? Column(
+            children: children,
+          )
+        : Row(
+            children: children,
+          );
   }
 
   List<Widget> _buildButtons() {
     List<Widget> res = List<Widget>.empty(growable: true);
 
     buildButton(VoidCallback onPressed, IconData icon) {
-      return Expanded(
-        child: ElevatedButton(
-          onPressed: onPressed,
-          child: Icon(icon),
-        ),
+      return ElevatedButton(
+        onPressed: onPressed,
+        child: Icon(icon),
       );
     }
 
