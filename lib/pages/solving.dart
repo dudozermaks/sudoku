@@ -99,10 +99,10 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
         )
       ];
     } else {
-			// TODO: fix terrible size
+      // TODO: fix terrible size
       children = [
         Flexible(
-          flex: 10,
+          flex: 1,
           child: SudokuWidget(
             field: widget.field,
             setSelected: (Pos selected) {
@@ -112,32 +112,24 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
             },
           ),
         ),
-        Row(
+        Column(
           children: [
-            Column(
-              children: [
-                Text(
-                  widget.field.difficultyString,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Row(
-                  // TODO: add expanded to those buttons somehow? Or make them stretch another way
-                  children: [
-                    ...buttons,
-                  ],
-                ),
-                Expanded(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height),
-                    child: Numpad(onPressed: (int a) {
-                      setState(() {
-                        widget.field.toggleNumber(a);
-                      });
-                    }),
-                  ),
-                ),
-              ],
+            Text(
+              widget.field.difficultyString,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            // TODO: add expanded to those buttons somehow? Or make them stretch another way
+            Row(children: buttons),
+            Expanded(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height),
+                child: Numpad(onPressed: (int a) {
+                  setState(() {
+                    widget.field.toggleNumber(a);
+                  });
+                }),
+              ),
             ),
           ],
         ),
