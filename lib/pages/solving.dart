@@ -99,9 +99,10 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
         )
       ];
     } else {
+			// TODO: fix terrible size
       children = [
         Flexible(
-          flex: 9,
+          flex: 10,
           child: SudokuWidget(
             field: widget.field,
             setSelected: (Pos selected) {
@@ -120,22 +121,21 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Row(
-									// TODO: add expanded to those buttons somehow? Or make them stretch another way
+                  // TODO: add expanded to those buttons somehow? Or make them stretch another way
                   children: [
                     ...buttons,
                   ],
                 ),
                 Expanded(
-                  child:
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minWidth: MediaQuery.of(context).size.width / 10),
-                      child: Numpad(onPressed: (int a) {
-                        setState(() {
-                          widget.field.toggleNumber(a);
-                        });
-                      }),
-                    ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height),
+                    child: Numpad(onPressed: (int a) {
+                      setState(() {
+                        widget.field.toggleNumber(a);
+                      });
+                    }),
+                  ),
                 ),
               ],
             ),
