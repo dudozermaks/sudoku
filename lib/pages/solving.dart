@@ -80,11 +80,10 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           ),
         ),
         Expanded(
-            child: Row(children: [
-          ...buttons.map(
-            (e) => Expanded(child: e),
-          )
-        ])),
+          child: Row(
+            children: buttons,
+          ),
+        ),
         Expanded(
           flex: 7,
           child: ConstrainedBox(
@@ -99,7 +98,6 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
         )
       ];
     } else {
-      // TODO: fix terrible size
       children = [
         Flexible(
           flex: 1,
@@ -113,13 +111,17 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           ),
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: buttons,
+        ),
+        Column(
           children: [
             Text(
               widget.field.difficultyString,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             // TODO: add expanded to those buttons somehow? Or make them stretch another way
-            Row(children: buttons),
+
             Expanded(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -141,6 +143,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
             children: children,
           )
         : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: children,
           );
   }
@@ -149,9 +152,11 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     List<Widget> res = List<Widget>.empty(growable: true);
 
     buildButton(VoidCallback onPressed, IconData icon) {
-      return ElevatedButton(
-        onPressed: onPressed,
-        child: Icon(icon),
+      return Expanded(
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: Icon(icon),
+        ),
       );
     }
 
