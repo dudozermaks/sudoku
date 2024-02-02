@@ -51,7 +51,7 @@ class StatisticsPage extends StatelessWidget {
       const Divider(),
       Text(
         "activity-chart".i18n(),
-        style: Theme.of(context).textTheme.bodySmall,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       // TODO: Make year-chooser
       // TODO: Add two timestemps between which data is shown
@@ -72,49 +72,76 @@ class ActivityChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = Theme.of(context).colorScheme.primary;
-    Color getColor(int numberOfActivities) {
-      switch (numberOfActivities) {
-        case 0:
-          return primaryColor.withOpacity(0.0);
-        case 1:
-          return primaryColor.withOpacity(0.2);
-        case 2:
-          return primaryColor.withOpacity(0.4);
-        case 3:
-          return primaryColor.withOpacity(0.6);
-        case 4:
-          return primaryColor.withOpacity(0.8);
-        default:
-          return primaryColor.withOpacity(1);
-      }
-    }
-
     // TODO: Add timestampts
     return LayoutBuilder(
       builder: (context, constraints) {
         final cellSize = constraints.maxWidth / 53;
 
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return Column(
           children: [
-            for (int i = 0; i < activity.length; i += 7)
-              Column(
-                children: [
-                  for (int j = 0; (j < 7 && i + j < activity.length); j++)
-                    Container(
-                      width: cellSize,
-                      height: cellSize,
-                      decoration: BoxDecoration(
-                        color: getColor(activity[i + j]),
-                        borderRadius: BorderRadius.circular(cellSize * 0.0),
-                      ),
-                    )
-                ],
-              )
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (int i = 0; i < activity.length; i += 7)
+                  Column(
+                    children: [
+                      for (int j = 0; (j < 7 && i + j < activity.length); j++)
+                        buildCell(cellSize, getColor(activity[i + j], context))
+                    ],
+                  ),
+              ],
+            ),
+            const SizedBox.square(dimension: 10),
+            Row(
+              children: [
+                Text(
+                  "stat-less".i18n(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+								
+                const SizedBox.square(dimension: 10),
+                for (int i = 0; i < 5; i++)
+                  buildCell(cellSize, getColor(i, context)),
+                const SizedBox.square(dimension: 10),
+
+                Text(
+                  "stat-more".i18n(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            )
           ],
         );
       },
+    );
+  }
+
+  Color getColor(int numberOfActivities, BuildContext context) {
+    Color primaryColor = Theme.of(context).colorScheme.primary;
+    switch (numberOfActivities) {
+      case 0:
+        return primaryColor.withOpacity(0.1);
+      case 1:
+        return primaryColor.withOpacity(0.2);
+      case 2:
+        return primaryColor.withOpacity(0.4);
+      case 3:
+        return primaryColor.withOpacity(0.6);
+      case 4:
+        return primaryColor.withOpacity(0.8);
+      default:
+        return primaryColor.withOpacity(1);
+    }
+  }
+
+  Widget buildCell(double cellSize, Color c) {
+    return Container(
+      width: cellSize,
+      height: cellSize,
+      decoration: BoxDecoration(
+        color: c,
+        borderRadius: BorderRadius.circular(cellSize * 0.0),
+      ),
     );
   }
 }
