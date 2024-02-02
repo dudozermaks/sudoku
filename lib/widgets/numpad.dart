@@ -9,23 +9,6 @@ class Numpad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return LayoutGrid(
-    // Set the cols and rows to be equal sizes
-    //   columnSizes: List<TrackSize>.generate(3, (index) => 1.fr),
-    //   rowSizes: List<TrackSize>.generate(3, (index) => 1.fr),
-    //   children: [
-    //     for (int i = 1; i < 10; i++)
-    //       ElevatedButton(
-    //         onPressed: () => onPressed(i),
-    //         style: ElevatedButton.styleFrom(
-    //           shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(15)),
-    //         ),
-    //         child: Text(i.toString()),
-    //       )
-    //   ],
-    // );
-
     return FittedBox(
       child: Column(
         children: [
