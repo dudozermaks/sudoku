@@ -88,6 +88,9 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           flex: 9,
           child: sudokuWidget,
         ),
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           children: buttons,
         ),
@@ -106,9 +109,15 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           flex: 1,
           child: sudokuWidget,
         ),
+        const SizedBox(
+          width: 10,
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: buttons,
+        ),
+        const SizedBox(
+          width: 10,
         ),
         Column(
           children: [
