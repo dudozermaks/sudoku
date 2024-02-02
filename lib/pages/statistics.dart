@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/other_logic/statistics.dart';
 
 // TODO: Refactor UI
@@ -13,8 +14,11 @@ class StatisticsPage extends StatelessWidget {
     var stats = context.read<Stats>();
     return Scaffold(
       appBar: AppBar(title: Text("statistics".i18n())),
-      body: ListView(
-        children: buildBody(stats, context),
+      body: Padding(
+        padding: AppGlobals.padding.copyWith(top: 0),
+        child: ListView(
+          children: buildBody(stats, context),
+        ),
       ),
     );
   }
@@ -98,12 +102,10 @@ class ActivityChart extends StatelessWidget {
                   "stat-less".i18n(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-								
                 const SizedBox.square(dimension: 10),
                 for (int i = 0; i < 5; i++)
                   buildCell(cellSize, getColor(i, context)),
                 const SizedBox.square(dimension: 10),
-
                 Text(
                   "stat-more".i18n(),
                   style: Theme.of(context).textTheme.bodySmall,
