@@ -80,7 +80,6 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
       });
     });
 
-
     List<Widget> children;
     if (orientation == Orientation.portrait) {
       children = [
@@ -185,8 +184,15 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   void _generateNextField() => Navigator.of(context)
       .pushReplacementNamed(SolvingPage.generatingRouteName);
 
-  void _copyToClipboard() =>
-      Clipboard.setData(ClipboardData(text: widget.field.cluesToString()));
+  void _copyToClipboard() {
+    Clipboard.setData(ClipboardData(text: widget.field.cluesToString()));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("clues-copied".i18n()),
+        showCloseIcon: true,
+      ),
+    );
+  }
 
   void _togglePencilmarkMode() => setState(() {
         widget.field.pencilmarkMode = !widget.field.pencilmarkMode;

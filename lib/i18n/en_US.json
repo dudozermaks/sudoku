@@ -27,6 +27,7 @@
 	"go-back-ask": "Do you want to go back?",
 	"save": "Save",
 	"save-before-exit-ask": "Save before exiting?",
+	"clues-copied": "Clues copied to clipboard!",
 	"puzzle-info": "Puzzle info",
 	"engine-info": "Engine info on this puzzle:",
 	"engine-info-unique-solution": "Has unique solution: %s",
