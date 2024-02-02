@@ -122,7 +122,7 @@ class ActivityChart extends StatelessWidget {
     Color primaryColor = Theme.of(context).colorScheme.primary;
     switch (numberOfActivities) {
       case 0:
-        return primaryColor.withOpacity(0.1);
+        return primaryColor.withOpacity(0.05);
       case 1:
         return primaryColor.withOpacity(0.2);
       case 2:
@@ -142,7 +142,7 @@ class ActivityChart extends StatelessWidget {
       height: cellSize,
       decoration: BoxDecoration(
         color: c,
-        borderRadius: BorderRadius.circular(cellSize * 0.0),
+        borderRadius: BorderRadius.circular(cellSize * 0.2),
       ),
     );
   }
