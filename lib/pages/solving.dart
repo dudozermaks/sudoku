@@ -61,39 +61,44 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   Widget _buildMain(BuildContext context, Orientation orientation) {
     var buttons = _buildButtons();
 
+    var difficultyWidget = Text(
+      widget.field.difficultyString,
+      style: Theme.of(context).textTheme.titleLarge,
+    );
+
+    var sudokuWidget = SudokuWidget(
+      field: widget.field,
+      setSelected: (Pos selected) {
+        setState(() {
+          widget.field.selected = selected;
+        });
+      },
+    );
+
+    var numpadWidget = Numpad(onPressed: (int a) {
+      setState(() {
+        widget.field.toggleNumber(a);
+      });
+    });
+
+
     List<Widget> children;
     if (orientation == Orientation.portrait) {
       children = [
-        Text(
-          widget.field.difficultyString,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        difficultyWidget,
         Flexible(
           flex: 9,
-          child: SudokuWidget(
-            field: widget.field,
-            setSelected: (Pos selected) {
-              setState(() {
-                widget.field.selected = selected;
-              });
-            },
-          ),
+          child: sudokuWidget,
         ),
-        Expanded(
-          child: Row(
-            children: buttons,
-          ),
+        Row(
+          children: buttons,
         ),
         Expanded(
           flex: 7,
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-            child: Numpad(onPressed: (int a) {
-              setState(() {
-                widget.field.toggleNumber(a);
-              });
-            }),
+            child: numpadWidget,
           ),
         )
       ];
@@ -101,14 +106,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
       children = [
         Flexible(
           flex: 1,
-          child: SudokuWidget(
-            field: widget.field,
-            setSelected: (Pos selected) {
-              setState(() {
-                widget.field.selected = selected;
-              });
-            },
-          ),
+          child: sudokuWidget,
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -120,17 +118,11 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
               widget.field.difficultyString,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            // TODO: add expanded to those buttons somehow? Or make them stretch another way
-
             Expanded(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                     minHeight: MediaQuery.of(context).size.height),
-                child: Numpad(onPressed: (int a) {
-                  setState(() {
-                    widget.field.toggleNumber(a);
-                  });
-                }),
+                child: numpadWidget,
               ),
             ),
           ],
