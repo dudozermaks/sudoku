@@ -96,9 +96,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
         ),
         Expanded(
           flex: 7,
-          child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+          child: FittedBox(
             child: numpadWidget,
           ),
         )
@@ -127,12 +125,10 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Expanded(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height),
+                child: FittedBox(
                   child: numpadWidget,
                 ),
-              ),
+              )
             ],
           ),
         ),
