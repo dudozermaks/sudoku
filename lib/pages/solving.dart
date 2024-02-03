@@ -119,20 +119,22 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
         const SizedBox(
           width: 10,
         ),
-        Column(
-          children: [
-            Text(
-              widget.field.difficultyString,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Expanded(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height),
-                child: numpadWidget,
+        Expanded(
+          child: Column(
+            children: [
+              Text(
+                widget.field.difficultyString,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-            ),
-          ],
+              Expanded(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height),
+                  child: numpadWidget,
+                ),
+              ),
+            ],
+          ),
         ),
       ];
     }
