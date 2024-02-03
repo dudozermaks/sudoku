@@ -100,6 +100,8 @@ class Stats {
 
     return false;
   }
+
+	DateTime get lastAvalibleDate => saveBox.length == 0 ? DateTime.now() : (saveBox.getAt(0) as StatPiece).finished;
 }
 
 @HiveType(typeId: 1)
@@ -108,6 +110,7 @@ class StatPiece {
   @HiveField(0)
   final DateTime finished;
 
+	// TODO: convert this to Duration
   /// Milliseconds
   @HiveField(1)
   final int timeToSolve;

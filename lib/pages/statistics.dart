@@ -57,32 +57,40 @@ class StatisticsPage extends StatelessWidget {
         "activity-chart".i18n(),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
-      // TODO: Make year-chooser
-      // TODO: Add two timestemps between which data is shown
-      ActivityChart(
-        activity: stats.getActivityMap(2023),
-      ),
+      const ActivityChart(),
       const Divider(),
     ];
   }
 }
 
-class ActivityChart extends StatelessWidget {
-  final List<int> activity;
+class ActivityChart extends StatefulWidget {
   const ActivityChart({
     super.key,
-    required this.activity,
   });
 
   @override
+  State<ActivityChart> createState() => _ActivityChartState();
+}
+
+class _ActivityChartState extends State<ActivityChart> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: Add timestampts
+		var stats = context.read<Stats>();
+    var activity = stats.getActivityMap(selectedDate.year);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final cellSize = constraints.maxWidth / 53;
 
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextButton(
+              onPressed: () => pickYear(context, stats),
+              child: Text("stat-year".i18n([selectedDate.year.toString()])),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,6 +121,32 @@ class ActivityChart extends StatelessWidget {
               ],
             )
           ],
+        );
+      },
+    );
+  }
+
+  void pickYear(BuildContext context, Stats stats) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("stat-pick-year".i18n()),
+          content: SizedBox.square(
+            dimension: 200,
+            child: YearPicker(
+              lastDate: DateTime.now(),
+              firstDate: stats.lastAvalibleDate,
+
+              selectedDate: selectedDate,
+              onChanged: (DateTime dateTime) {
+                setState(() {
+                  selectedDate = dateTime;
+                  Navigator.pop(context);
+                });
+              },
+            ),
+          ),
         );
       },
     );

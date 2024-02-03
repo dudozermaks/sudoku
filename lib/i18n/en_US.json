@@ -74,6 +74,8 @@
 	"stat-longest-streak": "Longest streak: %s",
 	"stat-less": "Less",
 	"stat-more": "More",
+	"stat-year": "Year: %s",
+	"stat-pick-year": "Pick year",
 	"development-fake-stats": "Generate fake statistics",
 	"development-delete-stats": "Delete ALL statistics"
 }
