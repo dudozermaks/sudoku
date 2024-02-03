@@ -33,30 +33,29 @@ class Stats {
   int get solvedCount => stats.length;
   int get _divisionSafeSolvedCount => solvedCount == 0 ? 1 : solvedCount;
 
-	int get longestStreak {
-		if (stats.isEmpty) return 0;
+  int get longestStreak {
+    if (stats.isEmpty) return 0;
 
-		int biggestStreak = 1;
-		int currentStreak = 1;
-		DateTime lastDate = stats[0].finished;
+    int biggestStreak = 1;
+    int currentStreak = 1;
+    DateTime lastDate = stats[0].finished;
 
-		for (var s in stats.skip(1)){
-			var daysBetween = lastDate.daysBetween(s.finished);
-			lastDate = s.finished;
+    for (var s in stats.skip(1)) {
+      var daysBetween = lastDate.daysBetween(s.finished);
+      lastDate = s.finished;
 
-			if (daysBetween == 1) {
-				currentStreak += 1;
-			}
-			else if (daysBetween > 1) {
-				if (biggestStreak < currentStreak) {
-					biggestStreak = currentStreak;
-				}
-				currentStreak = 1;
-			}
-		}
+      if (daysBetween == 1) {
+        currentStreak += 1;
+      } else if (daysBetween > 1) {
+        if (biggestStreak < currentStreak) {
+          biggestStreak = currentStreak;
+        }
+        currentStreak = 1;
+      }
+    }
 
-		return biggestStreak;
-	}
+    return biggestStreak;
+  }
 
   Stats() : saveBox = Hive.box(AppGlobals.statisticBoxName) {
     for (int i = 0; i < saveBox.length; i++) {
@@ -72,21 +71,21 @@ class Stats {
   }
 
   List<int> getActivityMap(int year) {
-		// Source: https://pub.dev/documentation/quiver/latest/quiver.time/isLeapYear.html#:~:text=Returns%20true%20if%20year%20is,including%20years%20divisible%20by%20400.
+    // Source: https://pub.dev/documentation/quiver/latest/quiver.time/isLeapYear.html#:~:text=Returns%20true%20if%20year%20is,including%20years%20divisible%20by%20400.
     bool isLeap = (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
 
     var res = List<int>.filled(isLeap ? 366 : 365, 0, growable: false);
 
-		var yearStart = DateTime(year);
+    var yearStart = DateTime(year);
 
     for (var stat in stats) {
-			var currentDate = stat.finished;
+      var currentDate = stat.finished;
 
-			if (currentDate.year == year) {
-				int diff = -yearStart.difference(currentDate).inDays;
-				res[diff] += 1;
-			}
-		}
+      if (currentDate.year == year) {
+        int diff = -yearStart.difference(currentDate).inDays;
+        res[diff] += 1;
+      }
+    }
 
     return res;
   }
@@ -101,7 +100,9 @@ class Stats {
     return false;
   }
 
-	DateTime get lastAvalibleDate => saveBox.length == 0 ? DateTime.now() : (saveBox.getAt(0) as StatPiece).finished;
+  DateTime get lastAvalibleDate => saveBox.length == 0
+      ? DateTime.now()
+      : (saveBox.getAt(0) as StatPiece).finished;
 }
 
 @HiveType(typeId: 1)
@@ -110,7 +111,7 @@ class StatPiece {
   @HiveField(0)
   final DateTime finished;
 
-	// TODO: convert this to Duration
+  // TODO: convert this to Duration
   /// Milliseconds
   @HiveField(1)
   final int timeToSolve;
@@ -138,9 +139,9 @@ class StatPiece {
 }
 
 extension _DaysBetween on DateTime {
-	int daysBetween(DateTime to) {
-		DateTime from = DateTime(year, month, day);
-		to = DateTime(to.year, to.month, to.day);
-		return (to.difference(from).inHours / 24).round();
-	}
+  int daysBetween(DateTime to) {
+    DateTime from = DateTime(year, month, day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inHours / 24).round();
+  }
 }
