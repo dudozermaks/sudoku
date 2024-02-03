@@ -213,20 +213,25 @@ class _PickFromEnum<T extends Enum> extends StatelessWidget {
           child: Text("cancel".i18n()),
         )
       ],
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (var value in values)
-            RadioListTile<T>(
-              title: Text("$i18nPrefix-${value.name}".i18n()),
-              value: value,
-              groupValue: initialValue,
-              onChanged: (value) {
-                onSelected(value ?? values[0]);
-                Navigator.of(context).pop();
-              },
-            ),
-        ],
+      content: RawScrollbar(
+        thumbVisibility: true,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var value in values)
+                RadioListTile<T>(
+                  title: Text("$i18nPrefix-${value.name}".i18n()),
+                  value: value,
+                  groupValue: initialValue,
+                  onChanged: (value) {
+                    onSelected(value ?? values[0]);
+                    Navigator.of(context).pop();
+                  },
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
