@@ -77,7 +77,7 @@ class _ActivityChartState extends State<ActivityChart> {
 
   @override
   Widget build(BuildContext context) {
-		var stats = context.read<Stats>();
+    var stats = context.read<Stats>();
     var activity = stats.getActivityMap(selectedDate.year);
 
     return LayoutBuilder(
@@ -132,12 +132,17 @@ class _ActivityChartState extends State<ActivityChart> {
       builder: (context) {
         return AlertDialog(
           title: Text("stat-pick-year".i18n()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("cancel".i18n()),
+            ),
+          ],
           content: SizedBox.square(
             dimension: 200,
             child: YearPicker(
               lastDate: DateTime.now(),
               firstDate: stats.lastAvalibleDate,
-
               selectedDate: selectedDate,
               onChanged: (DateTime dateTime) {
                 setState(() {
