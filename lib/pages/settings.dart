@@ -138,6 +138,8 @@ class _SettingsPageState extends State<SettingsPage> {
           .showSnackBar(SnackBar(content: Text("done".i18n())));
     }
 
+		// TODO: add year-picker
+		// TODO: do not delete previous stats
     generateStats(BuildContext context) {
       int rgSeed = DateTime.now().millisecondsSinceEpoch;
       Random rg = Random(rgSeed);
