@@ -25,49 +25,6 @@ class Cell extends StatelessWidget {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
 
-    // return Focus(
-    //   onKey: (node, event) {
-    //     if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
-    //       onTap();
-    //       return KeyEventResult.handled;
-    //     }
-    //     return KeyEventResult.ignored;
-    //   },
-    //   child: GestureDetector(
-    //     onTap: onTap,
-    //     child: Container(
-    //       alignment: Alignment.center,
-    //       decoration: BoxDecoration(
-    //         color: isSelected ? colorScheme.onPrimary : colorScheme.onSecondary,
-    //         border: Border(
-    //           // Conditionally set the border thickness
-    //           top: BorderSide(
-    //               color: colorScheme.outline,
-    //               width: position.y >= 0 && position.y % 3 == 0 ? 2 : 1),
-    //           right: BorderSide(
-    //               color: colorScheme.outline,
-    //               width: position.x >= 0 && position.x % 3 == 2 ? 2 : 1),
-    //           bottom: BorderSide(
-    //               color: colorScheme.outline,
-    //               width: position.y <= 8 && position.y % 3 == 2 ? 2 : 1),
-    //           left: BorderSide(
-    //               color: colorScheme.outline,
-    //               width: position.x <= 8 && position.x % 3 == 0 ? 2 : 1),
-    //         ),
-    //       ),
-    //       child: Text(
-    //         clue,
-    //         style: TextStyle(
-    //             color: isSelected ? colorScheme.primary : colorScheme.secondary,
-    //             // Responsive text size
-    //             fontSize: min(MediaQuery.of(context).size.width,
-    //                     MediaQuery.of(context).size.height) /
-    //                 25,
-    //             fontWeight: isUserPlaced ? FontWeight.normal : FontWeight.bold),
-    //       ),
-    //     ),
-    //   ),
-    // );
     Color? bg;
     Color? fg;
 
