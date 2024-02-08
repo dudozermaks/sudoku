@@ -24,7 +24,7 @@ Sudoku app written in Flutter (for now 📱 **Android-only**).
 * 🚫 No Adds
 * 💻 Generate Sudoku 
 * 📥 Import Sudoku
-* 💾 Save Sudoku (WIP)
+* 💾 Save Sudoku
 * ⛔ Error checking
 * 📚 Guides (WIP)
 * 📈 Solving statistics (WIP)
@@ -38,18 +38,20 @@ This is a preferable timeline for tasks. But some tasks might be done faster or 
 
 #### Before v1.0
 
-* Improve statistics. Add diagrams, GitHub-style activity charts
-* Add more guides
-* Transform UI. Create separated pages for almost every button on main screen
+* Improve statistics. Add diagrams, GitHub-style activity chart (done)
+* Add more guides (for now: skip)
+* Transform UI (done). Create separated pages for almost every button on main screen (for now: skip)
 * Add backwards-compatibility for statistics and saves (done using [Hive](https://pub.dev/packages/hive))
 
 #### After
 
+* Add other types of Sudoku
 * Add MORE animations (never enough...)
 * Write documentation (for developers)
 * Add hints (fairly simple, everything is already in Sudoku crate, just need to connect it to the UI part)
 * Publish somewhere
 * Translate guides
+* Automate app screenshots
 
 #### Very after
 
@@ -69,8 +71,9 @@ For now, I did not create a proper guide for all things below. You will probably
 * Share your Ideas in `Issues` tab on GitHub
 * Find bugs. Report them in `Issues` tab on GitHub
 * Write tests
-* Improve the code, especially Rust part. ~~Please make sure you are wearing protection glasses before looking into code!~~
-* Close some task from [plans](#📆-plans) section.
+* Correct typos
+* Improve code quality
+* Close some task from [plans](#📆-plans) section
 * Translate app. Multiple languages support is done with i18n library. Files for translation are in `lib/i18n`
 * Suggest design for the app in general
 * Suggest an icon (preferably with material design support)
