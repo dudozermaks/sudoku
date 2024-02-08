@@ -9,9 +9,11 @@ class Cell extends StatelessWidget {
   final bool isError;
   final String clue;
   final String pencilmarks;
+  final double size;
 
   const Cell({
     super.key,
+    required this.size,
     required this.position,
     required this.onTap,
     required this.isUserPlaced,
@@ -49,7 +51,7 @@ class Cell extends StatelessWidget {
     }
 
     return SizedBox.square(
-      dimension: 66,
+      dimension: size,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         decoration: BoxDecoration(color: bg),
@@ -59,12 +61,12 @@ class Cell extends StatelessWidget {
             shape: const RoundedRectangleBorder(),
             textStyle: TextStyle(
               fontWeight: fontWeight,
-              fontSize: clue != "" ? 30 : 18,
+              fontSize: clue != "" ? size / 1.8 : size / 3.5,
             ),
             foregroundColor: fg,
             disabledForegroundColor: colorScheme.primary,
           ),
-          child: clue != "" ? Text(clue) : Text(pencilmarks),
+          child: Text(clue != "" ? clue : pencilmarks),
         ),
       ),
     );

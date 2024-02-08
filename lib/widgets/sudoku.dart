@@ -90,6 +90,7 @@ class SudokuWidget extends StatelessWidget {
     }
 
     return Cell(
+		size: 66,
       position: position,
       onTap: onTap,
       isSelected: isSelected,
