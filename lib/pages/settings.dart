@@ -149,11 +149,11 @@ class _SettingsPageState extends State<SettingsPage> {
       for (int i = 0; i < 200; i++) {
         var s = StatPiece(
           difficulty: rg.nextInt(800) + 700,
-          // 60 * 30 * 1000 ms = 30 mins
-          timeToSolve: rg.nextInt(60 * 30 * 1000),
+          // 60 * 30s = 30 mins
+          timeToSolve: Duration(seconds: rg.nextInt(60 * 30)),
           clues: "0" * 81,
           // from 01.01.2022 to 01.01.2023
-          finished: DateTime(2023).add(Duration(days: rg.nextInt(365))),
+          finished: DateTime(2022).add(Duration(days: rg.nextInt(365))),
         );
 
         statPieces.add(s);

@@ -18,7 +18,7 @@ class StatPieceAdapter extends TypeAdapter<StatPiece> {
     };
     return StatPiece(
       finished: fields[0] as DateTime,
-      timeToSolve: fields[1] as int,
+      timeToSolve: fields[1] as Duration,
       difficulty: fields[2] as int,
       clues: fields[3] as String,
     );

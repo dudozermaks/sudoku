@@ -13,6 +13,7 @@ class SudokuField {
   final List<bool> _isUserPlaced;
   Function(SudokuField)? onCompleted;
   bool pencilmarkMode = false;
+	// In milliseconds
   int time;
   Pos _selected;
   File? _saveFile;

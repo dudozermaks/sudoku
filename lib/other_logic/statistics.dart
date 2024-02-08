@@ -19,11 +19,13 @@ class Stats {
 
   /// Milliseconds spend solving puzzles
   Duration get timeSolving {
-    int sum = 0;
+    Duration sum = Duration.zero;
+
     for (var stat in stats) {
       sum += stat.timeToSolve;
     }
-    return Duration(milliseconds: sum);
+
+    return sum;
   }
 
   int get averagePuzzleRating => rating ~/ _divisionSafeSolvedCount;
@@ -100,9 +102,9 @@ class Stats {
     return false;
   }
 
-  DateTime get lastAvalibleDate => saveBox.length == 0
-      ? DateTime.now()
-      : (saveBox.getAt(0) as StatPiece).finished;
+	// Get first stat finished time or ...
+  DateTime get lastAvalibleDate =>
+      stats.firstOrNull?.finished ?? DateTime.now().subtract(const Duration(days: 1));
 }
 
 @HiveType(typeId: 1)
@@ -111,10 +113,9 @@ class StatPiece {
   @HiveField(0)
   final DateTime finished;
 
-  // TODO: convert this to Duration
   /// Milliseconds
   @HiveField(1)
-  final int timeToSolve;
+  final Duration timeToSolve;
 
   /// Usually between 700 and 1400
   @HiveField(2)
@@ -133,7 +134,7 @@ class StatPiece {
 
   StatPiece.fromSudoku(SudokuField f)
       : difficulty = f.difficulty,
-        timeToSolve = f.time,
+        timeToSolve = Duration(milliseconds: f.time),
         clues = f.cluesToString(),
         finished = DateTime.now();
 }

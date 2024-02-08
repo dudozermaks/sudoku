@@ -30,9 +30,13 @@ class AppGlobals {
 
 		await Hive.initFlutter(applicationPath);
 
+		// Custom adapters
 		Hive.registerAdapter(ThemeModeAdapter());
+		Hive.registerAdapter(DurationAdapter());
+		// Generated adapters
 		Hive.registerAdapter(SudokuInfoAdapter());
 		Hive.registerAdapter(StatPieceAdapter());
+		// Built-in adapters
 		Hive.registerAdapter(ColorAdapter());
 
     await Hive.openBox(themeBoxName);
