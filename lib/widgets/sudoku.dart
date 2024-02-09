@@ -30,7 +30,8 @@ class SudokuWidget extends StatelessWidget {
           double cellSize = (sideSize - separatorSize * 2) / 9;
 
           return Column(
-						crossAxisAlignment: CrossAxisAlignment.start,
+						crossAxisAlignment: CrossAxisAlignment.center,
+						mainAxisAlignment: MainAxisAlignment.center,
             children: [
               for (int i = 0; i < 9; i++)
                 ...buildRowWithSeparator(
@@ -64,7 +65,7 @@ class SudokuWidget extends StatelessWidget {
     }
 
     return [
-      Row(children: cells),
+      Row(mainAxisAlignment: MainAxisAlignment.center,children: cells,),
       if (rowCount == 2 || rowCount == 5)
         SizedBox(
           width: sideSize,

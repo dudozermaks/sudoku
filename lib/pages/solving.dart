@@ -80,7 +80,6 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
       });
     });
 
-		// TODO: center sudoku widget across cross axis
     List<Widget> children;
     if (orientation == Orientation.portrait) {
       children = [
