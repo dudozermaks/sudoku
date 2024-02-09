@@ -1,9 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/sudoku_logic/pos.dart';
 import 'package:sudoku/widgets/cell.dart';
 
-// TODO: Simplify this things
 class SudokuWidget extends StatelessWidget {
   final SudokuField field;
   final Function(Pos)? setSelected;
@@ -23,60 +24,57 @@ class SudokuWidget extends StatelessWidget {
       enabled: field.saveFileName != null,
       child: Hero(
         tag: field.saveFileName ?? "",
-        child: FittedBox(
-          child: Column(
-            children: buildColumn(colorScheme.outline),
-          ),
-        ),
+        child: LayoutBuilder(builder: (context, constraints) {
+          double sideSize = min(constraints.maxWidth, constraints.maxHeight);
+          double separatorSize = sideSize * 0.008;
+          double cellSize = (sideSize - separatorSize * 2) / 9;
+
+          return Column(
+						crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (int i = 0; i < 9; i++)
+                ...buildRowWithSeparator(
+                    i, separatorSize, colorScheme.outline, cellSize, sideSize)
+            ],
+          );
+        }),
       ),
     );
   }
 
-  List<Widget> buildColumn(Color borderColor) {
-    var res = List<Widget>.empty(growable: true);
-    for (var y = 0; y < 3; y++) {
-      res.add(Row(
-        children: buildRow(borderColor, y),
-      ));
-      res.add(SizedBox(
-        width: 198 * 3 + 10,
-        height: 5,
-        child: ColoredBox(color: borderColor),
-      ));
+  List<Widget> buildRowWithSeparator(int rowCount, double separatorSize,
+      Color separatorColor, double cellSize, double sideSize) {
+    var cells = List<Widget>.empty(growable: true);
+
+    for (int i = 0; i < 9; i++) {
+      cells.add(
+        buildCell(
+          Pos(i, rowCount),
+          cellSize,
+        ),
+      );
+
+      if (i == 2 || i == 5) {
+        cells.add(SizedBox(
+          width: separatorSize,
+          height: cellSize,
+          child: ColoredBox(color: separatorColor),
+        ));
+      }
     }
-    res.removeLast();
-    return res;
+
+    return [
+      Row(children: cells),
+      if (rowCount == 2 || rowCount == 5)
+        SizedBox(
+          width: sideSize,
+          height: separatorSize,
+          child: ColoredBox(color: separatorColor),
+        )
+    ];
   }
 
-  List<Widget> buildRow(Color borderColor, int y) {
-    var res = List<Widget>.empty(growable: true);
-
-    for (var x = 0; x < 3; x++) {
-      res.add(build3x3Grid(Pos(x, y)));
-      res.add(SizedBox(
-        width: 5,
-        height: 198,
-        child: ColoredBox(color: borderColor),
-      ));
-    }
-    res.removeLast();
-    return res;
-  }
-
-  Widget build3x3Grid(Pos position) {
-    return Column(
-      children: [
-        for (var y = 0; y < 3; y++)
-          Row(
-            children: [
-              for (var x = 0; x < 3; x++) buildCell(Pos(x, y) + position * 3)
-            ],
-          ),
-      ],
-    );
-  }
-
-  Cell buildCell(Pos position) {
+  Cell buildCell(Pos position, double size) {
     int index = position.toIndex();
 
     VoidCallback? onTap;
@@ -90,7 +88,7 @@ class SudokuWidget extends StatelessWidget {
     }
 
     return Cell(
-		size: 66,
+      size: size,
       position: position,
       onTap: onTap,
       isSelected: isSelected,
