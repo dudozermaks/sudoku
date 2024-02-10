@@ -18,31 +18,29 @@ import 'package:sudoku/pages/statistics.dart';
 import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/other_logic/statistics.dart';
 
-import 'package:sudoku/src/rust/frb_generated.dart';
-
-var globals = AppGlobals();
-
 Future<void> main() async {
-  // Without this line path provider might not work on Android.
-  // Also (I did not tested it) removing this line might break Hive and Rust Bridge
-  WidgetsFlutterBinding.ensureInitialized();
+  var appGlobals = AppGlobals();
+  await appGlobals.load();
 
-  await RustLib.init();
-
-  await globals.load();
-
-  runApp(const SudokuApp());
+  runApp(SudokuApp(
+    appGlobals: appGlobals,
+  ));
 }
 
 class SudokuApp extends StatelessWidget {
-  const SudokuApp({super.key});
+  final AppGlobals appGlobals;
+  const SudokuApp({
+    super.key,
+    required this.appGlobals,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AppGlobals>.value(value: globals),
-        Provider<Stats>(create: (context) => Stats()),
+        Provider<AppGlobals>.value(value: appGlobals),
+        Provider<Stats>(
+            create: (context) => Stats(saveBox: appGlobals.statisticsBox)),
       ],
       child: Builder(
         builder: (BuildContext context) => buildMaterialApp(context),
@@ -54,7 +52,7 @@ class SudokuApp extends StatelessWidget {
     LocalJsonLocalization.delegate.directories = ['lib/i18n'];
 
     return ValueListenableBuilder(
-      valueListenable: Hive.box(AppGlobals.themeBoxName).listenable(),
+      valueListenable: appGlobals.themeBox.listenable(),
       builder: (context, box, widget) {
         var themeMode = box.get("themeMode");
         var color = box.get("color");
@@ -81,7 +79,8 @@ class SudokuApp extends StatelessWidget {
                   userSetting: true,
                 ),
             SolvingPage.generatingRouteName: (context) => SolvingPage(
-                  field: SudokuField.generate(),
+                  field:
+                      SudokuField.generate(context.read<AppGlobals>().infoBox),
                   generated: true,
                 ),
             SavesPage.routeName: (context) => const SavesPage(),
@@ -101,7 +100,7 @@ class SudokuApp extends StatelessWidget {
   }
 
   SudokuField _getField(BuildContext context) {
-    return (ModalRoute.of(context)?.settings.arguments ?? SudokuField())
-        as SudokuField;
+    return (ModalRoute.of(context)?.settings.arguments ??
+        SudokuField(context.read<AppGlobals>().infoBox)) as SudokuField;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
-import 'package:sudoku/other_logic/app_globals.dart';
 
 part 'statistics.g.dart';
 
@@ -59,7 +58,7 @@ class Stats {
     return biggestStreak;
   }
 
-  Stats() : saveBox = Hive.box(AppGlobals.statisticBoxName) {
+  Stats({required this.saveBox}) {
     for (int i = 0; i < saveBox.length; i++) {
       stats.add(saveBox.getAt(i));
     }

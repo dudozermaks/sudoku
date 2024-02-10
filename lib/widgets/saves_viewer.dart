@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/pages/solving.dart';
 import 'package:sudoku/widgets/sudoku.dart';
@@ -26,7 +28,7 @@ class _SavesViewerState extends State<SavesViewer> {
   @override
   void initState() {
     super.initState();
-    field = SudokuField.fromFile(widget.file);
+    field = SudokuField.fromFile(widget.file, context.read<AppGlobals>().infoBox);
   }
 
   @override
@@ -80,7 +82,7 @@ class _SavesViewerState extends State<SavesViewer> {
 				// Updating this save tile
         .then(
           (value) => setState(
-            () => field = SudokuField.fromFile(widget.file),
+            () => field = SudokuField.fromFile(widget.file, context.read<AppGlobals>().infoBox),
           ),
         );
   }

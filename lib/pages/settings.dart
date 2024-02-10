@@ -30,7 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
           lightTheme: buildTheme(context),
           darkTheme: buildTheme(context),
           sections: [
-            buildThemeSection(),
+            buildThemeSection(context),
             if (foundation.kDebugMode) buildDevelopmentSection()
           ],
         ),
@@ -38,8 +38,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  SettingsSection buildThemeSection() {
-    var themeBox = Hive.box(AppGlobals.themeBoxName);
+  SettingsSection buildThemeSection(BuildContext context) {
+		var themeBox = context.read<AppGlobals>().themeBox;
     return SettingsSection(
       title: Text("theme".i18n()),
       tiles: [

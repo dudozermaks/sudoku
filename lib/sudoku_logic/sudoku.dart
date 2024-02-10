@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:hive_flutter/adapters.dart';
 import 'package:sudoku/sudoku_logic/sudoku_info.dart';
-import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/pos.dart';
 import 'package:sudoku/src/rust/api/sudoku.dart';
 
@@ -27,39 +26,37 @@ class SudokuField {
   String get difficultyString =>
       difficulty.toString() + (info.humanEngineSolved ? "" : "+");
 
-  SudokuField({String? clues})
+  SudokuField(this.infoBox, {String? clues})
       : _pencilmarks = List.generate(81, (index) => List.empty(growable: true),
             growable: false),
         _clues = List.filled(81, 0, growable: false),
         _isUserPlaced = List.filled(81, true, growable: false),
         time = 0,
-        _selected = Pos(-1, -1),
-        infoBox = Hive.box(AppGlobals.infoBoxName) {
+        _selected = Pos(-1, -1){
     if (clues != null) {
       _setClues(clues);
       _getPuzzleInfo();
     }
   }
 
-  factory SudokuField.fromFile(File file) {
-    var field = SudokuField.fromJson(jsonDecode(file.readAsStringSync()));
+  factory SudokuField.fromFile(File file, Box infoBox) {
+    var field = SudokuField.fromJson(jsonDecode(file.readAsStringSync()), infoBox);
     field._saveFile = file;
     return field;
   }
 
-  SudokuField.fromJson(Map<String, dynamic> json)
+  SudokuField.fromJson(Map<String, dynamic> json, this.infoBox)
       : _clues = List<int>.from(json["clues"], growable: false),
         _pencilmarks = List<List<int>>.generate(
             81, (index) => List<int>.from(json["pencilmarks"][index]),
             growable: false),
         _isUserPlaced = List<bool>.from(json["isUserPlaced"], growable: false),
         time = json["time"] as int,
-        _selected = Pos.fromJson(json["selected"]),
-        infoBox = Hive.box(AppGlobals.infoBoxName) {
+        _selected = Pos.fromJson(json["selected"]) {
     _getPuzzleInfo();
   }
 
-  SudokuField.generate() : this(clues: generateSudoku());
+  SudokuField.generate(Box infoBox) : this(infoBox, clues: generateSudoku());
 
   get hasBeenModified => _hasBeenModified;
 
@@ -233,8 +230,8 @@ class SudokuField {
   }
 
 	/// Call this function before deleting saved file.
-	static Future<void> deleteFromDB(File file) async {
-    var field = SudokuField.fromFile(file);
+	static Future<void> deleteFromDB(File file, Box infoBox) async {
+    var field = SudokuField.fromFile(file, infoBox);
     final clues = field.cluesToString(nonUser: true, user: false);
 		await field.infoBox.delete(clues);
 

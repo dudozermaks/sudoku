@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
+import 'package:provider/provider.dart';
+import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/widgets/sudoku.dart';
 
@@ -42,7 +44,7 @@ class GuideViewer extends StatelessWidget {
   Widget _parseLine(String line, BuildContext context) {
     if (line.startsWith("-sudoku=")) {
       return SudokuWidget(
-        field: SudokuField(clues: line.substring(8)),
+        field: SudokuField(context.read<AppGlobals>().infoBox, clues: line.substring(8)),
         setSelected: null,
       );
     }

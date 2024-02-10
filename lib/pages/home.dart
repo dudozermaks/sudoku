@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:provider/provider.dart';
 import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/pages/guides.dart';
@@ -64,7 +65,8 @@ class _HomePageState extends State<HomePage> {
                 },
                 onSubmitted: (String value) {
                   if (canBeLoaded) {
-                    _loadPuzzle(SudokuField(clues: _controller.text));
+                    _loadPuzzle(SudokuField(context.read<AppGlobals>().infoBox,
+                        clues: _controller.text));
                   }
                 },
                 decoration: InputDecoration(
@@ -76,8 +78,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   suffixIcon: TextButton(
                     onPressed: canBeLoaded
-                        ? () =>
-                            _loadPuzzle(SudokuField(clues: _controller.text))
+                        ? () => _loadPuzzle(SudokuField(
+                            context.read<AppGlobals>().infoBox,
+                            clues: _controller.text))
                         : null,
                     child: const Icon(Icons.send),
                   ),
@@ -110,10 +113,12 @@ class _HomePageState extends State<HomePage> {
   List<Widget> buildButtons() {
     return [
       buildButton(SavesPage.routeName, "saves".i18n(), Icons.save),
+      buildButton(SolvingPage.userSettingRouteName, "set-field-yourself".i18n(),
+          Icons.edit),
+      buildButton(SolvingPage.generatingRouteName, "generate-field".i18n(),
+          Icons.computer),
       buildButton(
-          SolvingPage.userSettingRouteName, "set-field-yourself".i18n(), Icons.edit),
-      buildButton(SolvingPage.generatingRouteName, "generate-field".i18n(), Icons.computer),
-      buildButton(StatisticsPage.routeName, "statistics".i18n(), Icons.analytics),
+          StatisticsPage.routeName, "statistics".i18n(), Icons.analytics),
       buildButton(GuidesPage.routeName, "guides".i18n(), Icons.book),
       buildButton(SettingsPage.routeName, "settings".i18n(), Icons.settings),
     ];

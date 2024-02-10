@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku/sudoku_logic/sudoku.dart';
@@ -75,14 +76,14 @@ class _SavesPageState extends State<SavesPage> {
         return SavesViewer(
           key: ValueKey(_files[index].path),
           file: _files[index],
-          onDelete: _deleteSave,
+          onDelete: (f) => _deleteSave(f, context.read<AppGlobals>().infoBox),
         );
       },
     );
   }
 
-  void _deleteSave(File f) {
-    SudokuField.deleteFromDB(f).then(
+  void _deleteSave(File f, Box infoBox) {
+    SudokuField.deleteFromDB(f, infoBox).then(
       (value) => setState(
         () {
           f.deleteSync();
