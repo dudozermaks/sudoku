@@ -1,5 +1,9 @@
 import 'package:hive_flutter/adapters.dart';
 
+/// Many methods are UNIMPLEMENTED! be careful
+/// This is just a thin wrap for standard Map.
+/// Maybe this class is a bad idea, but I could not find any alternatives for
+/// opening boxes without the Hive initialized
 class FakeBox<E> extends Box<E> {
   final _storage = <dynamic, dynamic>{};
   var _nextIndex = 0;
