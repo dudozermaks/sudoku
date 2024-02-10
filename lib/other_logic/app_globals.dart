@@ -14,7 +14,6 @@ class AppGlobals {
 	static const EdgeInsets padding = EdgeInsets.all(5);
   late String applicationPath;
   late String savesPath;
-  late File statFile;
 
   Future<void> load() async {
     // ignore: prefer_interpolation_to_compose_strings
@@ -24,9 +23,6 @@ class AppGlobals {
     // ignore: prefer_interpolation_to_compose_strings
     savesPath = applicationPath + Platform.pathSeparator + "Puzzles";
 
-    statFile =
-        // ignore: prefer_interpolation_to_compose_strings
-        File(applicationPath + Platform.pathSeparator + "statistics.json");
 
 		await Hive.initFlutter(applicationPath);
 
