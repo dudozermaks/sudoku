@@ -61,5 +61,11 @@ class AppGlobals {
     }
   }
 
+  Future<void> loadForScreenshots() async {
+    themeBox = FakeBox();
+    infoBox = FakeBox();
+    statisticsBox = FakeBox();
+  }
+
   AppGlobals();
 }
