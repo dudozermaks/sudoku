@@ -16,6 +16,7 @@ class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
   }
 }
 
+// TODO: fix this warning about immutable class
 class DurationAdapter extends TypeAdapter<Duration> {
   @override
   int typeId = 12;
