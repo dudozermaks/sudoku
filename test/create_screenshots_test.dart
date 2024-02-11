@@ -10,18 +10,20 @@ void main() async {
   await appGlobals.themeBox.put("themeMode", ThemeMode.dark);
   await appGlobals.themeBox.put("color", const Color(0xFF79E579));
 
-	// TODO: maybe migrate to golden_toolkit
-	// TODO: make rust initialize (see integration test)
-  testWidgets('Golden test', (WidgetTester tester) async {
+  // TODO: make rust initialize (see integration test)
+	// TODO: make fonts load
+  testWidgets('Home page', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 1920);
+
     await tester.pumpWidget(SudokuApp(
       appGlobals: appGlobals,
     ));
 
-		// Without this line the whole method does not work.
-		// main.png is just a blank screenshot.
-		await tester.pumpAndSettle();
+    // Without this line the whole method does not work.
+    // main.png is just a blank screenshot.
+    await tester.pumpAndSettle();
 
     await expectLater(
-        find.byType(SudokuApp), matchesGoldenFile('screenshots/main.png'));
+        find.byType(SudokuApp), matchesGoldenFile('screenshots/home_page.png'));
   });
 }
