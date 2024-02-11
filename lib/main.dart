@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,14 +25,16 @@ Future<void> main() async {
 
   runApp(SudokuApp(
     appGlobals: appGlobals,
+		showDebugBanner: kDebugMode,
   ));
 }
 
 class SudokuApp extends StatelessWidget {
   final AppGlobals appGlobals;
+	final bool showDebugBanner;
   const SudokuApp({
     super.key,
-    required this.appGlobals,
+    required this.appGlobals, required this.showDebugBanner,
   });
 
   @override
@@ -59,6 +62,7 @@ class SudokuApp extends StatelessWidget {
         return MaterialApp(
           title: "app-name".i18n(),
           home: const HomePage(),
+					debugShowCheckedModeBanner: showDebugBanner,
           darkTheme: ThemeData(
             useMaterial3: true,
             brightness: Brightness.dark,
