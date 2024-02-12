@@ -55,4 +55,32 @@ void main() {
       await t.pumpAndSettle();
     },
   );
+
+	// TODO: remove this Done thing at the bottom
+  makeScreenshot(
+    SudokuApp(
+      appGlobals: appGlobals,
+      showDebugBanner: false,
+    ),
+    "Statistics",
+    "statistics_page",
+    (t) async {
+			// Generaing fake stats
+      await t.tap(find.byIcon(Icons.settings));
+      await t.pumpAndSettle();
+			await t.tap(find.byIcon(Icons.analytics_outlined));
+      await t.pumpAndSettle();
+			// Going back
+			await t.tap(find.byIcon(Icons.arrow_back));
+      await t.pumpAndSettle();
+			// Going to statistics page
+			await t.tap(find.byIcon(Icons.analytics));
+      await t.pumpAndSettle();
+			await t.tap(find.byType(TextButton));
+      await t.pumpAndSettle();
+			// Choosing year
+			await t.tap(find.bySemanticsLabel("2023"));
+      await t.pumpAndSettle(const Duration(seconds: 1));
+    },
+  );
 }

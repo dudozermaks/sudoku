@@ -128,6 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   SettingsSection buildDevelopmentSection() {
+		// TODO: make this a dedicated function
     deleteStats(BuildContext context) {
       debugPrint("Deleting statistics");
       var stats = Provider.of<Stats>(context, listen: false);
@@ -140,6 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
 		// TODO: add year-picker
 		// TODO: do not delete previous stats
+		// TODO: make this a dedicated function
     generateStats(BuildContext context) {
       int rgSeed = DateTime.now().millisecondsSinceEpoch;
       Random rg = Random(rgSeed);
@@ -154,8 +156,8 @@ class _SettingsPageState extends State<SettingsPage> {
           // 60 * 30s = 30 mins
           timeToSolve: Duration(seconds: rg.nextInt(60 * 30)),
           clues: "0" * 81,
-          // from 01.01.2022 to 01.01.2023
-          finished: DateTime(2022).add(Duration(days: rg.nextInt(365))),
+          // from 01.01.2023 to 01.01.2024
+          finished: DateTime(2023).add(Duration(days: rg.nextInt(365))),
         );
 
         statPieces.add(s);
