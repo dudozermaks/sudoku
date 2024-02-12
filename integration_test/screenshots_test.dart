@@ -32,6 +32,7 @@ void main() {
     await appGlobals.load();
   });
 
+	// TODO: make screenshots like on android (spacing, fonts, etc...)
   makeScreenshot(
     SudokuApp(
       appGlobals: appGlobals,
