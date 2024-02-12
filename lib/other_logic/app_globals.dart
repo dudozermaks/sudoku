@@ -61,6 +61,7 @@ class AppGlobals {
     }
   }
 
+	// TODO: remove this and FakeBox
   Future<void> loadForScreenshots() async {
     themeBox = FakeBox();
     infoBox = FakeBox();
