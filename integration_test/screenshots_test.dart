@@ -9,7 +9,7 @@ void makeScreenshot(
     Widget w, String testName, String fileName, Function(WidgetTester) later) {
   testWidgets(testName, (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1080 / 2, 1920 / 2);
-	debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
 
     await tester.pumpWidget(w);
 
@@ -23,7 +23,7 @@ void makeScreenshot(
       find.byType(SudokuApp),
       matchesGoldenFile('screenshots/$fileName.png'),
     );
-	debugDefaultTargetPlatformOverride = null;
+    debugDefaultTargetPlatformOverride = null;
   });
 }
 
@@ -35,7 +35,6 @@ void main() {
     await appGlobals.load();
   });
 
-	// TODO: make screenshots like on android (spacing, fonts, etc...)
   makeScreenshot(
     SudokuApp(
       appGlobals: appGlobals,
@@ -59,7 +58,7 @@ void main() {
     },
   );
 
-	// TODO: remove this Done thing at the bottom
+  // TODO: remove this Done thing at the bottom
   makeScreenshot(
     SudokuApp(
       appGlobals: appGlobals,
@@ -68,21 +67,21 @@ void main() {
     "Statistics",
     "statistics_page",
     (t) async {
-			// Generaing fake stats
+      // Generaing fake stats
       await t.tap(find.byIcon(Icons.settings));
       await t.pumpAndSettle();
-			await t.tap(find.byIcon(Icons.analytics_outlined));
+      await t.tap(find.byIcon(Icons.analytics_outlined));
       await t.pumpAndSettle();
-			// Going back
-			await t.tap(find.byIcon(Icons.arrow_back));
+      // Going back
+      await t.tap(find.byIcon(Icons.arrow_back));
       await t.pumpAndSettle();
-			// Going to statistics page
-			await t.tap(find.byIcon(Icons.analytics));
+      // Going to statistics page
+      await t.tap(find.byIcon(Icons.analytics));
       await t.pumpAndSettle();
-			await t.tap(find.byType(TextButton));
+      await t.tap(find.byType(TextButton));
       await t.pumpAndSettle();
-			// Choosing year
-			await t.tap(find.bySemanticsLabel("2023"));
+      // Choosing year
+      await t.tap(find.bySemanticsLabel("2023"));
       await t.pumpAndSettle(const Duration(seconds: 1));
     },
   );
