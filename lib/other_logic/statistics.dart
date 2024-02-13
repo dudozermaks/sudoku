@@ -108,11 +108,9 @@ class Stats {
 
 @HiveType(typeId: 1)
 class StatPiece {
-  /// Milliseconds since epoch
   @HiveField(0)
   final DateTime finished;
 
-  /// Milliseconds
   @HiveField(1)
   final Duration timeToSolve;
 
