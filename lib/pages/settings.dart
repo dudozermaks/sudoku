@@ -137,7 +137,7 @@ class _SettingsPageState extends State<SettingsPage> {
           onPressed: (c) {
             deleteStats(c);
 
-            ScaffoldMessenger.of(context)
+            ScaffoldMessenger.of(c)
                 .showSnackBar(SnackBar(content: Text("done".i18n())));
           },
         ),
@@ -145,9 +145,11 @@ class _SettingsPageState extends State<SettingsPage> {
           leading: const Icon(Icons.analytics_outlined),
           title: Text("development-fake-stats".i18n()),
           onPressed: (c) {
-            generateStats(c);
+						// TODO: add year-picker
+						// TODO: do not delete previous stats
+            generateStats(c, 2023);
 
-            ScaffoldMessenger.of(context)
+            ScaffoldMessenger.of(c)
                 .showSnackBar(SnackBar(content: Text("done".i18n())));
           },
         ),

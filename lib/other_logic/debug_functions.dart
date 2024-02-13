@@ -11,9 +11,7 @@ deleteStats(BuildContext context) {
   stats.stats.clear();
 }
 
-// TODO: add year-picker
-// TODO: do not delete previous stats
-generateStats(BuildContext context) {
+generateStats(BuildContext context, int year) {
   int rgSeed = DateTime.now().millisecondsSinceEpoch;
   Random rg = Random(rgSeed);
   deleteStats(context);
@@ -27,8 +25,7 @@ generateStats(BuildContext context) {
       // 60 * 30s = 30 mins
       timeToSolve: Duration(seconds: rg.nextInt(60 * 30)),
       clues: "0" * 81,
-      // from 01.01.2023 to 01.01.2024
-      finished: DateTime(2023).add(Duration(days: rg.nextInt(365))),
+      finished: DateTime(year).add(Duration(days: rg.nextInt(365))),
     );
 
     statPieces.add(s);
