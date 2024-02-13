@@ -17,6 +17,12 @@ Sudoku app written in Flutter (for now 📱 **Android-only**).
   - [💪 Powered by](#💪-powered-by)
 <!--toc:end-->
 
+<p align="center" style="white-space: nowrap; overflow-x: auto;">
+    <img alt="Home page screenshot" src="integration_test/screenshots/home_page.png", width="48%"/>
+    <img alt="Solving page screenshot" src="integration_test/screenshots/solving_page.png", width="48%"/>
+    <img alt="Statistics page screenshot" src="integration_test/screenshots/statistics_page.png", width="48%"/>
+</p>
+
 ## 👀 Features
 
 * 🎨 Material 3 theme and minimalistic design
