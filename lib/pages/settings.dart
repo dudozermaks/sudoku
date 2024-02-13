@@ -7,7 +7,7 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:sudoku/other_logic/app_globals.dart';
-import 'package:sudoku/other_logic/statistics.dart';
+import 'package:sudoku/other_logic/debug_functions.dart';
 
 import 'package:flutter/foundation.dart' as foundation;
 
@@ -128,51 +128,6 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   SettingsSection buildDevelopmentSection() {
-		// TODO: make this a dedicated function
-    deleteStats(BuildContext context) {
-      debugPrint("Deleting statistics");
-      var stats = Provider.of<Stats>(context, listen: false);
-      stats.saveBox.clear();
-      stats.stats.clear();
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("done".i18n())));
-    }
-
-		// TODO: add year-picker
-		// TODO: do not delete previous stats
-		// TODO: make this a dedicated function
-    generateStats(BuildContext context) {
-      int rgSeed = DateTime.now().millisecondsSinceEpoch;
-      Random rg = Random(rgSeed);
-      deleteStats(context);
-      debugPrint("Generating fake statistics. Rg seed: $rgSeed");
-      var stats = Provider.of<Stats>(context, listen: false);
-
-      List<StatPiece> statPieces = List.empty(growable: true);
-      for (int i = 0; i < 200; i++) {
-        var s = StatPiece(
-          difficulty: rg.nextInt(800) + 700,
-          // 60 * 30s = 30 mins
-          timeToSolve: Duration(seconds: rg.nextInt(60 * 30)),
-          clues: "0" * 81,
-          // from 01.01.2023 to 01.01.2024
-          finished: DateTime(2023).add(Duration(days: rg.nextInt(365))),
-        );
-
-        statPieces.add(s);
-      }
-
-      statPieces.sort((a, b) => a.finished.compareTo(b.finished));
-
-      for (var s in statPieces) {
-        stats.addStatPiece(s, checkIfAlreadyAdded: false);
-      }
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("done".i18n())));
-    }
-
     return SettingsSection(
       title: const Text("Development"),
       tiles: [
