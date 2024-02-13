@@ -88,4 +88,5 @@ If you don't understand something - please feel free to open an issue!
 * 🎨 [Flutter](https://flutter.dev) (see additional dependencies in `pubspec.yaml`)
 * 💻 [Rust Sudoku crate](https://crates.io/crates/sudoku) (for generating and rating Sudoku)
 * 🐝 [Hive database](https://pub.dev/packages/hive) (for storing settings and statistics)
+* 📷 [Integration test](https://docs.flutter.dev/cookbook/testing/integration/introduction) (for automated screenshots with golden testing)
 * 🌉 [Flutter-Rust bridge](https://pub.dev/packages/flutter_rust_bridge)
