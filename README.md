@@ -14,6 +14,7 @@ Sudoku app written in Flutter (for now 📱 **Android-only**).
   - [💪 Powered by](#💪-powered-by)
 <!--toc:end-->
 
+<!--- TODO: add scrolling -->
 | Home | Solving | Statistics |
 | ---- | ------- | ---------- |
 | ![Home page screenshot](integration_test/screenshots/home_page.png) | ![Solving page screenshot](integration_test/screenshots/solving_page.png) | ![Statistics page screenshot](integration_test/screenshots/statistics_page.png) |
