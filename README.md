@@ -2,9 +2,6 @@
 
 Sudoku app written in Flutter (for now 📱 **Android-only**).
 
-> [!WARNING]
-> This app is in intense development. Expect breaking changes (they can ruin your saves and statistics) and bugs. This app is not production ready yet.
-
 <!--toc:start-->
 - [🔢 sudoku.](#🔢-sudoku)
   - [👀 Features](#👀-features)
