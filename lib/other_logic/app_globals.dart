@@ -48,12 +48,9 @@ class AppGlobals {
     // Built-in adapters
     Hive.registerAdapter(ColorAdapter());
 
-    await Hive.openBox(themeBoxName);
-    themeBox = Hive.box(themeBoxName);
-    await Hive.openBox(infoBoxName);
-    infoBox = Hive.box(infoBoxName);
-    await Hive.openBox(statisticsBoxName);
-    statisticsBox = Hive.box(statisticsBoxName);
+    themeBox = await Hive.openBox(themeBoxName);
+    infoBox = await Hive.openBox(infoBoxName);
+    statisticsBox = await Hive.openBox(statisticsBoxName);
 
     if (themeBox.isEmpty) {
       await themeBox.put("themeMode", ThemeMode.system);
