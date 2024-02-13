@@ -16,10 +16,9 @@ class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
   }
 }
 
-// TODO: fix this warning about immutable class
 class DurationAdapter extends TypeAdapter<Duration> {
   @override
-  int typeId = 12;
+  final int typeId = 12;
 
   @override
   Duration read(BinaryReader reader) {
