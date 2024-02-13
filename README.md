@@ -34,6 +34,8 @@ Sudoku app written in Flutter (for now 📱 **Android-only**).
 
 <sub> **WIP** - work in progress </sub>
 
+<a href="https://www.buymeacoffee.com/dudozer_maks"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=dudozer_maks&button_colour=79e579&font_colour=000000&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00" /></a>
+
 ## 📆 Plans
 
 This is a preferable timeline for tasks. But some tasks might be done faster or slower than listed here.
