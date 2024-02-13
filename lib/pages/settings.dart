@@ -147,7 +147,7 @@ class _SettingsPageState extends State<SettingsPage> {
           onPressed: (c) {
 						// TODO: add year-picker
 						// TODO: do not delete previous stats
-            generateStats(c, 2023);
+            generateStats(c, 2023, DateTime.now().millisecondsSinceEpoch);
 
             ScaffoldMessenger.of(c)
                 .showSnackBar(SnackBar(content: Text("done".i18n())));

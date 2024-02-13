@@ -11,8 +11,7 @@ deleteStats(BuildContext context) {
   stats.stats.clear();
 }
 
-generateStats(BuildContext context, int year) {
-  int rgSeed = DateTime.now().millisecondsSinceEpoch;
+generateStats(BuildContext context, int year, int rgSeed) {
   Random rg = Random(rgSeed);
   deleteStats(context);
   debugPrint("Generating fake statistics. Rg seed: $rgSeed");
