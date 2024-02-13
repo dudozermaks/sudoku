@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku/main.dart';
@@ -8,6 +9,7 @@ void makeScreenshot(
     Widget w, String testName, String fileName, Function(WidgetTester) later) {
   testWidgets(testName, (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1080 / 2, 1920 / 2);
+	debugDefaultTargetPlatformOverride = TargetPlatform.android;
 
     await tester.pumpWidget(w);
 
@@ -21,6 +23,7 @@ void makeScreenshot(
       find.byType(SudokuApp),
       matchesGoldenFile('screenshots/$fileName.png'),
     );
+	debugDefaultTargetPlatformOverride = null;
   });
 }
 
