@@ -33,6 +33,7 @@ void main() {
   var appGlobals = AppGlobals();
   setUpAll(() async {
     await appGlobals.load();
+		await appGlobals.themeBox.put("themeMode", ThemeMode.dark);
   });
 
   makeScreenshot(
