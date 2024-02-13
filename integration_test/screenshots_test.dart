@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku/main.dart';
 import 'package:sudoku/other_logic/app_globals.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:sudoku/other_logic/debug_functions.dart';
+import 'package:sudoku/pages/home.dart';
 
 void makeScreenshot(
     Widget w, String testName, String fileName, Function(WidgetTester) later) {
@@ -59,7 +61,6 @@ void main() {
     },
   );
 
-  // TODO: remove this Done thing at the bottom
   makeScreenshot(
     SudokuApp(
       appGlobals: appGlobals,
@@ -68,20 +69,17 @@ void main() {
     "Statistics",
     "statistics_page",
     (t) async {
-      // Generaing fake stats
-      await t.tap(find.byIcon(Icons.settings));
-      await t.pumpAndSettle();
-      await t.tap(find.byIcon(Icons.analytics_outlined));
-      await t.pumpAndSettle();
-      // Going back
-      await t.tap(find.byIcon(Icons.arrow_back));
-      await t.pumpAndSettle();
+			BuildContext context = t.element(find.byType(HomePage));
+
+			// Do not change this 42, it's seed for random generator
+			// It must be static in order to detect, when new screenshots needed
+			generateStats(context, 2023, 42);
       // Going to statistics page
       await t.tap(find.byIcon(Icons.analytics));
       await t.pumpAndSettle();
+      // Choosing year
       await t.tap(find.byType(TextButton));
       await t.pumpAndSettle();
-      // Choosing year
       await t.tap(find.bySemanticsLabel("2023"));
       await t.pumpAndSettle(const Duration(seconds: 1));
     },
