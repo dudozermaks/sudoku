@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku/other_logic/statistics.dart';
 
@@ -10,9 +9,6 @@ deleteStats(BuildContext context) {
   var stats = Provider.of<Stats>(context, listen: false);
   stats.saveBox.clear();
   stats.stats.clear();
-
-  ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text("done".i18n())));
 }
 
 // TODO: add year-picker
@@ -43,7 +39,4 @@ generateStats(BuildContext context) {
   for (var s in statPieces) {
     stats.addStatPiece(s, checkIfAlreadyAdded: false);
   }
-
-  ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text("done".i18n())));
 }

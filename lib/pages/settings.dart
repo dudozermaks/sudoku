@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   SettingsSection buildThemeSection(BuildContext context) {
-		var themeBox = context.read<AppGlobals>().themeBox;
+    var themeBox = context.read<AppGlobals>().themeBox;
     return SettingsSection(
       title: Text("theme".i18n()),
       tiles: [
@@ -134,12 +134,22 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsTile(
           leading: const Icon(Icons.delete_forever_outlined),
           title: Text("development-delete-stats".i18n()),
-          onPressed: deleteStats,
+          onPressed: (c) {
+            deleteStats(c);
+
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text("done".i18n())));
+          },
         ),
         SettingsTile(
           leading: const Icon(Icons.analytics_outlined),
           title: Text("development-fake-stats".i18n()),
-          onPressed: generateStats,
+          onPressed: (c) {
+            generateStats(c);
+
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text("done".i18n())));
+          },
         ),
       ],
     );
