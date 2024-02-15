@@ -30,12 +30,17 @@ class SudokuWidget extends StatelessWidget {
           double cellSize = (sideSize - separatorSize * 2) / 9;
 
           return Column(
-						crossAxisAlignment: CrossAxisAlignment.center,
-						mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               for (int i = 0; i < 9; i++)
                 ...buildRowWithSeparator(
-                    i, separatorSize, colorScheme.outline, cellSize, sideSize)
+                  i,
+                  separatorSize,
+                  colorScheme.outline,
+                  cellSize,
+                  sideSize,
+                )
             ],
           );
         }),
@@ -43,8 +48,13 @@ class SudokuWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> buildRowWithSeparator(int rowCount, double separatorSize,
-      Color separatorColor, double cellSize, double sideSize) {
+  List<Widget> buildRowWithSeparator(
+    int rowCount,
+    double separatorSize,
+    Color separatorColor,
+    double cellSize,
+    double sideSize,
+  ) {
     var cells = List<Widget>.empty(growable: true);
 
     for (int i = 0; i < 9; i++) {
@@ -65,7 +75,10 @@ class SudokuWidget extends StatelessWidget {
     }
 
     return [
-      Row(mainAxisAlignment: MainAxisAlignment.center,children: cells,),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: cells,
+      ),
       if (rowCount == 2 || rowCount == 5)
         SizedBox(
           width: sideSize,
