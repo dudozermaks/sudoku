@@ -137,7 +137,6 @@ class _SettingsPageState extends State<SettingsPage> {
           title: Text("license".i18n()),
           // TODO: fix i18n duplicated key warning
           // NOTE: with useRootNavigator set to true, after hot-reload all warnings stop
-          // NOTE: maybe transfer i18n init to AppGlobals.init()
           onPressed: (context) => showLicensePage(
             context: context,
             useRootNavigator: true,
