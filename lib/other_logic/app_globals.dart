@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sudoku/other_logic/additional_license_register.dart';
 import 'package:sudoku/src/rust/frb_generated.dart';
 import 'package:sudoku/sudoku_logic/sudoku_info.dart';
 import 'package:sudoku/other_logic/adapters.dart';
@@ -55,6 +56,8 @@ class AppGlobals {
       await themeBox.put("themeMode", ThemeMode.system);
       await themeBox.put("color", const Color(0xFF79E579));
     }
+
+		registerAdditionalLicenses();
   }
 
   AppGlobals();
