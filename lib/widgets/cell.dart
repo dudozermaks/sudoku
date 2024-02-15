@@ -44,7 +44,7 @@ class Cell extends StatelessWidget {
     FontWeight fontWeight = FontWeight.w900;
     if (isUserPlaced) {
       if (clue == "") {
-        fontWeight = FontWeight.w100;
+        fontWeight = FontWeight.w200;
       } else {
         fontWeight = FontWeight.w300;
       }
@@ -61,8 +61,10 @@ class Cell extends StatelessWidget {
             shape: const RoundedRectangleBorder(),
             textStyle: TextStyle(
               fontWeight: fontWeight,
-              fontSize: clue != "" ? size / 1.8 : size / 3.5,
+              fontSize: clue != "" ? size / 1.8 : size / 2.9,
+              height: 1,
             ),
+            padding: EdgeInsets.zero,
             foregroundColor: fg,
             disabledForegroundColor: colorScheme.primary,
           ),

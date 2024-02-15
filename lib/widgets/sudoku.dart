@@ -5,7 +5,6 @@ import 'package:sudoku/sudoku_logic/sudoku.dart';
 import 'package:sudoku/sudoku_logic/pos.dart';
 import 'package:sudoku/widgets/cell.dart';
 
-// TODO: numbers are too big on the phone
 class SudokuWidget extends StatelessWidget {
   final SudokuField field;
   final Function(Pos)? setSelected;
