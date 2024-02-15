@@ -34,7 +34,7 @@ void main() {
 
   var appGlobals = AppGlobals();
   setUpAll(() async {
-    await appGlobals.load();
+    await appGlobals.load("SudokuAppScreenshots");
 		await appGlobals.themeBox.put("themeMode", ThemeMode.dark);
   });
 

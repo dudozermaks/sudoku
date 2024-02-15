@@ -21,7 +21,7 @@ class AppGlobals {
   /// This function loads some async stuff (like RustLib, PathProvider and Hive).
   /// Also it setups everything needed for SudokuApp.
   /// You need to make sure to call this function before passing globals anywhere else.
-  Future<void> load() async {
+  Future<void> load([String folderName="SudokuApp"]) async {
     const String themeBoxName = "themeBox";
     const String infoBoxName = "infoBox";
     const String statisticsBoxName = "statisticsBox";
@@ -33,7 +33,7 @@ class AppGlobals {
     // ignore: prefer_interpolation_to_compose_strings
     applicationPath = (await getApplicationDocumentsDirectory()).path +
         Platform.pathSeparator +
-        "SudokuApp";
+        folderName;
     // ignore: prefer_interpolation_to_compose_strings
     savesPath = applicationPath + Platform.pathSeparator + "Puzzles";
 
