@@ -31,6 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
           darkTheme: buildTheme(context),
           sections: [
             buildThemeSection(context),
+            buildLicenseSection(context),
             if (foundation.kDebugMode) buildDevelopmentSection()
           ],
         ),
@@ -127,6 +128,26 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  buildLicenseSection(BuildContext context) {
+    return SettingsSection(
+      title: const Text("About"),
+      tiles: [
+        SettingsTile(
+          leading: const Icon(Icons.description_outlined),
+          title: Text("license".i18n()),
+          // TODO: fix i18n duplicated key warning
+          // NOTE: with useRootNavigator set to true, after hot-reload all warnings stop
+          // NOTE: maybe transfer i18n init to AppGlobals.init()
+          onPressed: (context) => showLicensePage(
+            context: context,
+            useRootNavigator: true,
+						applicationVersion: "0.0.1"
+          ),
+        ),
+      ],
+    );
+  }
+
   SettingsSection buildDevelopmentSection() {
     return SettingsSection(
       title: const Text("Development"),
@@ -145,8 +166,8 @@ class _SettingsPageState extends State<SettingsPage> {
           leading: const Icon(Icons.analytics_outlined),
           title: Text("development-fake-stats".i18n()),
           onPressed: (c) {
-						// TODO: add year-picker
-						// TODO: do not delete previous stats
+            // TODO: add year-picker
+            // TODO: do not delete previous stats
             generateStats(c, 2023, DateTime.now().millisecondsSinceEpoch);
 
             ScaffoldMessenger.of(c)

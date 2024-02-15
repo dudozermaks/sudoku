@@ -11,6 +11,7 @@
 	"loading": "Loading...",
 	"load-from-string": "Load from string",
 	"can-be-loaded": "This puzzle can%b{:'t} be loaded",
+	"license": "License",
 	"saves": "Saves",
 	"saves-delete": "Delete the save",
 	"saves-delete-ask": "Delete this save?",
