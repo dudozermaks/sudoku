@@ -24,7 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("settings".i18n())),
+      appBar: AppBar(title: Text("settings.name".i18n())),
       body: SafeArea(
         child: SettingsList(
           lightTheme: buildTheme(context),
@@ -42,27 +42,27 @@ class _SettingsPageState extends State<SettingsPage> {
   SettingsSection buildThemeSection(BuildContext context) {
     var themeBox = context.read<AppGlobals>().themeBox;
     return SettingsSection(
-      title: Text("theme".i18n()),
+      title: Text("settings.theme.name".i18n()),
       tiles: [
         SettingsTile(
           leading: const Icon(Icons.color_lens),
-          title: Text("theme-base-color".i18n()),
+          title: Text("settings.theme.baseColor".i18n()),
           trailing: Icon(Icons.circle, color: themeBox.get("color")),
           onPressed: (context) => pickColor(context, themeBox, "color"),
         ),
         SettingsTile.navigation(
           leading: const Icon(Icons.dark_mode),
-          title: Text("theme-mode".i18n()),
+          title: Text("settings.theme.mode".i18n()),
           value: Text(
-              "theme-mode-${(themeBox.get("themeMode") as ThemeMode).name}"
+              "settings.theme.mode-${(themeBox.get("themeMode") as ThemeMode).name}"
                   .i18n()),
           onPressed: (context) {
             showDialog(
               context: context,
               builder: (context) {
                 return _PickFromEnum(
-                  title: Text("theme-mode".i18n()),
-                  i18nPrefix: "theme-mode",
+                  title: Text("settings.theme.mode".i18n()),
+                  i18nPrefix: "settings.theme.mode",
                   values: ThemeMode.values,
                   initialValue: themeBox.get("themeMode") as ThemeMode,
                   onSelected: (ThemeMode value) =>
@@ -92,7 +92,7 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title: Text("theme-base-color".i18n()),
+            title: Text("settings.theme.baseColor".i18n()),
             content: SingleChildScrollView(
               child: ColorPicker(
                 labelTypes: const [],
@@ -109,7 +109,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Color((Random().nextDouble() * 0xFFFFFF).toInt())
                             .withOpacity(1.0));
                   },
-                  child: Text("theme-random-color".i18n())),
+                  child: Text("settings.theme.randomColor".i18n())),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text("cancel".i18n()),
@@ -130,11 +130,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   buildAboutSection(BuildContext context) {
     return SettingsSection(
-      title: const Text("About"),
+      title: Text("settings.about.name".i18n()),
       tiles: [
         SettingsTile(
           leading: const Icon(Icons.description_outlined),
-          title: Text("license".i18n()),
+          title: Text("settings.about.license".i18n()),
           // TODO: fix i18n duplicated key warning
           // NOTE: with useRootNavigator set to true, after hot-reload all warnings stop
           onPressed: (context) => showLicensePage(
@@ -150,11 +150,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   SettingsSection buildDevelopmentSection() {
     return SettingsSection(
-      title: const Text("Development"),
+      title: Text("settings.development.name".i18n()),
       tiles: [
         SettingsTile(
           leading: const Icon(Icons.delete_forever_outlined),
-          title: Text("development-delete-stats".i18n()),
+          title: Text("settings.development.deleteStats".i18n()),
           onPressed: (c) {
             deleteStats(c);
 
@@ -164,7 +164,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         SettingsTile(
           leading: const Icon(Icons.analytics_outlined),
-          title: Text("development-fake-stats".i18n()),
+          title: Text("settings.development.fakeStats".i18n()),
           onPressed: (c) {
             // TODO: add year-picker
             // TODO: do not delete previous stats

@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
       buildButton(
           StatisticsPage.routeName, "statistics".i18n(), Icons.analytics),
       buildButton(GuidesPage.routeName, "guides".i18n(), Icons.book),
-      buildButton(SettingsPage.routeName, "settings".i18n(), Icons.settings),
+      buildButton(SettingsPage.routeName, "settings.name".i18n(), Icons.settings),
     ];
   }
 
