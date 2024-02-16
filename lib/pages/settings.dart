@@ -31,7 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
           darkTheme: buildTheme(context),
           sections: [
             buildThemeSection(context),
-            buildLicenseSection(context),
+            buildAboutSection(context),
             if (foundation.kDebugMode) buildDevelopmentSection()
           ],
         ),
@@ -128,7 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  buildLicenseSection(BuildContext context) {
+  buildAboutSection(BuildContext context) {
     return SettingsSection(
       title: const Text("About"),
       tiles: [
@@ -143,6 +143,7 @@ class _SettingsPageState extends State<SettingsPage> {
 						applicationVersion: "0.0.1"
           ),
         ),
+				
       ],
     );
   }
