@@ -1,5 +1,20 @@
 #!/bin/bash
 # WARNING: THIS SCRIPT IS WRITTEN BY A COMPLETE NOOB IN BASH!!!
+# How to
+# this script will rename every string you pass to it, for example:
+
+# file1.txt
+# be be be
+# something "be" something
+# "be something other"
+
+# run: ./script.sh be bebebe
+
+# now file1.txt looks like this
+# be be be
+# something "bebebe" something
+# "be something other"
+
 
 # Check if two arguments are provided
 if [ "$#" -ne 2 ]; then
@@ -13,7 +28,7 @@ new_string=$2
 modified_files=0
 modified_lines=0
 
-# ANSI escape code for bold
+# ANSI escape codes
 bold=$(tput bold)
 green=$(tput setaf 2)
 normal=$(tput sgr0)
@@ -25,6 +40,7 @@ do
 	echo "Modifying $file"
 	echo "Modified lines:"
 	grep -n "\"$initial_string\"" "$file" | sed "s/\"$initial_string\"/${bold}${green}\"$initial_string\"${normal}/g"
+
 	lines=$(grep -n "\"$initial_string\"" "$file" | wc -l)
 
 	sed -i "s/\"$initial_string\"/\"$new_string\"/g" "$file"
