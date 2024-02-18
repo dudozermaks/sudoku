@@ -50,9 +50,9 @@ class _SavesViewerState extends State<SavesViewer> {
             const Icon(Icons.timer),
             Text(StopWatchTimer.getDisplayTime(field.time, milliSecond: false)),
             // add info of date into separator
-            Text("saves-last-saved".i18n()),
+            Text("saves.lastSaved".i18n()),
             Text(_formatDate(field.saveFileStat!.modified)),
-            Text("puzzle-rating".i18n()),
+            Text("saves.puzzleRating".i18n()),
             Text(field.difficultyString),
             ElevatedButton.icon(
               onPressed: () async {
@@ -92,8 +92,8 @@ class _SavesViewerState extends State<SavesViewer> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("saves-delete".i18n()),
-              content: Text("saves-delete-ask".i18n()),
+              title: Text("saves.deleteBig".i18n()),
+              content: Text("saves.deleteAsk".i18n()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),

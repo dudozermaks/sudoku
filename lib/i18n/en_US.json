@@ -4,27 +4,32 @@
 		"yes": "Yes",
 		"no": "No",
 		"done": "Done!",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"error": "Error: %s",
+		"loading": "Loading...",
+		"generateField": "Generate new"
 	},
 
-	"puzzle-rating": "Rating",
-	"error": "Error: %s",
-	"loading": "Loading...",
-	"load-from-string": "Load from string",
-	"can-be-loaded": "This puzzle can%b{:'t} be loaded",
+	"home": {
+		"loadFromString": "Load from string",
+		"canBeLoaded": "This puzzle can%b{:'t} be loaded",
+		"setFieldYourself": "Set yourself"
+	},
 
 	"saves": {
 		"name": "Saves",
-		"delete": "Delete"
+		"delete": "Delete",
+		"deleteBig": "Delete the save",
+		"deleteAsk": "Delete this save?",
+		"lastSaved": "Last saved",
+		"puzzleRating": "Rating"
 	},
-	"saves-delete": "Delete the save",
-	"saves-delete-ask": "Delete this save?",
-	"saves-last-saved": "Last saved",
 
-	"set-field-yourself": "Set yourself",
-	"generate-field": "Generate new",
-	"statistics": "Statistics",
-	"activity-chart": "Activity chart",
+	"statistics": {
+		"name": "Statistics",
+		"activityChart": "Activity chart"
+	},
+
 	"guides": "Guides",
 	"guides-no-content":
     "Ooops! Looks like there is no text in your guide!\nPlease report this bug on the Github",

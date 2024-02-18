@@ -13,7 +13,7 @@ class StatisticsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var stats = context.read<Stats>();
     return Scaffold(
-      appBar: AppBar(title: Text("statistics".i18n())),
+      appBar: AppBar(title: Text("statistics.name".i18n())),
       body: Padding(
         padding: AppGlobals.padding.copyWith(top: 0),
         child: ListView(
@@ -54,7 +54,7 @@ class StatisticsPage extends StatelessWidget {
       ),
       const Divider(),
       Text(
-        "activity-chart".i18n(),
+        "statistics.activityChart".i18n(),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       const ActivityChart(),

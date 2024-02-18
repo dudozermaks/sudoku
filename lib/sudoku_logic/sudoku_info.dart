@@ -64,5 +64,5 @@ class SudokuInfo {
 }
 
 extension _YesNo on bool {
-  String get yesNo => this ? "general.yes" : "general.no";
+  String get yesNo => (this ? "general.yes" : "general.no").i18n();
 }

@@ -84,9 +84,9 @@ class _HomePageState extends State<HomePage> {
                         : null,
                     child: const Icon(Icons.send),
                   ),
-                  labelText: "load-from-string".i18n(),
+                  labelText: "home.loadFromString".i18n(),
                   helperText: _controller.text.isNotEmpty
-                      ? "can-be-loaded".i18n([], [canBeLoaded])
+                      ? "general.canBeLoaded".i18n([], [canBeLoaded])
                       : null,
                   helperStyle:
                       TextStyle(color: canBeLoaded ? Colors.green : Colors.red),
@@ -113,12 +113,12 @@ class _HomePageState extends State<HomePage> {
   List<Widget> buildButtons() {
     return [
       buildButton(SavesPage.routeName, "saves.name".i18n(), Icons.save),
-      buildButton(SolvingPage.userSettingRouteName, "set-field-yourself".i18n(),
+      buildButton(SolvingPage.userSettingRouteName, "home.setFieldYourself".i18n(),
           Icons.edit),
-      buildButton(SolvingPage.generatingRouteName, "generate-field".i18n(),
+      buildButton(SolvingPage.generatingRouteName, "general.generateField".i18n(),
           Icons.computer),
       buildButton(
-          StatisticsPage.routeName, "statistics".i18n(), Icons.analytics),
+          StatisticsPage.routeName, "statistics.name".i18n(), Icons.analytics),
       buildButton(GuidesPage.routeName, "guides".i18n(), Icons.book),
       buildButton(SettingsPage.routeName, "settings.name".i18n(), Icons.settings),
     ];

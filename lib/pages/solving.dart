@@ -380,7 +380,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
                 Navigator.of(context).pop();
                 _generateNextField();
               },
-              child: Text("generate-field".i18n()),
+              child: Text("general.generateField".i18n()),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
