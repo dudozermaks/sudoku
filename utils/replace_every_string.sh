@@ -31,6 +31,7 @@ modified_lines=0
 # ANSI escape codes
 bold=$(tput bold)
 green=$(tput setaf 2)
+red=$(tput setaf 1)
 normal=$(tput sgr0)
 
 # Find and replace strings in files
@@ -52,3 +53,16 @@ done < <(find . -type f -exec grep -l "\"$initial_string\"" {} \;)
 echo "----------------------------------------"
 echo "Total modified files: $modified_files"
 echo "Total modified lines: $modified_lines"
+echo "----------------------------------------"
+
+echo "Not affected files"
+while read file
+do
+	echo "----------------------------------------"
+	echo "$file"
+	echo "lines:"
+	# searching for initial string without quotes
+	grep -n "$initial_string" "$file" | sed "s/$initial_string/${bold}${red}$initial_string${normal}/g"
+	lines=$(grep -n "$initial_string" "$file" | wc -l)
+
+done < <(find . -type f -exec grep -l "$initial_string" {} \;)
