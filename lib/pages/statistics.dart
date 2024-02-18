@@ -135,7 +135,7 @@ class _ActivityChartState extends State<ActivityChart> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("cancel".i18n()),
+              child: Text("general.cancel".i18n()),
             ),
           ],
           content: SizedBox.square(

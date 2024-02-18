@@ -1,20 +1,26 @@
 {
-	"app-name": "sudoku.",
-	"yes": "Yes",
-	"no": "No",
-	"done": "Done!",
-	"delete": "Delete",
-	"cancel": "Cancel",
-	"select": "Select",
+	"general": {
+		"appName": "sudoku.",
+		"yes": "Yes",
+		"no": "No",
+		"done": "Done!",
+		"cancel": "Cancel"
+	},
+
 	"puzzle-rating": "Rating",
 	"error": "Error: %s",
 	"loading": "Loading...",
 	"load-from-string": "Load from string",
 	"can-be-loaded": "This puzzle can%b{:'t} be loaded",
-	"saves": "Saves",
+
+	"saves": {
+		"name": "Saves",
+		"delete": "Delete"
+	},
 	"saves-delete": "Delete the save",
 	"saves-delete-ask": "Delete this save?",
 	"saves-last-saved": "Last saved",
+
 	"set-field-yourself": "Set yourself",
 	"generate-field": "Generate new",
 	"statistics": "Statistics",
@@ -79,7 +85,8 @@
 			"mode-system": "System",
 			"mode-dark": "Dark",
 			"mode-light": "Light",
-			"randomColor": "Random color"
+			"randomColor": "Random color",
+			"selectColor": "Select"
 		},
 
 		"development": {

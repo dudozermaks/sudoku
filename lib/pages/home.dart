@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Center(
                 child: Text(
-                  "app-name".i18n(),
+                  "general.appName".i18n(),
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         color: colorScheme.primary,
                         fontWeight: FontWeight.w600,
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> buildButtons() {
     return [
-      buildButton(SavesPage.routeName, "saves".i18n(), Icons.save),
+      buildButton(SavesPage.routeName, "saves.name".i18n(), Icons.save),
       buildButton(SolvingPage.userSettingRouteName, "set-field-yourself".i18n(),
           Icons.edit),
       buildButton(SolvingPage.generatingRouteName, "generate-field".i18n(),

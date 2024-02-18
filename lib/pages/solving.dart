@@ -255,11 +255,11 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("no".i18n()),
+                  child: Text("general.no".i18n()),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: Text("yes".i18n()),
+                  child: Text("general.yes".i18n()),
                 ),
               ],
             );
@@ -281,11 +281,11 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("no".i18n()),
+                  child: Text("general.no".i18n()),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: Text("yes".i18n()),
+                  child: Text("general.yes".i18n()),
                 ),
               ],
             );
@@ -328,7 +328,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("cancel".i18n()),
+              child: Text("general.cancel".i18n()),
             ),
           ],
         );

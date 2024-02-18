@@ -60,7 +60,7 @@ class SudokuApp extends StatelessWidget {
         var themeMode = box.get("themeMode");
         var color = box.get("color");
         return MaterialApp(
-          title: "app-name".i18n(),
+          title: "general.appName".i18n(),
           home: const HomePage(),
 					debugShowCheckedModeBanner: showDebugBanner,
           darkTheme: ThemeData(

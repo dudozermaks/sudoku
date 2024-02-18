@@ -59,7 +59,7 @@ class _SavesViewerState extends State<SavesViewer> {
                 if (await _showDeleteDialog()) widget.onDelete(widget.file);
               },
               icon: const Icon(Icons.delete),
-              label: Text("delete".i18n()),
+              label: Text("saves.delete".i18n()),
             ),
           ],
         ),
@@ -97,11 +97,11 @@ class _SavesViewerState extends State<SavesViewer> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: Text("yes".i18n()),
+                  child: Text("general.yes".i18n()),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("no".i18n()),
+                  child: Text("general.no".i18n()),
                 ),
               ],
             );

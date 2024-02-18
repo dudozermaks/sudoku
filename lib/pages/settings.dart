@@ -112,10 +112,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Text("settings.theme.randomColor".i18n())),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text("cancel".i18n()),
+                child: Text("general.cancel".i18n()),
               ),
               TextButton(
-                child: Text("select".i18n()),
+                child: Text("settings.theme.selectColor".i18n()),
                 onPressed: () {
                   box.put(name, pickerColor);
                   Navigator.of(context).pop();
@@ -159,7 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
             deleteStats(c);
 
             ScaffoldMessenger.of(c)
-                .showSnackBar(SnackBar(content: Text("done".i18n())));
+                .showSnackBar(SnackBar(content: Text("general.done".i18n())));
           },
         ),
         SettingsTile(
@@ -171,7 +171,7 @@ class _SettingsPageState extends State<SettingsPage> {
             generateStats(c, 2023, DateTime.now().millisecondsSinceEpoch);
 
             ScaffoldMessenger.of(c)
-                .showSnackBar(SnackBar(content: Text("done".i18n())));
+                .showSnackBar(SnackBar(content: Text("general.done".i18n())));
           },
         ),
       ],
@@ -202,7 +202,7 @@ class _PickFromEnum<T extends Enum> extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text("cancel".i18n()),
+          child: Text("general.cancel".i18n()),
         )
       ],
       content: RawScrollbar(

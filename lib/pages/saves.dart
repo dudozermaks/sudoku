@@ -45,7 +45,7 @@ class _SavesPageState extends State<SavesPage> {
   Widget build(BuildContext context) {
     _sortFiles();
     return Scaffold(
-      appBar: AppBar(title: Text("saves".i18n())),
+      appBar: AppBar(title: Text("saves.name".i18n())),
       body: _buildBody(context),
     );
   }
