@@ -50,27 +50,26 @@ fn _strategy_to_difficulty(s: &Strategy) -> u32 {
 
 #[flutter_rust_bridge::frb(sync)]
 fn _strategy_to_string(s: &Strategy) -> String {
-    match s {
-        Strategy::NakedSingles => "naked-singles",
-        Strategy::HiddenSingles => "hidden-singles",
-        Strategy::LockedCandidates => "locked-candidates",
-        Strategy::NakedPairs => "naked-pairs",
-        Strategy::NakedTriples => "naked-triples",
-        Strategy::NakedQuads => "naked-quads",
-        Strategy::HiddenPairs => "hidden-pairs",
-        Strategy::HiddenTriples => "hidden-triples",
-        Strategy::HiddenQuads => "hidden-quads",
-        Strategy::XWing => "x-wing",
-        Strategy::Swordfish => "swordfish",
-        Strategy::Jellyfish => "jellyfish",
-        Strategy::XyWing => "xy-wing",
-        Strategy::XyzWing => "xyz-wing",
-        Strategy::MutantSwordfish => "mutant-swordfish",
-        Strategy::MutantJellyfish => "mutant-jellyfish",
-        _ => "unknown",
-    }
-    .to_string()
-        + "-strategy"
+    "strategy.".to_string()
+        + match s {
+            Strategy::NakedSingles => "naked-singles",
+            Strategy::HiddenSingles => "hidden-singles",
+            Strategy::LockedCandidates => "locked-candidates",
+            Strategy::NakedPairs => "naked-pairs",
+            Strategy::NakedTriples => "naked-triples",
+            Strategy::NakedQuads => "naked-quads",
+            Strategy::HiddenPairs => "hidden-pairs",
+            Strategy::HiddenTriples => "hidden-triples",
+            Strategy::HiddenQuads => "hidden-quads",
+            Strategy::XWing => "x-wing",
+            Strategy::Swordfish => "swordfish",
+            Strategy::Jellyfish => "jellyfish",
+            Strategy::XyWing => "xy-wing",
+            Strategy::XyzWing => "xyz-wing",
+            Strategy::MutantSwordfish => "mutant-swordfish",
+            Strategy::MutantJellyfish => "mutant-jellyfish",
+            _ => "unknown",
+        }
 }
 
 #[flutter_rust_bridge::frb(sync)]
