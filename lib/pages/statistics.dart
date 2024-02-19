@@ -26,30 +26,30 @@ class StatisticsPage extends StatelessWidget {
   List<Widget> buildBody(Stats stats, BuildContext context) {
     return [
       Text(
-        "stat-rating".i18n([stats.rating.toString()]),
+        "statistics.rating".i18n([stats.rating.toString()]),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       Text(
-        "stat-rating-average".i18n([stats.averagePuzzleRating.toString()]),
+        "statistics.ratingAverage".i18n([stats.averagePuzzleRating.toString()]),
         style: Theme.of(context).textTheme.bodySmall,
       ),
       const Divider(),
       Text(
-        "stat-time-solving".i18n([stats.timeSolving.format()]),
+        "statistics.timeSolving".i18n([stats.timeSolving.format()]),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       Text(
-        "stat-time-average".i18n([stats.averageTimeSolving.format()]),
+        "statistics.timeAverage".i18n([stats.averageTimeSolving.format()]),
         style: Theme.of(context).textTheme.bodySmall,
       ),
       Text(
-        "stat-longest-streak"
+        "statistics.longestStreak"
             .i18n([Duration(days: stats.longestStreak).format()]),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       const Divider(),
       Text(
-        "stat-puzzles-solved".i18n([stats.solvedCount.toString()]),
+        "statistics.puzzlesSolved".i18n([stats.solvedCount.toString()]),
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       const Divider(),
@@ -89,7 +89,7 @@ class _ActivityChartState extends State<ActivityChart> {
           children: [
             TextButton(
               onPressed: () => pickYear(context, stats),
-              child: Text("stat-year".i18n([selectedDate.year.toString()])),
+              child: Text("statistics.year".i18n([selectedDate.year.toString()])),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +107,7 @@ class _ActivityChartState extends State<ActivityChart> {
             Row(
               children: [
                 Text(
-                  "stat-less".i18n(),
+                  "statistics.less".i18n(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox.square(dimension: 10),
@@ -115,7 +115,7 @@ class _ActivityChartState extends State<ActivityChart> {
                   buildCell(cellSize, getColor(i, context)),
                 const SizedBox.square(dimension: 10),
                 Text(
-                  "stat-more".i18n(),
+                  "statistics.more".i18n(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -131,7 +131,7 @@ class _ActivityChartState extends State<ActivityChart> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("stat-pick-year".i18n()),
+          title: Text("statistics.pickYear".i18n()),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -198,10 +198,10 @@ extension on Duration {
       return "$formated ${s.i18n([], [n == 1])} ";
     }
 
-    String days = formatWithWords(inDays.abs(), "day");
-    String hours = formatWithWords(inHours.remainder(24).abs(), "hour");
-    String minutes = formatWithWords(inMinutes.remainder(60).abs(), "minute");
-    String seconds = formatWithWords(inSeconds.remainder(60).abs(), "second");
+    String days = formatWithWords(inDays.abs(), "general.day");
+    String hours = formatWithWords(inHours.remainder(24).abs(), "general.hour");
+    String minutes = formatWithWords(inMinutes.remainder(60).abs(), "general.minute");
+    String seconds = formatWithWords(inSeconds.remainder(60).abs(), "general.second");
     return "$days$hours$minutes$seconds".trimRight();
   }
 }

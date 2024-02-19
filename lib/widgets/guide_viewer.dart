@@ -22,7 +22,7 @@ class GuideViewer extends StatelessWidget {
             if (snapshot.hasData) {
               return buildGuide(
                 context,
-                snapshot.data?.split("\n") ?? ["guides-no-content".i18n()],
+                snapshot.data?.split("\n") ?? ["guides.noContent".i18n()],
               );
             } else if (snapshot.hasError) {
               return Text("general.error".i18n([snapshot.error.toString()]));

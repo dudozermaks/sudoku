@@ -194,7 +194,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     Clipboard.setData(ClipboardData(text: widget.field.cluesToString()));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("clues-copied".i18n()),
+        content: Text("solving.cluesCopied".i18n()),
         showCloseIcon: true,
       ),
     );
@@ -250,8 +250,8 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("go-back".i18n()),
-              content: Text("go-back-ask".i18n()),
+              title: Text("solving.goBack".i18n()),
+              content: Text("solving.goBackAsk".i18n()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
@@ -276,8 +276,8 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("save".i18n()),
-              content: Text("save-before-exit-ask".i18n()),
+              title: Text("solving.save".i18n()),
+              content: Text("solving.saveBeforeExitAsk".i18n()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
@@ -315,13 +315,13 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
   }
 
   void _infoPressed() async {
-    var content = "${"engine-info".i18n()}\n${widget.field.info.toString()}";
+    var content = "${"solving.engineInfo.engineInfo".i18n()}\n${widget.field.info.toString()}";
 
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("puzzle-info".i18n()),
+          title: Text("solving.puzzleInfo".i18n()),
           content: Text(content),
           actions: <Widget>[
             TextButton(
@@ -356,7 +356,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
     }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("file-saved".i18n()),
+        content: Text("solving.fileSaved".i18n()),
         showCloseIcon: true,
       ),
     );
@@ -372,8 +372,8 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("solved".i18n()),
-          content: Text("solved-congratulations".i18n()),
+          title: Text("solving.solved".i18n()),
+          content: Text("solving.solvedCongratulations".i18n()),
           actions: [
             TextButton(
               onPressed: () {
@@ -384,7 +384,7 @@ class _SolvingPageState extends State<SolvingPage> with WidgetsBindingObserver {
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("go-back".i18n()),
+              child: Text("solving.goBack".i18n()),
             ),
           ],
         );

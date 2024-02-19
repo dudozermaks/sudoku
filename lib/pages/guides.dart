@@ -29,7 +29,7 @@ class _GuidesPageState extends State<GuidesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("guides".i18n())),
+      appBar: AppBar(title: Text("guides.name".i18n())),
       body: SafeArea(
         child: FutureBuilder(
           future: guideList,

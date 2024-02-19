@@ -47,12 +47,12 @@ class SudokuInfo {
   String toString() {
     var res =
         // ignore: prefer_interpolation_to_compose_strings
-        "engine-info-unique-solution".i18n([(uniqueSolution != null).yesNo]) + "\n";
+        "solving.engineInfo.uniqueSolution".i18n([(uniqueSolution != null).yesNo]) + "\n";
 
     if (isInfoAvalible) {
-      res += "${"engine-info-difficulty".i18n([difficulty.toString()])}\n";
-      res += "${"engine-info-solved".i18n([humanEngineSolved.yesNo])}\n";
-      res += "${"engine-info-used-methods".i18n()}\n";
+      res += "${"solving.engineInfo.difficulty".i18n([difficulty.toString()])}\n";
+      res += "${"solving.engineInfo.isSolved".i18n([humanEngineSolved.yesNo])}\n";
+      res += "${"solving.engineInfo.usedMethods".i18n()}\n";
 
       usedMethods.forEach((key, value) {
         res += "${key.i18n()}: $value\n";

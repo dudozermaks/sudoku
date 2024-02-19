@@ -7,7 +7,11 @@
 		"cancel": "Cancel",
 		"error": "Error: %s",
 		"loading": "Loading...",
-		"generateField": "Generate new"
+		"generateField": "Generate new",
+		"day": "day%b{:s}",
+		"hour": "hour%b{:s}",
+		"minute": "minute%b{:s}",
+		"second": "second%b{:s}"
 	},
 
 	"home": {
@@ -22,30 +26,54 @@
 		"deleteBig": "Delete the save",
 		"deleteAsk": "Delete this save?",
 		"lastSaved": "Last saved",
-		"puzzleRating": "Rating"
+		"puzzleRating": "Rating",
+		"noSavedFiles": "You have no saved files!"
 	},
 
 	"statistics": {
 		"name": "Statistics",
-		"activityChart": "Activity chart"
+		"activityChart": "Activity chart",
+		"rating" : "Rating: %s",
+		"ratingAverage": "(average puzzle rating: %s)",
+		"timeSolving": "You spend %s solving Sudoku",
+		"timeAverage": "(average per puzzle: %s)",
+		"puzzlesSolved": "Puzzles solved: %s",
+		"longestStreak": "Longest streak: %s",
+		"less": "Less",
+		"more": "More",
+		"year": "Year: %s",
+		"pickYear": "Pick a year"
 	},
 
-	"guides": "Guides",
-	"guides-no-content":
-    "Ooops! Looks like there is no text in your guide!\nPlease report this bug on the Github",
-	"go-back": "Go back",
-	"go-back-ask": "Do you want to go back?",
-	"save": "Save",
-	"save-before-exit-ask": "Save before exiting?",
-	"clues-copied": "Clues copied to clipboard!",
-	"puzzle-info": "Puzzle info",
-	"engine-info": "Engine info on this puzzle:",
-	"engine-info-unique-solution": "Has unique solution: %s",
-	"engine-info-difficulty": "Difficulty: %s",
-	"engine-info-solved": "Solved: %s",
-	"engine-info-used-methods": "Used methods:",
+	"guides": {
+		"name": "Guides",
+		"noContent":
+    	"Ooops! Looks like there is no text in your guide!\nPlease report this bug on the Github"
+	},
+
+	"solving": {
+		"goBack": "Go back",
+		"goBackAsk": "Do you want to go back?",
+		"save": "Save",
+		"saveBeforeExitAsk": "Save before exiting?",
+		"cluesCopied": "Clues copied to clipboard!",
+		"puzzleInfo": "Puzzle info",
+
+		"engineInfo": {
+			"engineInfo": "Engine info on this puzzle:",
+			"uniqueSolution": "Has unique solution: %s",
+			"difficulty": "Difficulty: %s",
+			"isSolved": "Solved: %s",
+			"usedMethods": "Used methods:"
+		},
+
+		"fileSaved": "File saved!",
+		"solved": "Solved",
+		"solvedCongratulations": "Puzzle is solved. Congratulations!"
+	}, 
 
 	"strategy" : {
+		"@info": "Used to name strategies in solving page -> puzzle info",
 		"naked-singles": "Naked singles",
 		"hidden-singles": "Hidden singles",
 		"locked-candidates": "Locked candidates",
@@ -64,25 +92,6 @@
 		"mutant-jellyfish": "Mutant jellyfish",
 		"unknown": "Unknown"
 	},
-
-	"file-saved": "File saved!",
-	"solved": "Solved",
-	"solved-congratulations": "Puzzle is solved. Congratulations!",
-	"no-saved-files": "You have no saved files!",
-	"stat-rating" : "Rating: %s",
-	"stat-rating-average": "(average puzzle rating: %s)",
-	"stat-time-solving": "You spend %s solving Sudoku",
-	"stat-time-average": "(average per puzzle: %s)",
-	"day": "day%b{:s}",
-	"hour": "hour%b{:s}",
-	"minute": "minute%b{:s}",
-	"second": "second%b{:s}",
-	"stat-puzzles-solved": "Puzzles solved: %s",
-	"stat-longest-streak": "Longest streak: %s",
-	"stat-less": "Less",
-	"stat-more": "More",
-	"stat-year": "Year: %s",
-	"stat-pick-year": "Pick year",
 
 	"settings": {
 		"name": "Settings",

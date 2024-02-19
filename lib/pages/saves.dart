@@ -54,7 +54,7 @@ class _SavesPageState extends State<SavesPage> {
     if (_files.isEmpty) {
       return Center(
         child: Text(
-          "no-saved-files".i18n(),
+          "saves.noSavedFiles".i18n(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       );
