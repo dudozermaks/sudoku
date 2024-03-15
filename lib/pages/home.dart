@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   labelText: "home.loadFromString".i18n(),
                   helperText: _controller.text.isNotEmpty
-                      ? "general.canBeLoaded".i18n([], [canBeLoaded])
+                      ? "home.canBeLoaded".i18n([], [canBeLoaded])
                       : null,
                   helperStyle:
                       TextStyle(color: canBeLoaded ? Colors.green : Colors.red),
